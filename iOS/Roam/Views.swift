@@ -316,6 +316,7 @@ struct TripDetailView: View {
                     .overlay(alignment: .bottom) { Divider() }
                 }
             }
+            .frame(maxWidth: CGFloat(62 + 166 * trip.days.count))
             .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
             .padding(.horizontal, 14)
             Text("先安排想做的事，具体时间可以慢慢决定。")
