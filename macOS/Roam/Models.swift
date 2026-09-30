@@ -95,6 +95,7 @@ struct PlanItem: Identifiable, Codable, Equatable {
     var category: PlanCategory
     var transportMode: TransportMode? = nil
     var transportNumber: String? = nil
+    var photos: [Data]? = nil
     var place: PlanPlace? = nil
     var places: [PlanWaypoint]? = nil
 

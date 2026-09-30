@@ -5,6 +5,7 @@ final class TripSharingTests: XCTestCase {
     @MainActor func testPackageRoundTripPreservesPlanAndMakesIndependentCopy() throws {
         var trip = TravelStore.samples[0]
         trip.coverPhoto = Data([1, 2, 3])
+        trip.days[0].items[0].photos = [Data([4, 5, 6])]
         let url = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString + ".roamtrip")
         defer { try? FileManager.default.removeItem(at: url) }
         try JSONEncoder().encode(TripPackage(trip: trip)).write(to: url)
@@ -14,6 +15,7 @@ final class TripSharingTests: XCTestCase {
         XCTAssertNotEqual(copy.id, trip.id)
         XCTAssertEqual(copy.days, trip.days)
         XCTAssertEqual(copy.coverPhoto, trip.coverPhoto)
+        XCTAssertEqual(copy.days[0].items[0].photos, trip.days[0].items[0].photos)
     }
     @MainActor func testUnsupportedAndMalformedFilesAreRejected() throws {
         let url = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString + ".roamtrip")

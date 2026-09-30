@@ -23,9 +23,9 @@ struct TripPackage: Codable, Transferable {
         let access = url.startAccessingSecurityScopedResource()
         defer { if access { url.stopAccessingSecurityScopedResource() } }
         let size = try url.resourceValues(forKeys: [.fileSizeKey]).fileSize ?? 0
-        guard size > 0, size <= 25_000_000 else { throw PackageError.invalid }
+        guard size > 0, size <= 250_000_000 else { throw PackageError.invalid }
         let data = try Data(contentsOf: url)
-        guard data.count <= 25_000_000 else { throw PackageError.invalid }
+        guard data.count <= 250_000_000 else { throw PackageError.invalid }
         let package = try JSONDecoder().decode(TripPackage.self, from: data)
         guard package.version == 1, !package.trip.destination.isEmpty,
               (1...60).contains(package.trip.days.count), package.trip.itemCount <= 5000,
@@ -33,6 +33,7 @@ struct TripPackage: Codable, Transferable {
               Set(package.trip.days.map(\.id)).count == package.trip.days.count else { throw PackageError.invalid }
         for day in package.trip.days {
             guard Set(day.items.map(\.id)).count == day.items.count else { throw PackageError.invalid }
+            guard day.items.allSatisfy({ ($0.photos?.count ?? 0) <= 8 && ($0.photos ?? []).allSatisfy { $0.count <= 5_000_000 } }) else { throw PackageError.invalid }
             let points = day.items.flatMap(\.mapPlaces)
             guard Set(points.map(\.id)).count == points.count,
                   points.allSatisfy({ (-90...90).contains($0.place.latitude) && (-180...180).contains($0.place.longitude) }) else { throw PackageError.invalid }
@@ -73,7 +74,7 @@ struct TripImportModifier: ViewModifier {
                             Text("\(value.package.trip.days.count) 天 · \(value.package.trip.itemCount) 项安排")
                         }
                         Section {
-                            Text("包含行程、地点、交通备注和自选封面。导入为一份独立旅行，不会覆盖已有行程；保存后同步到你自己的 iCloud。")
+                            Text("包含行程、地点、交通备注、安排图片和自选封面。导入为一份独立旅行，不会覆盖已有行程；保存后同步到你自己的 iCloud。")
                             Button("导入到我的旅行") {
                                 store.trips.insert(value.package.importedCopy(), at: 0)
                                 incoming = nil

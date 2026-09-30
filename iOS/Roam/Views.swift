@@ -344,6 +344,15 @@ struct TripDetailView: View {
                     if items.count == 1, let first = items.first, !first.detail.isEmpty {
                         Text(first.detail).font(.caption).foregroundStyle(.secondary).lineLimit(category == .stay ? 2 : 3)
                     }
+                    if let firstPhoto = items.first?.photos?.first, let image = UIImage(data: firstPhoto) {
+                        HStack(spacing: 6) {
+                            Image(uiImage: image).resizable().scaledToFill()
+                                .frame(width: 38, height: 32).clipped().clipShape(RoundedRectangle(cornerRadius: 5))
+                            if let count = items.first?.photos?.count, count > 1 {
+                                Text("共 \(count) 张照片").font(.caption2).foregroundStyle(.secondary)
+                            }
+                        }.accessibilityLabel("安排照片")
+                    }
                     if let place = items.first?.mapPlaces.first?.place {
                         Label(place.name, systemImage: "mappin").font(.caption2).foregroundStyle(.blue).lineLimit(1)
                     }
@@ -435,6 +444,20 @@ struct TripDetailView: View {
                         }
                         Text(item.title).font(.title3.weight(.semibold))
                             .foregroundStyle(.primary).fixedSize(horizontal: false, vertical: true)
+                        if let photos = item.photos, !photos.isEmpty {
+                            ScrollView(.horizontal) {
+                                HStack(spacing: 8) {
+                                    ForEach(photos.indices, id: \.self) { index in
+                                        if let image = UIImage(data: photos[index]) {
+                                            Image(uiImage: image).resizable().scaledToFill()
+                                                .frame(width: 116, height: 88).clipped()
+                                                .clipShape(RoundedRectangle(cornerRadius: 9))
+                                                .accessibilityLabel("安排照片 \(index + 1)")
+                                        }
+                                    }
+                                }
+                            }.scrollIndicators(.hidden)
+                        }
                         if !item.detail.isEmpty {
                             Text(item.detail).font(.subheadline).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
                         }
@@ -657,6 +680,11 @@ struct ItemEditor: View {
     @State private var category: PlanCategory
     @State private var transportMode: TransportMode?
     @State private var transportNumber: String
+    @State private var itemPhotos: [Data]
+    @State private var selectedItemPhotos: [PhotosPickerItem] = []
+    @State private var showItemPhotoFiles = false
+    @State private var loadingItemPhotos = false
+    @State private var itemPhotoError: String?
     @State private var dayID: UUID
     @State private var endDayID: UUID
     @State private var multipleNights = false
@@ -672,11 +700,12 @@ struct ItemEditor: View {
         _category = State(initialValue: selection.category)
         _transportMode = State(initialValue: selection.item?.transportMode)
         _transportNumber = State(initialValue: selection.item?.transportNumber ?? "")
+        _itemPhotos = State(initialValue: selection.item?.photos ?? [])
         _dayID = State(initialValue: selection.dayID)
         _endDayID = State(initialValue: selection.dayID)
     }
     private var trip: Trip? { store.trips.first { $0.id == tripID } }
-    private var valid: Bool { !title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
+    private var valid: Bool { !title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || !itemPhotos.isEmpty }
 
     var body: some View {
         NavigationStack {
@@ -722,6 +751,37 @@ struct ItemEditor: View {
                             }
                         }
                     }
+                }
+                Section("照片 · \(itemPhotos.count)/8") {
+                    if !itemPhotos.isEmpty {
+                        ScrollView(.horizontal) {
+                            HStack(alignment: .top, spacing: 12) {
+                                ForEach(itemPhotos.indices, id: \.self) { index in
+                                    if let image = UIImage(data: itemPhotos[index]) {
+                                        VStack(spacing: 5) {
+                                            Image(uiImage: image).resizable().scaledToFill()
+                                                .frame(width: 112, height: 88).clipped()
+                                                .clipShape(RoundedRectangle(cornerRadius: 9))
+                                            Button("移除第 \(index + 1) 张", systemImage: "trash", role: .destructive) {
+                                                itemPhotos.remove(at: index)
+                                            }.font(.caption).accessibilityIdentifier("remove-item-photo-\(index)")
+                                        }
+                                    }
+                                }
+                            }.padding(.vertical, 4)
+                        }.scrollIndicators(.hidden)
+                    }
+                    if itemPhotos.count < 8 && !loadingItemPhotos {
+                        PhotosPicker(selection: $selectedItemPhotos, maxSelectionCount: 8 - itemPhotos.count, matching: .images) {
+                            Label("从相册添加图片", systemImage: "photo.on.rectangle")
+                        }.accessibilityIdentifier("choose-item-photos")
+                        Button { showItemPhotoFiles = true } label: {
+                            Label("从文件添加图片", systemImage: "folder")
+                        }.accessibilityIdentifier("choose-item-photo-files")
+                    }
+                    if loadingItemPhotos { ProgressView("正在处理图片…") }
+                    Text("每条安排最多 8 张。图片随行程保存在你的 iCloud 私人空间，分享旅行时也会一同发送。")
+                        .font(.caption).foregroundStyle(.secondary)
                 }
                 Section("地图地点 · \(places.count) 个") {
                     if !places.isEmpty {
@@ -775,15 +835,61 @@ struct ItemEditor: View {
                 ToolbarItem(placement: .cancellationAction) { Button("取消") { dismiss() } }
                 ToolbarItem(placement: .confirmationAction) {
                     Button("保存") {
-                        var item = PlanItem(id: selection.item?.id ?? UUID(), title: title.trimmingCharacters(in: .whitespacesAndNewlines), detail: detail, time: time, category: category, places: places)
+                        var item = PlanItem(id: selection.item?.id ?? UUID(), title: title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? "照片" : title.trimmingCharacters(in: .whitespacesAndNewlines), detail: detail, time: time, category: category, places: places)
                         item.transportMode = category == .transport ? transportMode : nil
                         let number = transportNumber.trimmingCharacters(in: .whitespacesAndNewlines)
                         item.transportNumber = category == .transport && transportMode?.numberLabel != nil && !number.isEmpty ? number : nil
+                        item.photos = itemPhotos.isEmpty ? nil : itemPhotos
                         store.upsert(item, tripID: tripID, from: selection.item == nil ? nil : selection.dayID, to: dayID, through: multipleNights ? endDayID : nil)
                         dismiss()
-                    }.disabled(!valid).accessibilityIdentifier("save-item")
+                    }.disabled(!valid || loadingItemPhotos).accessibilityIdentifier("save-item")
                 }
             }
+            .task(id: selectedItemPhotos) {
+                guard !selectedItemPhotos.isEmpty else { return }
+                loadingItemPhotos = true
+                defer { loadingItemPhotos = false; selectedItemPhotos = [] }
+                do {
+                    var added: [Data] = []
+                    for photo in selectedItemPhotos.prefix(max(0, 8 - itemPhotos.count)) {
+                        guard let data = try await photo.loadTransferable(type: Data.self) else { throw CoverPhotoError.invalid }
+                        let compressed = try await Task.detached { try CoverPhotoCodec.compress(data, maxPixelSize: 1200, quality: 0.72) }.value
+                        guard compressed.count <= 5_000_000 else { throw CoverPhotoError.invalid }
+                        added.append(compressed)
+                    }
+                    guard !Task.isCancelled else { return }
+                    itemPhotos.append(contentsOf: added)
+                } catch {
+                    if !Task.isCancelled { itemPhotoError = "图片无法读取或过大，请选择其他图片。" }
+                }
+            }
+            .fileImporter(isPresented: $showItemPhotoFiles, allowedContentTypes: [.image], allowsMultipleSelection: true) { result in
+                switch result {
+                case .success(let urls):
+                    loadingItemPhotos = true
+                    Task {
+                        defer { loadingItemPhotos = false }
+                        do {
+                            let remaining = max(0, 8 - itemPhotos.count)
+                            let added = try await Task.detached { () throws -> [Data] in
+                                try urls.prefix(remaining).map { url in
+                                    let access = url.startAccessingSecurityScopedResource()
+                                    defer { if access { url.stopAccessingSecurityScopedResource() } }
+                                    guard (try url.resourceValues(forKeys: [.fileSizeKey]).fileSize ?? 0) <= 30_000_000 else { throw CoverPhotoError.invalid }
+                                    let data = try CoverPhotoCodec.compress(Data(contentsOf: url), maxPixelSize: 1200, quality: 0.72)
+                                    guard data.count <= 5_000_000 else { throw CoverPhotoError.invalid }
+                                    return data
+                                }
+                            }.value
+                            itemPhotos.append(contentsOf: added)
+                        } catch { itemPhotoError = "图片无法读取或过大，请选择其他图片。" }
+                    }
+                case .failure: itemPhotoError = "未能打开文件，请重试。"
+                }
+            }
+            .alert("图片导入失败", isPresented: Binding(get: { itemPhotoError != nil }, set: { if !$0 { itemPhotoError = nil } })) {
+                Button("好") { itemPhotoError = nil }
+            } message: { Text(itemPhotoError ?? "") }
             .sheet(isPresented: $showPlacePicker) {
                 PlacePicker(destination: [trip?.country, trip?.destination].compactMap { $0 }.joined(separator: " "), existing: places.last?.place) { selected in
                     places.append(contentsOf: selected.map { PlanWaypoint(place: $0) })
