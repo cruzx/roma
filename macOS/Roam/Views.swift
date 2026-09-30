@@ -13,6 +13,7 @@ struct LibraryView: View {
     @State private var search = ""
     @State private var showCreate = false
     @State private var showCloud = false
+    @State private var showTrash = false
     private var filtered: [Trip] {
         store.trips.filter {
             (search.isEmpty || ($0.destination + $0.country).localizedStandardContains(search))
@@ -46,26 +47,26 @@ struct LibraryView: View {
                 .frame(maxWidth: .infinity, alignment: .top)
             }
             .background(Color(.systemGroupedBackground))
-            .navigationTitle("我的旅行 \(store.trips.count)")
+            .navigationTitle("我的旅行")
+            .navigationBarTitleDisplayMode(.large)
             .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Button("iCloud 同步", systemImage: "icloud") { showCloud = true }
-                        .accessibilityIdentifier("cloud-sync")
-                }
                 ToolbarItem(placement: .topBarTrailing) {
                     Menu {
+                        Button("iCloud 同步", systemImage: "icloud") { showCloud = true }
+                        Button("垃圾桶", systemImage: "trash") { showTrash = true }
                         Button("新建旅行", systemImage: "plus") { showCreate = true }
                         Button("导入旅行文件", systemImage: "square.and.arrow.down") {
                             NotificationCenter.default.post(name: .importRoamTrip, object: nil)
                         }
-                    } label: { Image(systemName: "plus") }
-                        .keyboardShortcut("n", modifiers: .command).help("新建旅行 ⌘N").accessibilityIdentifier("new-trip")
+                    } label: { Image(systemName: "gearshape") }
+                        .accessibilityLabel("设置").accessibilityIdentifier("library-settings")
                 }
             }
             .searchable(text: $search, prompt: "搜索目的地")
             .navigationDestination(for: UUID.self) { TripDetailView(tripID: $0) }
             .sheet(isPresented: $showCreate) { TripEditor().environmentObject(store) }
             .sheet(isPresented: $showCloud) { CloudSyncView().environmentObject(store) }
+            .sheet(isPresented: $showTrash) { TrashView().environmentObject(store) }
         }
     }
     private func sortableTripCard(_ trip: Trip) -> some View {
@@ -145,7 +146,11 @@ struct TripDetailView: View {
     let tripID: UUID
     @State private var singleDay = false
     @State private var organizingDay = false
+    @State private var reorderingDays = false
+    @State private var draggedDayID: UUID?
+    @State private var hoveredDayID: UUID?
     @State private var tableHeaderPosition = ScrollPosition(edge: .leading)
+    @Namespace private var dayCardMotion
     @State private var selectedDay = 0
     @State private var editing: ItemSelection?
     @State private var showTripEditor = false
@@ -159,7 +164,7 @@ struct TripDetailView: View {
             if let trip {
                 VStack(spacing: 0) {
                     if singleDay { controls(trip) }
-                    if singleDay { dailyView(trip) } else { tableView(trip).padding(.top, 16) }
+                    if reorderingDays { dayReorderView(trip).padding(.top, 12) } else { cardsView(trip).frame(minHeight: 720).padding(.top, 12) }
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(Color(.systemGroupedBackground))
@@ -169,13 +174,9 @@ struct TripDetailView: View {
                 .onChange(of: trip.days.count) { _, count in selectedDay = min(selectedDay, count - 1) }
                 .toolbar {
                     ToolbarItem(placement: .principal) {
-                        Picker("查看方式", selection: $singleDay) {
-                            Text("全程表格").tag(false)
-                            Text("按天查看").tag(true)
-                        }
-                        .pickerStyle(.segmented)
-                        .frame(width: 220)
-                        .accessibilityIdentifier("view-mode")
+                        Text("所有天数")
+                            .font(.subheadline.weight(.semibold))
+                            .foregroundStyle(.secondary)
                     }
                     ToolbarItem(placement: .topBarLeading) {
                         Label("\(trip.dateRange) · \(trip.days.count) 天", systemImage: "calendar")
@@ -193,6 +194,9 @@ struct TripDetailView: View {
                     }
                     ToolbarItem(placement: .topBarTrailing) {
                         Menu {
+                            Button("重新排序", systemImage: "arrow.up.arrow.down") {
+                                singleDay = false; draggedDayID = nil; reorderingDays = true
+                            }.accessibilityIdentifier("reorder-days")
                             Button(trip.status == .wish ? "加入行程 / 编辑旅行" : "编辑旅行", systemImage: "pencil") { showTripEditor = true }
                             ShareLink(item: TripPackage(trip: trip), preview: SharePreview(trip.destination)) {
                                 Label("分享旅行 / AirDrop", systemImage: "square.and.arrow.up")
@@ -233,15 +237,76 @@ struct TripDetailView: View {
                     }
                 } message: { Text("后面的日期会依次提前一天。此操作无法撤销。") }
                 .confirmationDialog("删除“\(trip.destination)”旅行？", isPresented: $showDeleteTrip, titleVisibility: .visible) {
-                    Button("删除旅行", role: .destructive) { store.trips.removeAll { $0.id == tripID }; dismiss() }
-                } message: { Text("所有安排都会被删除，此操作无法撤销。") }
+                    Button("删除旅行", role: .destructive) { store.deleteTrip(tripID); dismiss() }
+                } message: { Text("攻略会移入垃圾桶，保留 30 天，期间可以恢复。") }
             } else { ContentUnavailableView("旅行已删除", systemImage: "suitcase") }
+        }
+    }
+
+    private func dayReorderView(_ trip: Trip) -> some View {
+        VStack(spacing: 14) {
+            HStack {
+                Text("拖动卡片调整顺序，日期随顺序更新")
+                    .font(.caption).foregroundStyle(.secondary)
+                Spacer()
+                Button("完成") { draggedDayID = nil; reorderingDays = false }
+                    .font(.subheadline.weight(.semibold)).accessibilityIdentifier("finish-day-reorder")
+            }
+            .padding(.horizontal, 22)
+            ScrollView {
+                LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 10), count: 3), spacing: 10) {
+                    ForEach(Array(trip.days.enumerated()), id: \.element.id) { index, day in
+                        VStack(alignment: .leading, spacing: 10) {
+                            Text("第 \(index + 1) 天").font(.caption.weight(.bold)).foregroundStyle(.blue)
+                            Text(day.title.isEmpty ? "自由安排" : day.title)
+                                .font(.subheadline.weight(.semibold)).lineLimit(3)
+                            Spacer(minLength: 4)
+                            Text(trip.date(for: index).formatted(.dateTime.locale(Locale(identifier: "zh_CN")).month().day()))
+                                .font(.caption).foregroundStyle(.secondary)
+                        }
+                        .padding(14).frame(maxWidth: .infinity, minHeight: 140, maxHeight: 140, alignment: .topLeading)
+                        .background(Color(.secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 18))
+                        .overlay(RoundedRectangle(cornerRadius: 18).stroke(.blue.opacity(draggedDayID == day.id ? 0.6 : 0), lineWidth: 2))
+                        .opacity(draggedDayID == day.id ? 0.65 : 1)
+                        .contentShape(RoundedRectangle(cornerRadius: 18))
+                        .onDrag {
+                            draggedDayID = day.id
+                            hoveredDayID = nil
+                            return NSItemProvider(object: day.id.uuidString as NSString)
+                        }
+                        .onDrop(of: [UTType.text], delegate: DayOrderDropDelegate(targetID: day.id, draggedID: $draggedDayID, hoveredID: $hoveredDayID, move: moveDay))
+                        .accessibilityElement(children: .combine)
+                        .accessibilityIdentifier("reorder-day-\(index)")
+                        .accessibilityAction(named: "向前移动") {
+                            if index > 0 { moveDay(day.id, trip.days[index - 1].id) }
+                        }
+                        .accessibilityAction(named: "向后移动") {
+                            if index + 1 < trip.days.count { moveDay(day.id, trip.days[index + 1].id) }
+                        }
+                    }
+                }
+                .padding(.horizontal, 22).padding(.bottom, 24)
+            }
+        }
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("day-reorder-grid")
+    }
+
+    private func moveDay(_ source: UUID, _ target: UUID) {
+        guard let trip, trip.days.indices.contains(selectedDay) else { return }
+        let selectedID = trip.days[selectedDay].id
+        withAnimation(.easeInOut(duration: 0.18)) {
+            _ = store.reorderDay(source, onto: target, tripID: tripID)
+            if let updated = store.trips.first(where: { $0.id == tripID }),
+               let index = updated.days.firstIndex(where: { $0.id == selectedID }) { selectedDay = index }
         }
     }
 
     private func controls(_ trip: Trip) -> some View {
         HStack {
             if singleDay {
+                Button { closeDay() } label: { Label("所有天数", systemImage: "rectangle.stack") }
+                    .accessibilityIdentifier("close-day")
                 Button("前一天", systemImage: "chevron.left") { selectedDay -= 1 }
                     .labelStyle(.iconOnly).disabled(selectedDay == 0)
                 Spacer()
@@ -262,6 +327,108 @@ struct TripDetailView: View {
         }
         .frame(minHeight: 32)
         .padding(.horizontal, 20).padding(.top, 2).padding(.bottom, 8)
+    }
+
+    private func openDay(_ index: Int) {
+        selectedDay = index
+        organizingDay = false
+        withAnimation(.spring(response: 0.56, dampingFraction: 0.86)) { singleDay = true }
+    }
+
+    private func closeDay() {
+        organizingDay = false
+        withAnimation(.spring(response: 0.5, dampingFraction: 0.9)) { singleDay = false }
+    }
+
+    private func cardsView(_ trip: Trip) -> some View {
+        GeometryReader { geometry in
+            let cardWidth = min(max(370, geometry.size.width * 0.26), 470)
+            let cardHeight = max(680, geometry.size.height - 28)
+            ScrollView(.horizontal) {
+                LazyHStack(alignment: .top, spacing: 18) {
+                    ForEach(Array(trip.days.enumerated()), id: \.element.id) { index, day in
+                        dayCard(trip, day: day, index: index)
+                            .frame(width: cardWidth, height: cardHeight)
+                            .background(Color(.secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 24))
+                            .clipShape(RoundedRectangle(cornerRadius: 24))
+                            .overlay(RoundedRectangle(cornerRadius: 24).strokeBorder(.primary.opacity(0.06)))
+                            .shadow(color: .black.opacity(0.08), radius: 14, y: 7)
+                            .accessibilityIdentifier("day-card-\(index)")
+                    }
+                }
+                .padding(.horizontal, 20)
+                .padding(.bottom, 20)
+            }
+            .scrollIndicators(.hidden)
+            .accessibilityIdentifier("day-cards")
+        }
+    }
+
+    private func dayCard(_ trip: Trip, day: TravelDay, index: Int) -> some View {
+        VStack(alignment: .leading, spacing: 0) {
+            VStack(alignment: .leading, spacing: 10) {
+                HStack {
+                    Text("DAY " + String(format: "%02d", index + 1))
+                        .font(.caption.weight(.bold)).tracking(2).foregroundStyle(.blue)
+                    Spacer()
+                    Text(trip.date(for: index).formatted(.dateTime.locale(Locale(identifier: "zh_CN")).month(.twoDigits).day(.twoDigits)))
+                        .font(.subheadline.monospacedDigit()).foregroundStyle(.secondary)
+                }
+                TextField("当天标题", text: Binding(get: { day.title }, set: { value in
+                    var changed = trip; changed.days[index].title = value; store.update(changed)
+                }))
+                .font(.title2.weight(.bold)).textFieldStyle(.plain)
+                .accessibilityIdentifier("day-title-\(index)")
+                Text("\(day.items.count) 项安排").font(.caption).foregroundStyle(.secondary)
+            }
+            .padding(24)
+            Divider().padding(.horizontal, 24)
+            ScrollView(.vertical) {
+                VStack(alignment: .leading, spacing: 0) {
+                    ForEach(PlanCategory.allCases) { category in
+                        let items = day.items.filter { $0.category == category }
+                        VStack(alignment: .leading, spacing: 10) {
+                            HStack(spacing: 9) {
+                                Image(systemName: category.symbol).frame(width: 20)
+                                Text(category.rawValue)
+                                Spacer()
+                                Button { selectedDay = index; editing = ItemSelection(dayID: day.id, category: category) } label: {
+                                    Image(systemName: "plus.circle.fill").font(.body)
+                                }
+                                .buttonStyle(.plain)
+                                .accessibilityLabel("添加\(category.rawValue)")
+                            }
+                            .font(.subheadline.weight(.semibold)).foregroundStyle(category.color)
+                            if items.isEmpty {
+                                Button { selectedDay = index; editing = ItemSelection(dayID: day.id, category: category) } label: {
+                                    Text("待安排").foregroundStyle(.tertiary)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .contentShape(Rectangle())
+                                }.buttonStyle(.plain)
+                            } else {
+                                ForEach(items) { item in
+                                    Button { selectedDay = index; editing = ItemSelection(dayID: day.id, category: category, item: item) } label: {
+                                        VStack(alignment: .leading, spacing: 4) {
+                                            Text(item.title).font(.subheadline.weight(.medium)).foregroundStyle(.primary)
+                                            if !item.detail.isEmpty {
+                                                Text(item.detail).font(.caption).foregroundStyle(.secondary).lineLimit(2)
+                                            }
+                                        }
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .contentShape(Rectangle())
+                                    }
+                                    .buttonStyle(.plain)
+                                    .accessibilityIdentifier("item-\(item.id)")
+                                }
+                            }
+                        }
+                        .padding(.vertical, 17)
+                        if category != .notes { Divider() }
+                    }
+                }
+                .padding(.horizontal, 24)
+            }
+        }
     }
 
     private func tableView(_ trip: Trip) -> some View {
@@ -307,18 +474,20 @@ struct TripDetailView: View {
                         ScrollView(.horizontal) {
                             HStack(spacing: 0) {
                                 ForEach(Array(trip.days.enumerated()), id: \.element.id) { index, day in
-                                    Button {
-                                        selectedDay = index; singleDay = true
-                                    } label: {
-                                        VStack(alignment: .leading, spacing: 5) {
-                                            HStack {
-                                                Text("DAY \(index + 1)").font(.caption2.weight(.bold)).foregroundStyle(.blue)
-                                                Spacer()
-                                                Text(trip.date(for: index).formatted(.dateTime.month(.twoDigits).day(.twoDigits))).font(.caption2).foregroundStyle(.secondary)
-                                            }
-                                            Text(day.title).font(.subheadline.weight(.semibold)).foregroundStyle(.primary).lineLimit(1)
-                                        }.padding(12).frame(width: columnWidth, height: 64).contentShape(Rectangle())
-                                    }.buttonStyle(.plain).accessibilityIdentifier("day-header-\(index)")
+                                    VStack(alignment: .leading, spacing: 5) {
+                                        HStack {
+                                            Text("DAY \(index + 1)").font(.caption2.weight(.bold)).foregroundStyle(.blue)
+                                            Spacer()
+                                            Text(trip.date(for: index).formatted(.dateTime.month(.twoDigits).day(.twoDigits))).font(.caption2).foregroundStyle(.secondary)
+                                        }
+                                        TextField("当天标题", text: Binding(get: { day.title }, set: { value in
+                                            var changed = trip; changed.days[index].title = value; store.update(changed)
+                                        }))
+                                        .font(.subheadline.weight(.semibold))
+                                        .textFieldStyle(.plain)
+                                        .accessibilityIdentifier("day-title-\(index)")
+                                    }.padding(12).frame(width: columnWidth, height: 64)
+                                        .accessibilityIdentifier("day-header-\(index)")
                                         .background(index.isMultiple(of: 2) ? Color(.secondarySystemGroupedBackground) : Color("ItineraryAlternate"))
                                         .overlay(alignment: .trailing) { Divider() }
                                 }
@@ -342,26 +511,32 @@ struct TripDetailView: View {
 
     private func tableCell(trip: Trip, day: TravelDay, index: Int, category: PlanCategory) -> some View {
         let items = day.items.filter { $0.category == category }
-        return Button {
-            selectedDay = index
-            if items.count == 1 { editing = ItemSelection(dayID: day.id, category: category, item: items[0]) }
-            else if items.isEmpty { editing = ItemSelection(dayID: day.id, category: category) }
-            else { singleDay = true }
-        } label: {
-            VStack(alignment: .leading, spacing: 6) {
-                if items.isEmpty {
+        return VStack(alignment: .leading, spacing: 6) {
+            if items.isEmpty {
+                Button {
+                    selectedDay = index
+                    editing = ItemSelection(dayID: day.id, category: category)
+                } label: {
                     Label("添加", systemImage: "plus").font(.caption).foregroundStyle(.tertiary)
-                } else {
-                    ForEach(items.prefix(2)) { item in
+                }.buttonStyle(.plain)
+            } else {
+                ForEach(items) { item in
+                    Button {
+                        selectedDay = index
+                        editing = ItemSelection(dayID: day.id, category: category, item: item)
+                    } label: {
+                        VStack(alignment: .leading, spacing: 3) {
                         if category == .transport, let mode = item.transportMode {
                             Label([mode.rawValue, item.transportNumber].compactMap { $0 }.filter { !$0.isEmpty }.joined(separator: " · "), systemImage: mode.symbol)
                                 .font(.caption.weight(.semibold)).foregroundStyle(category.color)
                         }
                         Text(item.title).font(.subheadline.weight(.medium)).foregroundStyle(.primary).lineLimit(2)
-                    }
-                    if items.count == 1, let first = items.first, !first.detail.isEmpty {
-                        Text(first.detail).font(.caption).foregroundStyle(.secondary).lineLimit(category == .stay ? 2 : 3)
-                    }
+                        if !item.detail.isEmpty {
+                            Text(item.detail).font(.caption).foregroundStyle(.secondary).lineLimit(2)
+                        }
+                    }}.buttonStyle(.plain)
+                    .accessibilityIdentifier("item-\(item.id)")
+                }
                     if let firstPhoto = items.first?.photos?.first, let image = UIImage(data: firstPhoto) {
                         HStack(spacing: 6) {
                             Image(uiImage: image).resizable().scaledToFill()
@@ -374,12 +549,15 @@ struct TripDetailView: View {
                     if let place = items.first?.mapPlaces.first?.place {
                         Label(place.name, systemImage: "mappin").font(.caption2).foregroundStyle(.blue).lineLimit(1)
                     }
-                    if items.count > 2 { Text("另有 \(items.count - 2) 项").font(.caption2).foregroundStyle(.blue) }
-                }
-                Spacer(minLength: 0)
-            }.padding(12).frame(maxWidth: .infinity, alignment: .topLeading).frame(height: rowHeight(category), alignment: .topLeading)
-                .contentShape(Rectangle())
-        }.buttonStyle(.plain).accessibilityIdentifier("cell-\(index)-\(category.rawValue)")
+                Button {
+                    selectedDay = index
+                    editing = ItemSelection(dayID: day.id, category: category)
+                } label: { Label("添加", systemImage: "plus").font(.caption2).foregroundStyle(.blue) }
+                    .buttonStyle(.plain)
+            }
+            Spacer(minLength: 0)
+        }.padding(12).frame(maxWidth: .infinity, alignment: .topLeading).frame(height: rowHeight(category), alignment: .topLeading)
+            .accessibilityIdentifier("cell-\(index)-\(category.rawValue)")
     }
 
     private func rowHeight(_ category: PlanCategory) -> CGFloat {
@@ -399,12 +577,6 @@ struct TripDetailView: View {
             } else {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 24) {
-                        if !trip.cover.isEmpty, UIImage(named: trip.cover) != nil {
-                            GeometryReader { geometry in
-                                Image(trip.cover).resizable().scaledToFill()
-                                    .frame(width: geometry.size.width, height: 150).clipped()
-                            }.frame(height: 150).clipShape(RoundedRectangle(cornerRadius: 16)).accessibilityHidden(true)
-                        }
                         VStack(alignment: .leading, spacing: 16) {
                             VStack(alignment: .leading, spacing: 8) {
                                 Text("DAY " + String(format: "%02d", selectedDay + 1))
@@ -986,8 +1158,18 @@ struct PlacePicker: View {
                     Text("搜索地点").tag(false)
                     Text("地图选点").tag(true)
                 }.pickerStyle(.segmented).padding(.horizontal).padding(.bottom, 8)
-                if manual || !selectedPlaces.isEmpty {
                 Map(position: $position) {
+                    if !manual {
+                        ForEach(Array(searchModel.places.prefix(6).enumerated()), id: \.offset) { _, place in
+                            if !selectedPlaces.contains(place) {
+                                Annotation(place.name, coordinate: place.coordinate) {
+                                    Button { selectedPlaces.append(place); searchFocused = false; position = .region(place.region) } label: {
+                                        Image(systemName: "mappin.circle.fill").font(.title).foregroundStyle(.blue).background(.white, in: Circle())
+                                    }.accessibilityLabel("选择" + place.name)
+                                }
+                            }
+                        }
+                    }
                     ForEach(Array(selectedPlaces.enumerated()), id: \.offset) { index, place in
                         Marker("\(index + 1). \(place.name)", coordinate: place.coordinate)
                     }
@@ -1003,8 +1185,13 @@ struct PlacePicker: View {
                             .background(.white, in: Circle()).allowsHitTesting(false)
                     }
                 }
-                .frame(height: manual ? 250 : searchFocused ? 80 : 110)
+                .overlay(alignment: .bottomTrailing) {
+                    Button { if let area = searchModel.area { position = .region(area.region) } } label: {
+                        Image(systemName: "scope").padding(10).background(.regularMaterial, in: Circle())
+                    }.accessibilityLabel("回到搜索城市").padding(10)
                 }
+                .frame(height: manual ? 250 : searchFocused ? 100 : 170)
+                .accessibilityIdentifier("place-preview-map")
                 if !selectedPlaces.isEmpty {
                     ScrollView(.horizontal) {
                         HStack {
@@ -1029,7 +1216,12 @@ struct PlacePicker: View {
                     }
                 } else {
                     if searchModel.loading { ProgressView("正在搜索地点…").padding() }
-                    if let message = searchModel.message { Text(message).font(.subheadline).foregroundStyle(.secondary).padding(.horizontal) }
+                    if let message = searchModel.message {
+                        HStack {
+                            Text(message).font(.subheadline).foregroundStyle(.secondary)
+                            Button("重试", action: search).disabled(query.isEmpty || searchModel.loading)
+                        }.padding(.horizontal)
+                    }
                     List {
                         ForEach(Array(searchModel.completions.enumerated()), id: \.offset) { _, completion in
                             Button {
@@ -1068,7 +1260,7 @@ struct PlacePicker: View {
                                 .font(.subheadline).foregroundStyle(.secondary)
                         }
                     }.listStyle(.plain).scrollDismissesKeyboard(.interactively)
-                    if searchModel.overseas {
+                    if searchModel.places.contains(where: { $0.source == "OpenStreetMap" }) {
                         Link("地点数据 © OpenStreetMap contributors · Photon", destination: URL(string: "https://www.openstreetmap.org/copyright")!)
                             .font(.caption2).padding(.bottom, 4)
                     }
@@ -1390,6 +1582,34 @@ struct SearchArea {
     var region: MKCoordinateRegion
 }
 
+enum PlaceSearchTerms {
+    static func isStation(_ query: String) -> Bool {
+        ["车站", "車站", "火车站", "駅", "站", "station"].contains { query.lowercased().contains($0) }
+    }
+    static func local(_ query: String, country: String?) -> String {
+        guard country == "JP" else { return query }
+        var text = query.trimmingCharacters(in: .whitespacesAndNewlines)
+        let aliases = [("Tokyo Station", "東京駅"), ("tokyo station", "東京駅"), ("东京", "東京"), ("银座", "銀座"), ("日本桥", "日本橋"), ("涩谷", "渋谷"), ("大阪", "大阪"), ("成田机场", "成田空港"), ("羽田机场", "羽田空港")]
+        for (from, to) in aliases { text = text.replacingOccurrences(of: from, with: to) }
+        text = text.applyingTransform(StringTransform("Simplified-Traditional"), reverse: false) ?? text
+        for suffix in ["火車站", "車站", "站"] { text = text.replacingOccurrences(of: suffix, with: "駅") }
+        return text
+    }
+    static func stationBase(_ query: String, country: String?) -> String {
+        var text = local(query, country: country)
+        for suffix in [" Station", " station", "駅", "火车站", "车站", "站"] { text = text.replacingOccurrences(of: suffix, with: "") }
+        return text.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+    static func city(_ destination: String, country: String?) -> String {
+        if country == "JP" {
+            for (name, local) in [("东京", "Tokyo"), ("東京", "Tokyo"), ("京都", "Kyoto"), ("大阪", "Osaka"), ("札幌", "Sapporo"), ("福冈", "Fukuoka"), ("富士山", "Mount Fuji")] {
+                if destination.contains(name) { return local }
+            }
+        }
+        return destination.replacingOccurrences(of: "\\d+天.*$|旅行.*$|规划.*$|行程.*$", with: "", options: .regularExpression).trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+}
+
 actor OverseasPlaceSearch {
     static let shared = OverseasPlaceSearch()
     private var nextRequest = Date.distantPast
@@ -1413,10 +1633,11 @@ actor OverseasPlaceSearch {
             }
         }
     }
-    func search(_ query: String, country: String?, area: SearchArea? = nil) async throws -> [PlanPlace] {
+    func search(_ query: String, country: String?, area: SearchArea? = nil, stationsOnly: Bool = false) async throws -> [PlanPlace] {
         var url = URLComponents(string: "https://photon.komoot.io/api/")!
-        let text = country == "JP" ? query.applyingTransform(StringTransform("Simplified-Traditional"), reverse: false) ?? query : query
+        let text = stationsOnly ? PlaceSearchTerms.stationBase(query, country: country) : PlaceSearchTerms.local(query, country: country)
         var params = [URLQueryItem(name: "q", value: text), URLQueryItem(name: "limit", value: "12")]
+        if stationsOnly { params.append(.init(name: "osm_tag", value: "railway:station")) }
         if let country { params.append(.init(name: "countrycode", value: country)) }
         if let area {
             let c = area.region.center, span = area.region.span
@@ -1426,9 +1647,10 @@ actor OverseasPlaceSearch {
         url.queryItems = params
         let endpoint = url.url!
         if let cached = cache[endpoint.absoluteString] { return cached }
-        while nextRequest.timeIntervalSinceNow > 0 { try await Task.sleep(for: .seconds(nextRequest.timeIntervalSinceNow)) }
+        let reserved = max(nextRequest, Date())
+        nextRequest = reserved.addingTimeInterval(1)
+        if reserved.timeIntervalSinceNow > 0 { try await Task.sleep(for: .seconds(reserved.timeIntervalSinceNow)) }
         try Task.checkCancellation()
-        nextRequest = Date().addingTimeInterval(1)
         var request = URLRequest(url: endpoint, timeoutInterval: 15)
         request.setValue("RoamTravelPlanner/1.0", forHTTPHeaderField: "User-Agent")
         request.setValue(country == "JP" ? "ja" : "en", forHTTPHeaderField: "Accept-Language")
@@ -1439,17 +1661,19 @@ actor OverseasPlaceSearch {
         for feature in decoded.features {
             let p = feature.properties, c = feature.geometry.coordinates
             guard c.count >= 2, let name = p.name, !name.isEmpty,
-                  country == nil || p.countrycode?.uppercased() == country else { continue }
+                  country == nil || p.countrycode?.uppercased() == country,
+                  !["footway", "steps", "path"].contains(p.osm_value ?? "") else { continue }
             let countryName = p.countrycode.flatMap { Locale(identifier: "zh_CN").localizedString(forRegionCode: $0) } ?? p.country
             var parts: [String] = []
             for part in [countryName, p.state, p.city, p.district, p.street, p.housenumber].compactMap({ $0 }) {
                 if !parts.contains(part) { parts.append(part) }
             }
-            let place = PlanPlace(name: name, address: parts.joined(separator: " · "), latitude: c[1], longitude: c[0], source: "OpenStreetMap")
-            if !places.contains(where: { $0.name == name && CLLocation(latitude: $0.latitude, longitude: $0.longitude).distance(from: CLLocation(latitude: c[1], longitude: c[0])) < 80 }) { places.append(place) }
+            let displayName = stationsOnly && country == "JP" && !name.hasSuffix("駅") ? name + "駅" : name
+            let place = PlanPlace(name: displayName, address: parts.joined(separator: " · "), latitude: c[1], longitude: c[0], source: "OpenStreetMap")
+            if !places.contains(where: { $0.name == displayName && CLLocation(latitude: $0.latitude, longitude: $0.longitude).distance(from: CLLocation(latitude: c[1], longitude: c[0])) < 250 }) { places.append(place) }
         }
         if cache.count > 100 { cache.removeAll() }
-        cache[endpoint.absoluteString] = places
+        if !places.isEmpty { cache[endpoint.absoluteString] = places }
         return places
     }
 }
@@ -1483,16 +1707,17 @@ final class PlaceSearchModel: NSObject, ObservableObject, @preconcurrency MKLoca
         invalidate(); area = nil; scopeName = destination; resolvingArea = true
         scopeGeneration = UUID(); let token = scopeGeneration
         let country = Self.countryCode(for: destination)
+        let city = PlaceSearchTerms.city(destination, country: country)
         overseas = country != nil && country != "CN"
         if let cached = Self.areas[destination] { area = cached; resolvingArea = false; return }
         do {
             let coordinate: CLLocationCoordinate2D
             if overseas {
-                let places = try await OverseasPlaceSearch.shared.search(destination, country: country)
+                let places = try await OverseasPlaceSearch.shared.search(city, country: country)
                 guard let first = places.first else { throw URLError(.cannotFindHost) }
                 coordinate = first.coordinate
             } else {
-                guard let request = MKGeocodingRequest(addressString: destination) else { throw URLError(.badURL) }
+                guard let request = MKGeocodingRequest(addressString: city) else { throw URLError(.badURL) }
                 let result = try await request.mapItems
                 guard let first = result.first else { throw URLError(.cannotFindHost) }
                 coordinate = first.location.coordinate
@@ -1512,21 +1737,10 @@ final class PlaceSearchModel: NSObject, ObservableObject, @preconcurrency MKLoca
     func suggest(_ text: String) async {
         guard !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty, let area else { return }
         let token = generation; loading = true
-        if overseas {
-            do {
-                let found = try await OverseasPlaceSearch.shared.search(text, country: area.country, area: area)
-                guard token == generation, !Task.isCancelled else { return }
-                places = found; loading = false
-                if found.isEmpty { message = "这个城市内没有找到，可换当地名称、英文名称，或修改搜索城市。" }
-            } catch {
-                guard token == generation, !Task.isCancelled else { return }
-                loading = false; message = "地点搜索暂时不可用，请点搜索重试。"
-            }
-        } else {
-            let next = MKLocalSearchCompleter(); next.region = area.region; next.regionPriority = .required
-            next.resultTypes = [.address, .pointOfInterest]; next.delegate = self; completer = next
-            next.queryFragment = text
-        }
+        if overseas { await search(text); return }
+        let next = MKLocalSearchCompleter(); next.region = area.region; next.regionPriority = .default
+        next.resultTypes = [.address, .pointOfInterest]; next.delegate = self; completer = next
+        next.queryFragment = text
     }
     func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
         guard completer === self.completer else { return }
@@ -1539,26 +1753,45 @@ final class PlaceSearchModel: NSObject, ObservableObject, @preconcurrency MKLoca
     }
     func search(_ text: String, completion: MKLocalSearchCompletion? = nil) async {
         invalidate()
+        let query = text.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !query.isEmpty else { return }
         guard let area else { message = "请先确认搜索城市，再搜索地点。"; return }
-        if overseas { await suggest(text); return }
         loading = true; let token = generation
+        let station = PlaceSearchTerms.isStation(query)
         let request = completion.map { MKLocalSearch.Request(completion: $0) } ?? MKLocalSearch.Request()
-        if completion == nil { request.naturalLanguageQuery = text }
-        request.region = area.region; request.regionPriority = .required
+        if completion == nil { request.naturalLanguageQuery = PlaceSearchTerms.local(query, country: area.country) }
+        request.region = area.region; request.regionPriority = .default
+        request.resultTypes = [.address, .pointOfInterest]
         let search = MKLocalSearch(request: request); activeSearch = search
+        async let fallback: [PlanPlace]? = overseas ? try? await OverseasPlaceSearch.shared.search(query, country: area.country, area: area, stationsOnly: station) : nil
+        var apple: [PlanPlace] = []
+        var appleSucceeded = false
         do {
             let response = try await search.start()
-            guard token == generation, !Task.isCancelled else { return }
-            places = response.mapItems.map { PlanPlace(mapItem: $0) }.filter { place in
+            appleSucceeded = true
+            apple = response.mapItems.map { PlanPlace(mapItem: $0) }.filter { place in
                 CLLocation(latitude: area.region.center.latitude, longitude: area.region.center.longitude).distance(from: CLLocation(latitude: place.latitude, longitude: place.longitude)) < 90_000
             }
-            loading = false
-            if places.isEmpty { message = "当前城市没有找到这个地点，请换个关键词或修改搜索城市。" }
-        } catch {
             guard token == generation, !Task.isCancelled else { return }
-            loading = false; message = "搜索暂时失败，请重试或修改搜索城市。"
+            places = apple
+        } catch { }
+        let supplemental = await fallback
+        guard token == generation, !Task.isCancelled else { return }
+        let merged = station ? (supplemental ?? []) + apple : apple + (supplemental ?? [])
+        var unique: [PlanPlace] = []
+        for place in merged {
+            let base = PlaceSearchTerms.stationBase(place.name, country: area.country)
+            if !unique.contains(where: {
+                PlaceSearchTerms.stationBase($0.name, country: area.country) == base &&
+                CLLocation(latitude: $0.latitude, longitude: $0.longitude).distance(from: CLLocation(latitude: place.latitude, longitude: place.longitude)) < 250
+            }) { unique.append(place) }
+        }
+        places = Array(unique.prefix(20)); loading = false
+        if places.isEmpty {
+            message = appleSucceeded || supplemental != nil ? "没有找到这个地点。可输入更完整的地址，或切换到地图选点。" : "网络暂时不可用，请重试；也可以在地图上手动选点。"
         }
     }
+
 }
 
 struct NativePlaceSearchBar: UIViewRepresentable {
@@ -1646,5 +1879,67 @@ struct SearchCityEditor: View {
         Button { if country != code { country = code; city = "" }; selectingCountry = false } label: {
             HStack { Text(Self.name(code)); Spacer(); if country == code { Image(systemName: "checkmark") } }
         }.accessibilityIdentifier("country-" + code)
+    }
+}
+
+struct TrashView: View {
+    @EnvironmentObject private var store: TravelStore
+    @Environment(\.dismiss) private var dismiss
+    @State private var deleting: DeletedTrip?
+    var body: some View {
+        NavigationStack {
+            List {
+                Section {
+                    Text("删除的攻略保留 30 天，到期后自动彻底删除。")
+                        .font(.subheadline).foregroundStyle(.secondary)
+                }
+                if store.deletedTrips.isEmpty {
+                    ContentUnavailableView("垃圾桶为空", systemImage: "trash", description: Text("删除的攻略会暂存在这里。"))
+                } else {
+                    ForEach(store.deletedTrips) { entry in
+                        VStack(alignment: .leading, spacing: 12) {
+                            Text(entry.trip.destination).font(.headline)
+                            Text("\(entry.trip.dateRange) · \(entry.trip.days.count) 天 · \(entry.trip.itemCount) 项安排")
+                                .font(.caption).foregroundStyle(.secondary)
+                            Text("剩余 \(entry.remainingDays) 天后彻底删除")
+                                .font(.caption).foregroundStyle(.secondary)
+                            HStack {
+                                Button("恢复", systemImage: "arrow.uturn.backward") { store.restoreTrip(entry.id) }
+                                    .buttonStyle(.bordered).accessibilityIdentifier("restore-trip-" + entry.id.uuidString)
+                                Spacer()
+                                Button("彻底删除", systemImage: "trash", role: .destructive) { deleting = entry }
+                                    .buttonStyle(.borderless)
+                            }
+                        }.padding(.vertical, 6)
+                    }
+                }
+            }
+            .navigationTitle("垃圾桶").navigationBarTitleDisplayMode(.inline)
+            .toolbar { ToolbarItem(placement: .confirmationAction) { Button("完成") { dismiss() } } }
+            .onAppear { store.purgeExpiredTrash() }
+            .confirmationDialog("彻底删除这份攻略？", isPresented: Binding(get: { deleting != nil }, set: { if !$0 { deleting = nil } }), titleVisibility: .visible) {
+                Button("彻底删除", role: .destructive) { if let entry = deleting { store.permanentlyDeleteTrip(entry.id) }; deleting = nil }
+            } message: { Text("彻底删除后无法恢复。") }
+        }
+    }
+}
+
+private struct DayOrderDropDelegate: DropDelegate {
+    let targetID: UUID
+    @Binding var draggedID: UUID?
+    @Binding var hoveredID: UUID?
+    let move: (UUID, UUID) -> Void
+    func dropEntered(info: DropInfo) {
+        guard let source = draggedID, source != targetID, hoveredID != targetID else { return }
+        hoveredID = targetID
+        move(source, targetID)
+    }
+    func dropUpdated(info: DropInfo) -> DropProposal? { DropProposal(operation: .move) }
+    func performDrop(info: DropInfo) -> Bool {
+        guard let source = draggedID else { return false }
+        if source != targetID && hoveredID != targetID { move(source, targetID) }
+        hoveredID = nil
+        draggedID = nil
+        return true
     }
 }

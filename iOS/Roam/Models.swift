@@ -146,6 +146,12 @@ struct Trip: Identifiable, Codable, Equatable {
     func date(for index: Int) -> Date {
         Calendar.current.date(byAdding: .day, value: index, to: startDate) ?? startDate
     }
+    func dayIndex(on date: Date, calendar: Calendar = .current) -> Int? {
+        guard status == .planning,
+              let index = calendar.dateComponents([.day], from: calendar.startOfDay(for: startDate), to: calendar.startOfDay(for: date)).day,
+              days.indices.contains(index) else { return nil }
+        return index
+    }
     var dateRange: String {
         let format = DateFormatter()
         format.dateFormat = "M.dd"
@@ -158,9 +164,19 @@ struct Trip: Identifiable, Codable, Equatable {
     }
 }
 
+struct DeletedTrip: Identifiable, Codable, Equatable {
+    var trip: Trip
+    var deletedAt: Date
+    var id: UUID { trip.id }
+    var expiresAt: Date { deletedAt.addingTimeInterval(30 * 24 * 60 * 60) }
+    var remainingDays: Int { max(0, Int(ceil(expiresAt.timeIntervalSinceNow / 86400))) }
+}
+
 @MainActor
 final class TravelStore: ObservableObject {
-    @Published var trips: [Trip] { didSet { save(); if !applyingCloud { cloud?.localChanged(trips) } } }
+    @Published var trips: [Trip] { didSet { save(); if !applyingCloud { cloud?.localChanged(trips, trash: deletedTrips) } } }
+    @Published private(set) var deletedTrips: [DeletedTrip] = []
+    private var trashFile: URL { file.deletingLastPathComponent().appendingPathComponent(file.deletingPathExtension().lastPathComponent + "-trash.json") }
     @Published var cloudStatus = "仅本机保存"
     @Published var cloudLastSync: Date?
     var cloud: RoamCloudSync?
@@ -176,7 +192,10 @@ final class TravelStore: ObservableObject {
         } else {
             trips = Self.samples
         }
-        if reset { save() }
+        if !reset, let data = try? Data(contentsOf: trashFile), let saved = try? JSONDecoder().decode([DeletedTrip].self, from: data) {
+            deletedTrips = saved.filter { $0.expiresAt > Date() }
+        }
+        if reset { save(); saveTrash() }
         if file == nil && !reset {
             cloud = RoamCloudSync(store: self, file: self.file, hasExistingData: FileManager.default.fileExists(atPath: self.file.path))
             cloud?.start()
@@ -190,10 +209,51 @@ final class TravelStore: ObservableObject {
         } catch { saveError = "暂时无法保存，请检查设备剩余空间。" }
     }
 
-    func applyCloudTrips(_ incoming: [Trip]) {
+    func applyCloudTrips(_ incoming: [Trip], trash: [DeletedTrip] = []) {
         applyingCloud = true
+        deletedTrips = trash.filter { $0.expiresAt > Date() }
+        saveTrash()
         trips = incoming
         applyingCloud = false
+    }
+
+    @discardableResult private func saveTrash() -> Bool {
+        do {
+            try FileManager.default.createDirectory(at: trashFile.deletingLastPathComponent(), withIntermediateDirectories: true)
+            try JSONEncoder().encode(deletedTrips).write(to: trashFile, options: .atomic)
+            return true
+        } catch { saveError = "暂时无法保存垃圾桶，请检查设备剩余空间。"; return false }
+    }
+
+    func deleteTrip(_ id: UUID, now: Date = Date()) {
+        guard let trip = trips.first(where: { $0.id == id }) else { return }
+        deletedTrips.removeAll { $0.id == id }
+        deletedTrips.insert(DeletedTrip(trip: trip, deletedAt: now), at: 0)
+        guard saveTrash() else { deletedTrips.removeAll { $0.id == id }; return }
+        trips.removeAll { $0.id == id }
+    }
+
+    func restoreTrip(_ id: UUID, now: Date = Date()) {
+        guard let entry = deletedTrips.first(where: { $0.id == id }), entry.expiresAt > now else { purgeExpiredTrash(now: now); return }
+        applyingCloud = true
+        if !trips.contains(where: { $0.id == id }) { trips.insert(entry.trip, at: 0) }
+        deletedTrips.removeAll { $0.id == id }
+        saveTrash()
+        applyingCloud = false
+        cloud?.localChanged(trips, trash: deletedTrips)
+    }
+
+    func permanentlyDeleteTrip(_ id: UUID) {
+        deletedTrips.removeAll { $0.id == id }
+        saveTrash()
+        cloud?.localChanged(trips, trash: deletedTrips)
+    }
+
+    func purgeExpiredTrash(now: Date = Date()) {
+        guard deletedTrips.contains(where: { $0.expiresAt <= now }) else { return }
+        deletedTrips.removeAll { $0.expiresAt <= now }
+        saveTrash()
+        cloud?.localChanged(trips, trash: deletedTrips)
     }
 
     func update(_ trip: Trip) {
@@ -210,6 +270,19 @@ final class TravelStore: ObservableObject {
         let moved = ordered.remove(at: source)
         ordered.insert(moved, at: target)
         trips = ordered
+        return true
+    }
+
+    @discardableResult
+    func reorderDay(_ sourceID: UUID, onto targetID: UUID, tripID: UUID) -> Bool {
+        guard sourceID != targetID,
+              let t = trips.firstIndex(where: { $0.id == tripID }),
+              let source = trips[t].days.firstIndex(where: { $0.id == sourceID }),
+              let target = trips[t].days.firstIndex(where: { $0.id == targetID }) else { return false }
+        var trip = trips[t]
+        let moved = trip.days.remove(at: source)
+        trip.days.insert(moved, at: target)
+        trips[t] = trip
         return true
     }
 

@@ -149,4 +149,55 @@ final class TravelStoreTests: XCTestCase {
         XCTAssertEqual(store.trips, original)
     }
 
+    @MainActor func testTrashPersistsRestoresExactTripAndExpiresAtThirtyDays() throws {
+        let folder = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        defer { try? FileManager.default.removeItem(at: folder) }
+        let file = folder.appendingPathComponent("trips.json")
+        let store = TravelStore(file: file, reset: true)
+        let trip = store.trips[0]
+        let now = Date()
+        store.deleteTrip(trip.id, now: now)
+        XCTAssertFalse(store.trips.contains { $0.id == trip.id })
+        XCTAssertEqual(store.deletedTrips.first?.trip, trip)
+        let loaded = TravelStore(file: file)
+        XCTAssertEqual(loaded.deletedTrips.first?.trip, trip)
+        loaded.restoreTrip(trip.id, now: now.addingTimeInterval(29 * 86400))
+        XCTAssertEqual(loaded.trips.first, trip)
+        XCTAssertTrue(loaded.deletedTrips.isEmpty)
+        loaded.deleteTrip(trip.id, now: now)
+        loaded.restoreTrip(trip.id, now: now.addingTimeInterval(30 * 86400))
+        XCTAssertFalse(loaded.trips.contains { $0.id == trip.id })
+        XCTAssertTrue(loaded.deletedTrips.isEmpty)
+        XCTAssertTrue(TravelStore(file: file).deletedTrips.isEmpty)
+    }
+
+    @MainActor func testPermanentDeletionOnlyRemovesSelectedTrashEntry() {
+        let folder = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        defer { try? FileManager.default.removeItem(at: folder) }
+        let store = TravelStore(file: folder.appendingPathComponent("trips.json"), reset: true)
+        let first = store.trips[0], second = store.trips[1]
+        store.deleteTrip(first.id); store.deleteTrip(second.id)
+        store.permanentlyDeleteTrip(first.id)
+        XCTAssertEqual(store.deletedTrips.map(\.id), [second.id])
+        XCTAssertFalse(store.trips.contains { $0.id == first.id })
+    }
+
+    @MainActor func testReorderDaysPreservesPlansAndReassignsDates() {
+        let folder = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        defer { try? FileManager.default.removeItem(at: folder) }
+        let file = folder.appendingPathComponent("trips.json")
+        let store = TravelStore(file: file, reset: true)
+        let original = store.trips[0]
+        let day = original.days[0]
+        XCTAssertTrue(store.reorderDay(day.id, onto: original.days[2].id, tripID: original.id))
+        let updated = store.trips[0]
+        XCTAssertEqual(updated.days[2], day)
+        XCTAssertEqual(updated.days[0], original.days[1])
+        XCTAssertEqual(updated.date(for: 2), original.date(for: 2))
+        XCTAssertEqual(updated.itemCount, original.itemCount)
+        XCTAssertEqual(updated.days.count, original.days.count)
+        XCTAssertEqual(TravelStore(file: file).trips[0], updated)
+        XCTAssertFalse(store.reorderDay(day.id, onto: day.id, tripID: original.id))
+    }
+
 }

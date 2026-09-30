@@ -1,6 +1,64 @@
 import XCTest
 
 final class RoamUITests: XCTestCase {
+    @MainActor func testChineseTokyoStationSearchCanBeAddedToMap() throws {
+        let app = XCUIApplication()
+        app.launchArguments = ["--uitesting", "--reset", "-AppleLanguages", "(zh-Hans)", "-AppleLocale", "zh_CN"]
+        app.launch()
+        XCTAssertTrue(app.buttons["trip-tokyo"].waitForExistence(timeout: 10))
+        app.buttons["trip-tokyo"].tap()
+        app.buttons["show-route"].tap()
+        app.buttons["add-route-place"].tap()
+        let field = app.searchFields.firstMatch
+        XCTAssertTrue(field.waitForExistence(timeout: 5))
+        field.tap(); field.typeText("东京车站"); field.typeText("\n")
+        let result = app.buttons.matching(identifier: "place-result").firstMatch
+        XCTAssertTrue(result.waitForExistence(timeout: 35))
+        XCTAssertTrue(result.label.contains("東京駅") || result.label.contains("东京"), result.label)
+        capture("tokyo-station-results")
+        result.tap()
+        XCTAssertEqual(app.buttons["save-place"].label, "添加 1 个地点")
+        app.buttons["save-place"].tap()
+        XCTAssertTrue(app.buttons["select-route-stops"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.buttons["select-route-stops"].label.contains("1"))
+        capture("tokyo-station-on-route")
+    }
+
+
+    @MainActor func testTodayCardOpensCorrectDayAndBackgroundSelectionPersists() throws {
+        let app = XCUIApplication()
+        app.launchArguments = ["--uitesting", "--reset", "--today-trip", "-AppleLanguages", "(zh-Hans)", "-AppleLocale", "zh_CN"]
+        app.launch()
+        let card = app.buttons["today-itinerary-card"]
+        XCTAssertTrue(card.waitForExistence(timeout: 10))
+        capture("today-home")
+        XCTAssertEqual(card.frame.width / card.frame.height, 4.0 / 3.0, accuracy: 0.02)
+        XCTAssertTrue(card.label.contains("第 2 天"), card.label)
+        capture("today-home")
+        card.tap()
+        XCTAssertTrue(app.buttons["day-picker"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.buttons["day-picker"].label.contains("第 2 天"))
+        capture("today-detail")
+        app.buttons["close-day"].tap()
+        app.buttons["back-trip"].tap()
+        app.buttons["library-settings"].tap()
+        app.buttons["首页背景"].tap()
+        XCTAssertTrue(app.buttons["bg-fuji"].waitForExistence(timeout: 5))
+        app.buttons["bg-fuji"].tap()
+        capture("background-picker")
+        app.buttons["完成"].tap()
+        capture("home-background-fuji")
+        app.terminate()
+        app.launchArguments = ["--uitesting", "--today-trip", "-AppleLanguages", "(zh-Hans)", "-AppleLocale", "zh_CN"]
+        app.launch()
+        app.buttons["library-settings"].tap()
+        app.buttons["首页背景"].tap()
+        XCTAssertTrue(app.buttons["bg-fuji"].waitForExistence(timeout: 5))
+        app.buttons["default-background"].tap()
+        app.buttons["完成"].tap()
+    }
+
+
     @MainActor func testPlanAndPersistTrip() throws {
         let app = XCUIApplication()
         app.launchArguments = ["--uitesting", "--reset", "-AppleLanguages", "(zh-Hans)", "-AppleLocale", "zh_CN"]
@@ -32,7 +90,7 @@ final class RoamUITests: XCTestCase {
         let app = XCUIApplication()
         app.launchArguments = ["--uitesting", "--reset", "-AppleLanguages", "(zh-Hans)", "-AppleLocale", "zh_CN"]
         app.launch()
-        app.buttons["new-trip"].tap()
+        app.buttons["library-settings"].tap()
         let field = app.textFields["destination-field"]
         XCTAssertTrue(field.waitForExistence(timeout: 5))
         field.tap(); field.typeText("Weekend")
@@ -47,28 +105,87 @@ final class RoamUITests: XCTestCase {
         XCTAssertFalse(app.buttons["save-item"].isEnabled)
     }
 
-    @MainActor func testFrozenDayHeader() throws {
+    @MainActor func testDayCardSwipesOpenAndCloses() throws {
         let app = XCUIApplication()
         app.launchArguments = ["--uitesting", "--reset", "-AppleLanguages", "(zh-Hans)", "-AppleLocale", "zh_CN"]
         app.launch()
         XCTAssertTrue(app.buttons["trip-tokyo"].waitForExistence(timeout: 10))
+        capture("home-settings")
         app.buttons["trip-tokyo"].tap()
-        let header = app.buttons["day-header-0"]
-        XCTAssertTrue(header.waitForExistence(timeout: 5))
-        let initialY = header.frame.minY
-        let firstCell = app.buttons["cell-0-逛什么"]
-        let cellY = firstCell.frame.minY
-        firstCell.swipeUp()
-        XCTAssertEqual(header.frame.minY, initialY, accuracy: 2)
-        XCTAssertLessThan(firstCell.frame.minY, cellY - 10)
-        let foodCell = app.buttons["cell-0-吃什么"]
-        foodCell.swipeLeft()
-        let secondHeader = app.buttons["day-header-1"]
-        let secondCell = app.buttons["cell-1-吃什么"]
-        XCTAssertEqual(secondHeader.frame.minX, secondCell.frame.minX, accuracy: 2)
-        capture("05-frozen-header-scrolled")
-        app.segmentedControls["view-mode"].buttons["按天查看"].tap()
+        let firstCard = app.descendants(matching: .any).matching(identifier: "day-header-0").firstMatch
+        XCTAssertTrue(firstCard.waitForExistence(timeout: 5))
+        XCTAssertEqual(firstCard.frame.width / app.frame.width, 0.71, accuracy: 0.05)
+        XCTAssertGreaterThan(firstCard.frame.height / app.frame.height, 0.55)
+        capture("day-cards-taller")
+        firstCard.swipeLeft()
+        XCTAssertFalse(app.buttons["close-day"].exists)
+        let secondCard = app.descendants(matching: .any).matching(identifier: "day-header-1").firstMatch
+        XCTAssertTrue(secondCard.waitForExistence(timeout: 5))
+        secondCard.swipeRight()
+        XCTAssertFalse(app.buttons["close-day"].exists)
+        firstCard.swipeUp()
         XCTAssertTrue(app.buttons["add-逛什么"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.descendants(matching: .any).matching(identifier: "day-picker").firstMatch.exists)
+        XCTAssertFalse(app.buttons["前一天"].exists)
+        XCTAssertFalse(app.buttons["后一天"].exists)
+        capture("day-selector-in-content")
+        app.buttons["close-day"].tap()
+        XCTAssertTrue(firstCard.waitForExistence(timeout: 5))
+        firstCard.tap()
+        XCTAssertTrue(app.buttons["add-逛什么"].waitForExistence(timeout: 5))
+        app.buttons["close-day"].tap()
+        XCTAssertTrue(firstCard.waitForExistence(timeout: 5))
+    }
+
+    @MainActor func testTrashCanRestoreDeletedTrip() throws {
+        let app = XCUIApplication()
+        app.launchArguments = ["--uitesting", "--reset", "-AppleLanguages", "(zh-Hans)", "-AppleLocale", "zh_CN"]
+        app.launch()
+        XCTAssertTrue(app.buttons["trip-tokyo"].waitForExistence(timeout: 10))
+        capture("home-settings-final")
+        app.buttons["trip-tokyo"].tap()
+        app.buttons["trip-options"].tap()
+        app.buttons["删除旅行"].tap()
+        app.buttons["删除旅行"].tap()
+        XCTAssertTrue(app.buttons["library-settings"].waitForExistence(timeout: 5))
+        XCTAssertFalse(app.buttons["trip-tokyo"].exists)
+        app.buttons["library-settings"].tap()
+        app.buttons["垃圾桶"].tap()
+        let restore = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH 'restore-trip-'")).firstMatch
+        XCTAssertTrue(restore.waitForExistence(timeout: 5))
+        capture("trash-before-restore")
+        restore.tap()
+        XCTAssertTrue(app.staticTexts["垃圾桶为空"].waitForExistence(timeout: 5))
+        app.buttons["完成"].tap()
+        XCTAssertTrue(app.buttons["trip-tokyo"].waitForExistence(timeout: 5))
+    }
+
+    @MainActor func testReorderDayGridDragChangesDateAndDetail() throws {
+        let app = XCUIApplication()
+        app.launchArguments = ["--uitesting", "--reset", "-AppleLanguages", "(zh-Hans)", "-AppleLocale", "zh_CN"]
+        app.launch()
+        XCTAssertTrue(app.buttons["trip-tokyo"].waitForExistence(timeout: 10))
+        capture("home-settings-final")
+        app.buttons["trip-tokyo"].tap()
+        app.buttons["trip-options"].tap()
+        app.buttons["重新排序"].tap()
+        let first = app.descendants(matching: .any).matching(identifier: "reorder-day-0").firstMatch
+        let third = app.descendants(matching: .any).matching(identifier: "reorder-day-2").firstMatch
+        XCTAssertTrue(first.waitForExistence(timeout: 5))
+        capture("reorder-grid-before")
+        first.press(forDuration: 0.7, thenDragTo: third, withVelocity: .slow, thenHoldForDuration: 0.8)
+        XCTAssertTrue(third.label.contains("抵达东京"), third.label)
+        XCTAssertTrue(third.label.contains("10月26日"), third.label)
+        capture("reorder-grid-after")
+        app.buttons["finish-day-reorder"].tap()
+        let cards = app.scrollViews["day-cards"]
+        cards.swipeLeft(); cards.swipeLeft()
+        let moved = app.descendants(matching: .any).matching(identifier: "day-header-2").firstMatch
+        XCTAssertTrue(moved.waitForExistence(timeout: 5))
+        moved.tap()
+        XCTAssertTrue(app.descendants(matching: .any).matching(identifier: "day-picker").firstMatch.label.contains("10月26日"))
+        let title = app.textFields["day-title"].exists ? app.textFields["day-title"] : app.textViews["day-title"]
+        XCTAssertEqual(title.value as? String, "抵达东京")
     }
 
     @MainActor func testLiveMapSearchAndRoute() throws {

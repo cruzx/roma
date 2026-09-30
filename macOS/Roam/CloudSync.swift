@@ -6,6 +6,7 @@ struct CloudTripVersion: Codable, Equatable {
     var trip: Trip?
     var revision: String = UUID().uuidString
     var parent: String?
+    var archived: DeletedTrip? = nil
 }
 
 struct CloudLibrary: Codable {
@@ -24,23 +25,38 @@ struct CloudLibrary: Codable {
     }
 }
 
+extension CloudLibrary {
+    var trash: [DeletedTrip] {
+        trips.values.compactMap { $0.archived }.filter { $0.expiresAt > Date() }.sorted { $0.deletedAt > $1.deletedAt }
+    }
+}
+
 struct CloudLedger: Codable {
     var library = CloudLibrary()
     var pending = Set<String>()
     var orderPending = false
     var owner: String?
 
-    mutating func capture(_ trips: [Trip]) {
-        let ids = Set(trips.map { $0.id.uuidString })
+    mutating func capture(_ trips: [Trip], trash: [DeletedTrip] = []) {
+        let validTrash = trash.filter { $0.expiresAt > Date() }
+        let ids = Set(trips.map { $0.id.uuidString } + validTrash.map { $0.id.uuidString })
         for trip in trips {
             let key = trip.id.uuidString
-            if library.trips[key]?.trip != trip {
+            if library.trips[key]?.trip != trip || library.trips[key]?.archived != nil {
                 let previous = library.trips[key]
                 library.trips[key] = CloudTripVersion(trip: trip, parent: pending.contains(key) ? previous?.parent : previous?.revision)
                 pending.insert(key)
             }
         }
-        for key in Array(library.trips.keys) where !ids.contains(key) && library.trips[key]?.trip != nil {
+        for entry in validTrash {
+            let key = entry.id.uuidString
+            if library.trips[key]?.archived != entry || library.trips[key]?.trip != nil {
+                let previous = library.trips[key]
+                library.trips[key] = CloudTripVersion(trip: nil, parent: pending.contains(key) ? previous?.parent : previous?.revision, archived: entry)
+                pending.insert(key)
+            }
+        }
+        for key in Array(library.trips.keys) where !ids.contains(key) && (library.trips[key]?.trip != nil || library.trips[key]?.archived != nil) {
             let previous = library.trips[key]
             library.trips[key] = CloudTripVersion(trip: nil, parent: pending.contains(key) ? previous?.parent : previous?.revision)
             pending.insert(key)
@@ -57,7 +73,7 @@ struct CloudLedger: Codable {
         for (key, incoming) in remote.trips {
             guard var local = library.trips[key] else { library.trips[key] = incoming; continue }
             if local.revision == incoming.revision { continue }
-            if local.trip == incoming.trip { library.trips[key] = incoming; pending.remove(key); continue }
+            if local.trip == incoming.trip && local.archived == incoming.archived { library.trips[key] = incoming; pending.remove(key); continue }
             if !pending.contains(key) { library.trips[key] = incoming; continue }
             if local.parent == incoming.revision { continue }
             if var preserved = incoming.trip ?? local.trip {
@@ -69,7 +85,7 @@ struct CloudLedger: Codable {
                 conflicts += 1
             }
             // If a deletion and an edit collide, retain the edit as the copy above.
-            if incoming.trip == nil { local.trip = nil }
+            if incoming.trip == nil { local.trip = nil; local.archived = incoming.archived }
             local.parent = incoming.revision
             library.trips[key] = local
         }
@@ -104,10 +120,10 @@ final class RoamCloudSync {
         ledgerFile = file.deletingLastPathComponent().appendingPathComponent("icloud-ledger-v1.json")
         if let data = try? Data(contentsOf: ledgerFile), let saved = try? JSONDecoder().decode(CloudLedger.self, from: data) {
             ledger = saved
-            if hasExistingData { ledger.capture(store.trips) }
+            if hasExistingData { ledger.capture(store.trips, trash: store.deletedTrips) }
         } else {
             ledger = CloudLedger()
-            if hasExistingData { ledger.capture(store.trips) }
+            if hasExistingData { ledger.capture(store.trips, trash: store.deletedTrips) }
         }
         if Self.isConfigured {
             container = CKContainer(identifier: Self.containerID)
@@ -115,8 +131,8 @@ final class RoamCloudSync {
         } else { store.cloudStatus = "iCloud 待配置开发者权限" }
     }
 
-    func localChanged(_ trips: [Trip]) {
-        ledger.capture(trips)
+    func localChanged(_ trips: [Trip], trash: [DeletedTrip] = []) {
+        ledger.capture(trips, trash: trash)
         persist()
         if container != nil { store?.cloudStatus = "更改已保存在本机，等待同步" }
     }
@@ -140,6 +156,7 @@ final class RoamCloudSync {
 
     func synchronize() async {
         guard let container, !syncing, let store else { return }
+        store.purgeExpiredTrash()
         syncing = true
         defer { syncing = false }
         do {
@@ -162,9 +179,9 @@ final class RoamCloudSync {
                     guard remote.schema == 1 else { store.cloudStatus = "云端数据版本较新，请更新 App"; return }
                     conflictCount += ledger.merge(remote)
                     persist()
-                    if ledger.library.visible != store.trips {
+                    if ledger.library.visible != store.trips || ledger.library.trash != store.deletedTrips {
                         backup(store.trips)
-                        store.applyCloudTrips(ledger.library.visible)
+                        store.applyCloudTrips(ledger.library.visible, trash: ledger.library.trash)
                     }
                 }
                 if ledger.pending.isEmpty && !ledger.orderPending {

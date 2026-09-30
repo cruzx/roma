@@ -5,7 +5,9 @@ struct RoamApp: App {
     @StateObject private var store: TravelStore
     @Environment(\.scenePhase) private var scenePhase
     init() {
-        let testing = ProcessInfo.processInfo.arguments.contains("--uitesting")
+        let testing = ProcessInfo.processInfo.arguments.contains("--uitesting") ||
+            ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil ||
+            ProcessInfo.processInfo.environment["XCTestBundlePath"] != nil
         let file = testing ? FileManager.default.temporaryDirectory.appendingPathComponent("roam-ui-tests.json") : nil
         _store = StateObject(wrappedValue: TravelStore(file: file, reset: ProcessInfo.processInfo.arguments.contains("--reset")))
     }
@@ -14,7 +16,7 @@ struct RoamApp: App {
             RootView().modifier(TripImportModifier()).environmentObject(store)
                 .background(MacWindowSetup())
                 .onChange(of: scenePhase) { _, phase in
-                    if phase == .active { Task { await store.cloud?.synchronize() } }
+                    if phase == .active { store.purgeExpiredTrash(); Task { await store.cloud?.synchronize() } }
                 }
                 .tint(.blue)
                 .environment(\.locale, Locale(identifier: "zh_CN"))

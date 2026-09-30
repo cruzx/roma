@@ -60,4 +60,29 @@ final class CloudLedgerTests: XCTestCase {
         XCTAssertEqual(phone.merge(mac.library), 0)
         XCTAssertEqual(phone.library.visible.count, 1)
     }
+    func testTrashAndRestoreSynchronizeWithoutResurrection() throws {
+        let trip = makeTrip("东京")
+        let entry = DeletedTrip(trip: trip, deletedAt: Date())
+        let base = settled([trip])
+        var phone = base, mac = base
+        phone.capture([], trash: [entry])
+        mac.merge(try JSONDecoder().decode(CloudLibrary.self, from: JSONEncoder().encode(phone.library)))
+        XCTAssertTrue(mac.library.visible.isEmpty)
+        XCTAssertEqual(mac.library.trash, [entry])
+        mac.pending = []; mac.orderPending = false
+        phone.pending = []; phone.orderPending = false
+        phone.capture([trip], trash: [])
+        mac.merge(phone.library)
+        XCTAssertEqual(mac.library.visible, [trip])
+        XCTAssertTrue(mac.library.trash.isEmpty)
+        phone.pending = []; phone.orderPending = false
+        phone.capture([], trash: [entry])
+        phone.pending = []; phone.orderPending = false
+        phone.capture([], trash: [])
+        mac.merge(phone.library)
+        XCTAssertTrue(mac.library.visible.isEmpty)
+        XCTAssertTrue(mac.library.trash.isEmpty)
+        XCTAssertNil(mac.library.trips[trip.id.uuidString]?.archived)
+    }
+
 }
