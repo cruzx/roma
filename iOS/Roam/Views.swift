@@ -335,6 +335,10 @@ struct TripDetailView: View {
                     Label("添加", systemImage: "plus").font(.caption).foregroundStyle(.tertiary)
                 } else {
                     ForEach(items.prefix(2)) { item in
+                        if category == .transport, let mode = item.transportMode {
+                            Label(mode.rawValue, systemImage: mode.symbol)
+                                .font(.caption.weight(.semibold)).foregroundStyle(category.color)
+                        }
                         Text(item.title).font(.subheadline.weight(.medium)).foregroundStyle(.primary).lineLimit(2)
                     }
                     if items.count == 1, let first = items.first, !first.detail.isEmpty {
@@ -424,6 +428,10 @@ struct TripDetailView: View {
                         if !item.time.isEmpty {
                             Text(item.time).font(.caption.weight(.semibold)).foregroundStyle(category.color)
                                 .padding(.horizontal, 8).padding(.vertical, 4).background(category.color.opacity(0.08), in: Capsule())
+                        }
+                        if category == .transport, let mode = item.transportMode {
+                            Label(mode.rawValue, systemImage: mode.symbol)
+                                .font(.subheadline.weight(.semibold)).foregroundStyle(category.color)
                         }
                         Text(item.title).font(.title3.weight(.semibold))
                             .foregroundStyle(.primary).fixedSize(horizontal: false, vertical: true)
@@ -647,6 +655,7 @@ struct ItemEditor: View {
     @State private var detail: String
     @State private var time: String
     @State private var category: PlanCategory
+    @State private var transportMode: TransportMode?
     @State private var dayID: UUID
     @State private var endDayID: UUID
     @State private var multipleNights = false
@@ -660,6 +669,7 @@ struct ItemEditor: View {
         _detail = State(initialValue: selection.item?.detail ?? "")
         _time = State(initialValue: selection.item?.time ?? "")
         _category = State(initialValue: selection.category)
+        _transportMode = State(initialValue: selection.item?.transportMode)
         _dayID = State(initialValue: selection.dayID)
         _endDayID = State(initialValue: selection.dayID)
     }
@@ -672,6 +682,14 @@ struct ItemEditor: View {
                 Section("安排什么") {
                     TextField("地点或安排", text: $title, axis: .vertical).accessibilityIdentifier("item-title")
                     Picker("分类", selection: $category) { ForEach(PlanCategory.allCases) { Text($0.rawValue).tag($0) } }
+                    if category == .transport {
+                        Picker("出行方式", selection: $transportMode) {
+                            Text("未指定").tag(nil as TransportMode?)
+                            ForEach(TransportMode.allCases) { mode in
+                                Label(mode.rawValue, systemImage: mode.symbol).tag(Optional(mode))
+                            }
+                        }.accessibilityIdentifier("transport-mode")
+                    }
                 }
                 if let trip {
                     Section("安排在哪一天") {
@@ -746,7 +764,8 @@ struct ItemEditor: View {
                 ToolbarItem(placement: .cancellationAction) { Button("取消") { dismiss() } }
                 ToolbarItem(placement: .confirmationAction) {
                     Button("保存") {
-                        let item = PlanItem(id: selection.item?.id ?? UUID(), title: title.trimmingCharacters(in: .whitespacesAndNewlines), detail: detail, time: time, category: category, places: places)
+                        var item = PlanItem(id: selection.item?.id ?? UUID(), title: title.trimmingCharacters(in: .whitespacesAndNewlines), detail: detail, time: time, category: category, places: places)
+                        item.transportMode = category == .transport ? transportMode : nil
                         store.upsert(item, tripID: tripID, from: selection.item == nil ? nil : selection.dayID, to: dayID, through: multipleNights ? endDayID : nil)
                         dismiss()
                     }.disabled(!valid).accessibilityIdentifier("save-item")

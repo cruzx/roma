@@ -24,6 +24,27 @@ enum PlanCategory: String, Codable, CaseIterable, Identifiable {
     }
 }
 
+enum TransportMode: String, Codable, CaseIterable, Identifiable {
+    case taxi = "打车", subway = "地铁", highSpeedRail = "高铁", flight = "飞机"
+    case jr = "JR", shinkansen = "新干线", train = "普通列车", bus = "巴士"
+    case walk = "步行", bicycle = "骑行", ferry = "轮渡", driving = "自驾"
+
+    var id: String { rawValue }
+    var symbol: String {
+        switch self {
+        case .taxi, .driving: "car.side.fill"
+        case .subway: "tram.fill"
+        case .highSpeedRail, .shinkansen: "train.side.front.car"
+        case .flight: "airplane"
+        case .jr, .train: "train.side.middle.car"
+        case .bus: "bus.fill"
+        case .walk: "figure.walk"
+        case .bicycle: "bicycle"
+        case .ferry: "ferry.fill"
+        }
+    }
+}
+
 struct PlanPlace: Codable, Equatable {
     var name: String
     var address: String
@@ -43,6 +64,7 @@ struct PlanItem: Identifiable, Codable, Equatable {
     var detail = ""
     var time = ""
     var category: PlanCategory
+    var transportMode: TransportMode? = nil
     var place: PlanPlace? = nil
     var places: [PlanWaypoint]? = nil
 
