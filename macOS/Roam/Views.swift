@@ -158,9 +158,10 @@ struct TripDetailView: View {
         Group {
             if let trip {
                 VStack(spacing: 0) {
-                    controls(trip)
+                    if singleDay { controls(trip) }
                     if singleDay { dailyView(trip) } else { tableView(trip) }
                 }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(Color(.systemGroupedBackground))
                 .navigationTitle("")
                 .navigationBarTitleDisplayMode(.inline)
@@ -175,6 +176,19 @@ struct TripDetailView: View {
                         .pickerStyle(.segmented)
                         .frame(width: 220)
                         .accessibilityIdentifier("view-mode")
+                    }
+                    ToolbarItem(placement: .topBarLeading) {
+                        Label("\(trip.dateRange) · \(trip.days.count) 天", systemImage: "calendar")
+                            .labelStyle(.titleAndIcon)
+                            .font(.body.weight(.medium))
+                            .foregroundStyle(.secondary)
+                            .fixedSize()
+                    }
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button { addDay(trip) } label: {
+                            Label("加一天", systemImage: "plus").labelStyle(.titleAndIcon)
+                        }
+                        .accessibilityIdentifier("add-day")
                     }
                     ToolbarItem(placement: .topBarTrailing) {
                         Menu {
@@ -196,8 +210,6 @@ struct TripDetailView: View {
                         .accessibilityLabel("旅行选项").accessibilityIdentifier("trip-options")
                     }
                     ToolbarItemGroup(placement: .bottomBar) {
-                        Text("\(trip.days.count) 天 · \(trip.itemCount) 项安排").font(.caption).foregroundStyle(.secondary)
-                            .accessibilityIdentifier("trip-summary")
                         Spacer()
                         Button("地图路线", systemImage: "map") { showRoute = true }
                             .keyboardShortcut("m", modifiers: [.command, .shift]).help("当天地图路线 ⇧⌘M").accessibilityIdentifier("show-route")
@@ -252,6 +264,8 @@ struct TripDetailView: View {
     }
 
     private func tableView(_ trip: Trip) -> some View {
+        GeometryReader { geometry in
+            let columnWidth = max(166, (geometry.size.width - 28 - 62) / CGFloat(max(1, trip.days.count)))
         ScrollView(.vertical) {
             LazyVStack(spacing: 0, pinnedViews: [.sectionHeaders]) {
                 Section {
@@ -274,8 +288,8 @@ struct TripDetailView: View {
                                             tableCell(trip: trip, day: day, index: index, category: category)
                                                 .overlay(alignment: .top) { Divider() }
                                         }
-                                    }.frame(width: 166)
-                                        .background(index.isMultiple(of: 2) ? Color(.secondarySystemGroupedBackground) : Color(red: 230.0 / 255, green: 245.0 / 255, blue: 254.0 / 255))
+                                    }.frame(width: columnWidth)
+                                        .background(index.isMultiple(of: 2) ? Color(.secondarySystemGroupedBackground) : Color("ItineraryAlternate"))
                                         .overlay(alignment: .trailing) { Divider() }
                                 }
                             }
@@ -302,9 +316,9 @@ struct TripDetailView: View {
                                                 Text(trip.date(for: index).formatted(.dateTime.month(.twoDigits).day(.twoDigits))).font(.caption2).foregroundStyle(.secondary)
                                             }
                                             Text(day.title).font(.subheadline.weight(.semibold)).foregroundStyle(.primary).lineLimit(1)
-                                        }.padding(12).frame(width: 166, height: 64).contentShape(Rectangle())
+                                        }.padding(12).frame(width: columnWidth, height: 64).contentShape(Rectangle())
                                     }.buttonStyle(.plain).accessibilityIdentifier("day-header-\(index)")
-                                        .background(index.isMultiple(of: 2) ? Color(.secondarySystemGroupedBackground) : Color(red: 230.0 / 255, green: 245.0 / 255, blue: 254.0 / 255))
+                                        .background(index.isMultiple(of: 2) ? Color(.secondarySystemGroupedBackground) : Color("ItineraryAlternate"))
                                         .overlay(alignment: .trailing) { Divider() }
                                 }
                             }
@@ -317,12 +331,12 @@ struct TripDetailView: View {
                     .overlay(alignment: .bottom) { Divider() }
                 }
             }
-            .frame(maxWidth: CGFloat(62 + 166 * trip.days.count))
             .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
             .padding(.horizontal, 14)
             Text("先安排想做的事，具体时间可以慢慢决定。")
                 .font(.caption).foregroundStyle(.secondary).padding(20)
         }.accessibilityIdentifier("itinerary-table")
+        }
     }
 
     private func tableCell(trip: Trip, day: TravelDay, index: Int, category: PlanCategory) -> some View {
@@ -349,7 +363,7 @@ struct TripDetailView: View {
                     if items.count > 2 { Text("另有 \(items.count - 2) 项").font(.caption2).foregroundStyle(.blue) }
                 }
                 Spacer(minLength: 0)
-            }.padding(12).frame(width: 166, height: rowHeight(category), alignment: .topLeading)
+            }.padding(12).frame(maxWidth: .infinity, alignment: .topLeading).frame(height: rowHeight(category), alignment: .topLeading)
                 .contentShape(Rectangle())
         }.buttonStyle(.plain).accessibilityIdentifier("cell-\(index)-\(category.rawValue)")
     }

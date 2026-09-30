@@ -195,8 +195,6 @@ struct TripDetailView: View {
                         .accessibilityLabel("旅行选项").accessibilityIdentifier("trip-options")
                     }
                     ToolbarItemGroup(placement: .bottomBar) {
-                        Text("\(trip.days.count) 天 · \(trip.itemCount) 项安排").font(.caption).foregroundStyle(.secondary)
-                            .accessibilityIdentifier("trip-summary")
                         Spacer()
                         Button("地图路线", systemImage: "map") { showRoute = true }
                             .accessibilityIdentifier("show-route")
@@ -274,7 +272,7 @@ struct TripDetailView: View {
                                                 .overlay(alignment: .top) { Divider() }
                                         }
                                     }.frame(width: 166)
-                                        .background(index.isMultiple(of: 2) ? Color(.secondarySystemGroupedBackground) : Color(red: 230.0 / 255, green: 245.0 / 255, blue: 254.0 / 255))
+                                        .background(index.isMultiple(of: 2) ? Color(.secondarySystemGroupedBackground) : Color("ItineraryAlternate"))
                                         .overlay(alignment: .trailing) { Divider() }
                                 }
                             }
@@ -303,7 +301,7 @@ struct TripDetailView: View {
                                             Text(day.title).font(.subheadline.weight(.semibold)).foregroundStyle(.primary).lineLimit(1)
                                         }.padding(12).frame(width: 166, height: 64).contentShape(Rectangle())
                                     }.buttonStyle(.plain).accessibilityIdentifier("day-header-\(index)")
-                                        .background(index.isMultiple(of: 2) ? Color(.secondarySystemGroupedBackground) : Color(red: 230.0 / 255, green: 245.0 / 255, blue: 254.0 / 255))
+                                        .background(index.isMultiple(of: 2) ? Color(.secondarySystemGroupedBackground) : Color("ItineraryAlternate"))
                                         .overlay(alignment: .trailing) { Divider() }
                                 }
                             }
