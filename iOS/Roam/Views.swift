@@ -136,7 +136,7 @@ struct TodayItineraryCard: View {
                         .frame(width: geometry.size.width, height: geometry.size.height).clipped()
                 } else { Color.blue }
                 LinearGradient(colors: [.black.opacity(0.12), .black.opacity(0.82)], startPoint: .top, endPoint: .bottom)
-                VStack(alignment: .leading, spacing: 9) {
+                VStack(alignment: .leading, spacing: 7) {
                     HStack {
                         Label("今日行程", systemImage: "sun.max.fill").font(.subheadline.weight(.semibold))
                         Spacer()
@@ -152,9 +152,9 @@ struct TodayItineraryCard: View {
                             .font(.subheadline).lineLimit(1)
                         Spacer(minLength: 4)
                     }
-                }.padding(22).foregroundStyle(.white)
+                }.padding(18).foregroundStyle(.white)
             }.clipShape(RoundedRectangle(cornerRadius: 26))
-        }.aspectRatio(4.0 / 3.0, contentMode: .fit)
+        }.aspectRatio(16.0 / 9.0, contentMode: .fit)
         .contentShape(RoundedRectangle(cornerRadius: 26))
         .accessibilityElement(children: .ignore)
         .accessibilityLabel("今日行程，\(trip.destination)，第 \(index + 1) 天，\(trip.days[index].title)")
@@ -235,49 +235,24 @@ struct TripDetailView: View {
         _singleDay = State(initialValue: initialDay != nil)
         _selectedDay = State(initialValue: initialDay ?? 0)
     }
+    @Environment(\.colorScheme) private var colorScheme
     private var trip: Trip? { store.trips.first { $0.id == tripID } }
+    @State private var headerAccent: Color = .blue
+    @State private var detailBackground: Color = Color(.systemGroupedBackground)
+    @State private var headerPhoto: UIImage?
+
+    private func refreshHeaderPalette() {
+        guard let trip else { return }
+        let image = trip.coverPhoto.flatMap { UIImage(data: $0) } ?? UIImage(named: trip.cover)
+        headerPhoto = image
+        headerAccent = HeaderPalette.accent(from: image, dark: colorScheme == .dark)
+        detailBackground = HeaderPalette.accent(from: image, dark: colorScheme == .dark, background: true)
+    }
 
     var body: some View {
         Group {
             if let trip {
-                VStack(spacing: 0) {
-                    if !singleDay {
-                        VStack(alignment: .leading, spacing: 7) {
-                            Text(trip.destination)
-                                .font(.system(size: 28, weight: .bold)).foregroundStyle(.primary)
-                            Text("\(trip.dateRange) · \(trip.days.count) 天")
-                                .font(.subheadline).foregroundStyle(.secondary)
-                        }
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.horizontal, 24).padding(.top, 8).padding(.bottom, 22)
-                    }
-                    if reorderingDays { dayReorderView(trip) } else if singleDay { dailyView(trip).matchedGeometryEffect(id: trip.days[min(selectedDay, trip.days.count - 1)].id, in: dayCardMotion) } else { cardsView(trip).zIndex(10) }
-                }
-                .background {
-                    ZStack(alignment: .top) {
-                        Color(singleDay ? .systemBackground : .systemGroupedBackground)
-                        if !singleDay { tripHeaderImage(trip) }
-                    }
-                    .ignoresSafeArea()
-                }
-                .navigationTitle("")
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar(.visible, for: .navigationBar)
-                .navigationBarBackButtonHidden(true)
-                .toolbarBackground(.hidden, for: .navigationBar)
-                .toolbar(.hidden, for: .tabBar)
-                .toolbarBackground(.hidden, for: .bottomBar)
-                .onChange(of: trip.days.count) { _, count in selectedDay = min(selectedDay, count - 1) }
-                .toolbar {
-                    detailNavigation(trip)
-                    ToolbarItemGroup(placement: .bottomBar) {
-                        Spacer()
-                        Button("地图路线", systemImage: "map") { showRoute = true }
-                            .accessibilityIdentifier("show-route")
-                        Button("加一天", systemImage: "plus") { addDay(trip) }
-                            .accessibilityLabel("加一天").accessibilityIdentifier("add-day")
-                    }
-                }
+                detailContent(trip)
                 .sheet(item: $editing) { selection in
                     ItemEditor(tripID: tripID, selection: selection).environmentObject(store)
                 }
@@ -298,13 +273,64 @@ struct TripDetailView: View {
         }
     }
 
+    private func detailContent(_ trip: Trip) -> some View {
+                VStack(spacing: 0) {
+                    if !singleDay {
+                        VStack(alignment: .leading, spacing: 7) {
+                            Text(trip.destination)
+                                .font(.system(size: 28, weight: .bold)).foregroundStyle(.white)
+                            Text("\(trip.dateRange) · \(trip.days.count) 天")
+                                .font(.subheadline).foregroundStyle(.white.opacity(0.95))
+                        }
+                        .shadow(color: .black.opacity(0.65), radius: 3, y: 1)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.horizontal, 24).padding(.top, 8).padding(.bottom, 22)
+                    }
+                    if reorderingDays { dayReorderView(trip) } else if singleDay { dailyView(trip).matchedGeometryEffect(id: trip.days[min(selectedDay, trip.days.count - 1)].id, in: dayCardMotion) } else { cardsView(trip).zIndex(10) }
+                }
+                .background {
+                    ZStack(alignment: .top) {
+                        detailBackground
+                        if !singleDay { tripHeaderImage(trip) }
+                    }
+                    .ignoresSafeArea()
+                }
+                .onAppear { refreshHeaderPalette() }
+                .onChange(of: trip.coverPhoto) { _, _ in refreshHeaderPalette() }
+                .onChange(of: trip.cover) { _, _ in refreshHeaderPalette() }
+                .onChange(of: colorScheme) { _, _ in refreshHeaderPalette() }
+                .tint(headerAccent)
+                .navigationTitle("")
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar(.visible, for: .navigationBar)
+                .navigationBarBackButtonHidden(true)
+                .toolbarBackground(.hidden, for: .navigationBar)
+                .toolbar(.hidden, for: .tabBar)
+                .toolbarBackground(.hidden, for: .bottomBar)
+                .onChange(of: trip.days.count) { _, count in selectedDay = min(selectedDay, count - 1) }
+                .toolbar {
+                    detailNavigation(trip)
+                    ToolbarItemGroup(placement: .bottomBar) {
+                        Spacer()
+                        Button { showRoute = true } label: {
+                            Image(systemName: "map").foregroundStyle(headerAccent)
+                        }
+                            .tint(headerAccent)
+                            .accessibilityLabel("地图路线").accessibilityIdentifier("show-route")
+                        Button { addDay(trip) } label: {
+                            Image(systemName: "plus").foregroundStyle(headerAccent)
+                        }
+                            .tint(headerAccent)
+                            .accessibilityLabel("加一天").accessibilityIdentifier("add-day")
+                    }
+                }
+    }
+
     private func tripHeaderImage(_ trip: Trip) -> some View {
         GeometryReader { geometry in
             Group {
-                if let photo = trip.coverPhoto.flatMap({ UIImage(data: $0) }) {
+                if let photo = headerPhoto {
                     Image(uiImage: photo).resizable().scaledToFill()
-                } else if !trip.cover.isEmpty, UIImage(named: trip.cover) != nil {
-                    Image(trip.cover).resizable().scaledToFill()
                 } else {
                     Color.blue.opacity(0.12)
                 }
@@ -312,9 +338,9 @@ struct TripDetailView: View {
             .frame(width: geometry.size.width, height: 310).clipped()
             .mask {
                 LinearGradient(stops: [
-                    .init(color: .black.opacity(0.85), location: 0),
-                    .init(color: .black.opacity(0.65), location: 0.25),
-                    .init(color: .black.opacity(0.15), location: 0.68),
+                    .init(color: .black, location: 0),
+                    .init(color: .black.opacity(0.95), location: 0.4),
+                    .init(color: .black.opacity(0.45), location: 0.78),
                     .init(color: .clear, location: 1)
                 ], startPoint: .top, endPoint: .bottom)
             }
@@ -331,7 +357,9 @@ struct TripDetailView: View {
                 else { dismiss() }
             } label: {
                 Image(systemName: singleDay ? "xmark" : "chevron.left")
+                    .foregroundStyle(headerAccent)
             }
+            .tint(headerAccent)
             .accessibilityLabel(singleDay ? "收起当天" : "返回")
             .accessibilityIdentifier(singleDay ? "close-day" : "back-trip")
         }
@@ -355,8 +383,9 @@ struct TripDetailView: View {
                             }
                             Button("删除旅行", systemImage: "trash", role: .destructive) { showDeleteTrip = true }
                         } label: {
-                            Image(systemName: "ellipsis")
+                            Image(systemName: "ellipsis").foregroundStyle(headerAccent)
                         }
+                        .tint(headerAccent)
                         .accessibilityLabel("旅行选项").accessibilityIdentifier("trip-options")
         }
     }
@@ -375,7 +404,7 @@ struct TripDetailView: View {
                 LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 10), count: 3), spacing: 10) {
                     ForEach(Array(trip.days.enumerated()), id: \.element.id) { index, day in
                         VStack(alignment: .leading, spacing: 10) {
-                            Text("第 \(index + 1) 天").font(.caption.weight(.bold)).foregroundStyle(.blue)
+                            Text("第 \(index + 1) 天").font(.caption.weight(.bold)).foregroundStyle(headerAccent)
                             Text(day.title.isEmpty ? "自由安排" : day.title)
                                 .font(.subheadline.weight(.semibold)).lineLimit(3)
                             Spacer(minLength: 4)
@@ -384,7 +413,7 @@ struct TripDetailView: View {
                         }
                         .padding(14).frame(maxWidth: .infinity, minHeight: 140, maxHeight: 140, alignment: .topLeading)
                         .background(Color(.secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 18))
-                        .overlay(RoundedRectangle(cornerRadius: 18).stroke(.blue.opacity(draggedDayID == day.id ? 0.6 : 0), lineWidth: 2))
+                        .overlay(RoundedRectangle(cornerRadius: 18).stroke(headerAccent.opacity(draggedDayID == day.id ? 0.6 : 0), lineWidth: 2))
                         .opacity(draggedDayID == day.id ? 0.65 : 1)
                         .contentShape(RoundedRectangle(cornerRadius: 18))
                         .onDrag {
@@ -432,7 +461,7 @@ struct TripDetailView: View {
                 Text("第 \(selectedDay + 1) 天 · \(trip.date(for: selectedDay).formatted(.dateTime.locale(Locale(identifier: "zh_CN")).month().day()))")
                 Image(systemName: "chevron.up.chevron.down").font(.caption.weight(.semibold))
             }
-            .font(.subheadline.weight(.semibold)).foregroundStyle(.blue)
+            .font(.subheadline.weight(.semibold)).foregroundStyle(headerAccent)
         }
         .buttonStyle(.plain)
         .accessibilityIdentifier("day-picker")
@@ -522,7 +551,7 @@ struct TripDetailView: View {
             HStack(alignment: .top, spacing: 16) {
                 VStack(alignment: .leading, spacing: 10) {
                     Text("DAY " + String(format: "%02d", index + 1))
-                        .font(.caption.weight(.bold)).tracking(2).foregroundStyle(.blue)
+                        .font(.caption.weight(.bold)).tracking(2).foregroundStyle(headerAccent)
                     Text(day.title).font(.title2.weight(.bold)).foregroundStyle(.primary).lineLimit(2)
                     Text(trip.date(for: index).formatted(.dateTime.locale(Locale(identifier: "zh_CN")).month(.twoDigits).day(.twoDigits)))
                         .font(.subheadline.weight(.medium)).foregroundStyle(.secondary)
@@ -543,7 +572,7 @@ struct TripDetailView: View {
                     let items = day.items.filter { $0.category == category }
                     HStack(alignment: .top, spacing: 10) {
                         Image(systemName: category.symbol)
-                            .font(.subheadline.weight(.semibold)).foregroundStyle(category.color)
+                            .font(.subheadline.weight(.semibold)).foregroundStyle(headerAccent)
                             .frame(width: 22)
                         Text(category.rawValue).font(.caption.weight(.semibold)).foregroundStyle(.secondary)
                             .frame(width: 45, alignment: .leading)
@@ -576,7 +605,7 @@ struct TripDetailView: View {
                                 VStack(spacing: 7) {
                                     Image(systemName: category.symbol).font(.body)
                                     Text(category.rawValue).font(.caption2.weight(.medium))
-                                }.foregroundStyle(category.color)
+                                }.foregroundStyle(headerAccent)
                                     .frame(width: 62, height: rowHeight(category))
                                     .overlay(alignment: .top) { Divider() }
                             }
@@ -612,7 +641,7 @@ struct TripDetailView: View {
                                     } label: {
                                         VStack(alignment: .leading, spacing: 5) {
                                             HStack {
-                                                Text("DAY \(index + 1)").font(.caption2.weight(.bold)).foregroundStyle(.blue)
+                                                Text("DAY \(index + 1)").font(.caption2.weight(.bold)).foregroundStyle(headerAccent)
                                                 Spacer()
                                                 Text(trip.date(for: index).formatted(.dateTime.month(.twoDigits).day(.twoDigits))).font(.caption2).foregroundStyle(.secondary)
                                             }
@@ -655,7 +684,7 @@ struct TripDetailView: View {
                     ForEach(items.prefix(2)) { item in
                         if category == .transport, let mode = item.transportMode {
                             Label([mode.rawValue, item.transportNumber].compactMap { $0 }.filter { !$0.isEmpty }.joined(separator: " · "), systemImage: mode.symbol)
-                                .font(.caption.weight(.semibold)).foregroundStyle(category.color)
+                                .font(.caption.weight(.semibold)).foregroundStyle(headerAccent)
                         }
                         Text(item.title).font(.subheadline.weight(.medium)).foregroundStyle(.primary).lineLimit(2)
                     }
@@ -672,9 +701,9 @@ struct TripDetailView: View {
                         }.accessibilityLabel("安排照片")
                     }
                     if let place = items.first?.mapPlaces.first?.place {
-                        Label(place.name, systemImage: "mappin").font(.caption2).foregroundStyle(.blue).lineLimit(1)
+                        Label(place.name, systemImage: "mappin").font(.caption2).foregroundStyle(headerAccent).lineLimit(1)
                     }
-                    if items.count > 2 { Text("另有 \(items.count - 2) 项").font(.caption2).foregroundStyle(.blue) }
+                    if items.count > 2 { Text("另有 \(items.count - 2) 项").font(.caption2).foregroundStyle(headerAccent) }
                 }
                 Spacer(minLength: 0)
             }.padding(12).frame(width: 166, height: rowHeight(category), alignment: .topLeading)
@@ -737,21 +766,21 @@ struct TripDetailView: View {
         return VStack(alignment: .leading, spacing: 14) {
             HStack(spacing: 8) {
                 Image(systemName: category.symbol).font(.subheadline.weight(.semibold))
-                    .frame(width: 32, height: 32).background(category.color.opacity(0.12), in: RoundedRectangle(cornerRadius: 10))
+                    .frame(width: 32, height: 32).background(headerAccent.opacity(0.12), in: RoundedRectangle(cornerRadius: 10))
                 Text(category.rawValue).font(.headline)
                 Spacer(minLength: 0)
                 if !items.isEmpty { Text("\(items.count)").font(.caption.monospacedDigit()).foregroundStyle(.secondary) }
-            }.foregroundStyle(category.color)
+            }.foregroundStyle(headerAccent)
             ForEach(items) { item in
                 Button { editing = ItemSelection(dayID: day.id, category: category, item: item) } label: {
                     VStack(alignment: .leading, spacing: 8) {
                         if !item.time.isEmpty {
-                            Text(item.time).font(.caption.weight(.semibold)).foregroundStyle(category.color)
-                                .padding(.horizontal, 8).padding(.vertical, 4).background(category.color.opacity(0.08), in: Capsule())
+                            Text(item.time).font(.caption.weight(.semibold)).foregroundStyle(headerAccent)
+                                .padding(.horizontal, 8).padding(.vertical, 4).background(headerAccent.opacity(0.08), in: Capsule())
                         }
                         if category == .transport, let mode = item.transportMode {
                             Label([mode.rawValue, item.transportNumber].compactMap { $0 }.filter { !$0.isEmpty }.joined(separator: " · "), systemImage: mode.symbol)
-                                .font(.subheadline.weight(.semibold)).foregroundStyle(category.color)
+                                .font(.subheadline.weight(.semibold)).foregroundStyle(headerAccent)
                         }
                         Text(item.title).font(.title3.weight(.semibold))
                             .foregroundStyle(.primary).fixedSize(horizontal: false, vertical: true)
@@ -774,7 +803,7 @@ struct TripDetailView: View {
                         }
                         if !item.mapPlaces.isEmpty {
                             Label(item.mapPlaces.map { $0.place.name }.joined(separator: " → "), systemImage: "mappin")
-                                .font(.caption).foregroundStyle(category.color).fixedSize(horizontal: false, vertical: true)
+                                .font(.caption).foregroundStyle(headerAccent).fixedSize(horizontal: false, vertical: true)
                         }
                     }.frame(maxWidth: .infinity, alignment: .leading).contentShape(Rectangle())
                 }.buttonStyle(.plain).accessibilityIdentifier("day-item-\(item.title)").accessibilityHint("编辑这项安排")
@@ -787,7 +816,7 @@ struct TripDetailView: View {
             Button { editing = ItemSelection(dayID: day.id, category: category) } label: {
                 Label(category == .stay ? "添加住宿" : category == .food ? "添加美食" : category == .notes ? "写备忘" : "添加安排", systemImage: "plus")
                     .font(.subheadline.weight(.medium)).frame(minHeight: 32)
-            }.tint(category.color).accessibilityIdentifier("add-\(category.rawValue)")
+            }.tint(headerAccent).accessibilityIdentifier("add-\(category.rawValue)")
         }
         .frame(maxWidth: .infinity, alignment: .topLeading)
         .padding(.bottom, 22)
@@ -817,7 +846,7 @@ struct TripDetailView: View {
                                     Image(systemName: "chevron.right").font(.caption2.weight(.semibold)).foregroundStyle(.tertiary)
                                 }
                                 if !item.mapPlaces.isEmpty {
-                                    Label(item.mapPlaces.map { $0.place.name }.joined(separator: " → "), systemImage: "mappin.circle.fill").font(.caption).foregroundStyle(.blue)
+                                    Label(item.mapPlaces.map { $0.place.name }.joined(separator: " → "), systemImage: "mappin.circle.fill").font(.caption).foregroundStyle(headerAccent)
                                 }
                                 if !item.detail.isEmpty { Text(item.detail).font(.subheadline).foregroundStyle(.secondary).lineLimit(4) }
                             }.padding(.vertical, 3)
@@ -837,7 +866,7 @@ struct TripDetailView: View {
                     }.accessibilityIdentifier("add-\(category.rawValue)")
                 } header: {
                     HStack {
-                        Label(category.rawValue, systemImage: category.symbol).foregroundStyle(category.color)
+                        Label(category.rawValue, systemImage: category.symbol).foregroundStyle(headerAccent)
                         Spacer()
                     }
                 }
@@ -2093,5 +2122,38 @@ private struct DayOrderDropDelegate: DropDelegate {
         hoveredID = nil
         draggedID = nil
         return true
+    }
+}
+
+private enum HeaderPalette {
+    static func accent(from image: UIImage?, dark: Bool, background: Bool = false) -> Color {
+        guard let cgImage = image?.cgImage else { return background ? Color(.systemGroupedBackground) : .blue }
+        let size = 24
+        var pixels = [UInt8](repeating: 0, count: size * size * 4)
+        let sampled: UIColor? = pixels.withUnsafeMutableBytes { buffer in
+            guard let context = CGContext(data: buffer.baseAddress, width: size, height: size,
+                bitsPerComponent: 8, bytesPerRow: size * 4,
+                space: CGColorSpaceCreateDeviceRGB(), bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue) else { return nil }
+            context.draw(cgImage, in: CGRect(x: 0, y: 0, width: size, height: size))
+            var buckets: [Int: (count: Int, red: Int, green: Int, blue: Int)] = [:]
+            for offset in stride(from: 0, to: buffer.count, by: 4) {
+                let r = Int(buffer[offset]), g = Int(buffer[offset + 1]), b = Int(buffer[offset + 2])
+                guard buffer[offset + 3] > 200, max(r, g, b) - min(r, g, b) > 25 else { continue }
+                let key = (r / 32) * 64 + (g / 32) * 8 + b / 32
+                let old = buckets[key] ?? (0, 0, 0, 0)
+                buckets[key] = (old.count + 1, old.red + r, old.green + g, old.blue + b)
+            }
+            guard let dominant = buckets.values.max(by: { $0.count < $1.count }) else { return .systemBlue }
+            return UIColor(red: CGFloat(dominant.red) / CGFloat(dominant.count * 255),
+                green: CGFloat(dominant.green) / CGFloat(dominant.count * 255),
+                blue: CGFloat(dominant.blue) / CGFloat(dominant.count * 255), alpha: 1)
+        }
+        guard let sampled else { return .blue }
+        var hue: CGFloat = 0, saturation: CGFloat = 0, brightness: CGFloat = 0, alpha: CGFloat = 0
+        sampled.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
+        if background {
+            return Color(UIColor(hue: hue, saturation: dark ? 0.65 : 0.38, brightness: dark ? 0.24 : 0.94, alpha: 1))
+        }
+        return Color(UIColor(hue: hue, saturation: max(0.45, min(saturation, 0.8)), brightness: dark ? 0.9 : 0.32, alpha: 1))
     }
 }

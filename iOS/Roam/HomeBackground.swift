@@ -129,7 +129,7 @@ struct HomeBackdropView: View {
                     Image(asset).resizable().scaledToFill().frame(width: geometry.size.width, height: geometry.size.height).clipped()
                 }
                 if selection.asset != nil || selection.photo != nil {
-                    LinearGradient(colors: [Color(.systemBackground).opacity(0.67), Color(.systemBackground).opacity(0.85)], startPoint: .top, endPoint: .bottom)
+                    LinearGradient(colors: [Color(.systemBackground).opacity(0.10), Color(.systemBackground).opacity(0.18)], startPoint: .top, endPoint: .bottom)
                 }
             }
         }.ignoresSafeArea().allowsHitTesting(false)

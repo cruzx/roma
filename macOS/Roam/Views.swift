@@ -162,6 +162,27 @@ struct TripDetailView: View {
     var body: some View {
         Group {
             if let trip {
+                detailContent(trip)
+                .sheet(item: $editing) { selection in
+                    ItemEditor(tripID: tripID, selection: selection).environmentObject(store)
+                }
+                .sheet(isPresented: $showRoute) {
+                    TripRouteView(tripID: tripID, initialDay: selectedDay).environmentObject(store)
+                }
+                .sheet(isPresented: $showTripEditor) { TripEditor(existing: trip).environmentObject(store) }
+                .confirmationDialog("删除第 \(selectedDay + 1) 天及当天所有安排？", isPresented: $showDeleteDay, titleVisibility: .visible) {
+                    Button("删除当天", role: .destructive) {
+                        deleteSelectedDay(trip)
+                    }
+                } message: { Text("后面的日期会依次提前一天。此操作无法撤销。") }
+                .confirmationDialog("删除“\(trip.destination)”旅行？", isPresented: $showDeleteTrip, titleVisibility: .visible) {
+                    Button("删除旅行", role: .destructive) { store.deleteTrip(tripID); dismiss() }
+                } message: { Text("攻略会移入垃圾桶，保留 30 天，期间可以恢复。") }
+            } else { ContentUnavailableView("旅行已删除", systemImage: "suitcase") }
+        }
+    }
+
+    private func detailContent(_ trip: Trip) -> some View {
                 VStack(spacing: 0) {
                     if singleDay { controls(trip) }
                     if reorderingDays { dayReorderView(trip).padding(.top, 12) } else { cardsView(trip).frame(minHeight: 720).padding(.top, 12) }
@@ -223,24 +244,13 @@ struct TripDetailView: View {
                         }.keyboardShortcut("n", modifiers: [.command, .shift]).help("添加安排 ⇧⌘N").accessibilityIdentifier("add-item")
                     }
                 }
-                .sheet(item: $editing) { selection in
-                    ItemEditor(tripID: tripID, selection: selection).environmentObject(store)
-                }
-                .sheet(isPresented: $showRoute) {
-                    TripRouteView(tripID: tripID, initialDay: selectedDay).environmentObject(store)
-                }
-                .sheet(isPresented: $showTripEditor) { TripEditor(existing: trip).environmentObject(store) }
-                .confirmationDialog("删除第 \(selectedDay + 1) 天及当天所有安排？", isPresented: $showDeleteDay, titleVisibility: .visible) {
-                    Button("删除当天", role: .destructive) {
-                        var changed = trip; changed.days.remove(at: selectedDay)
-                        selectedDay = min(selectedDay, changed.days.count - 1); store.update(changed)
-                    }
-                } message: { Text("后面的日期会依次提前一天。此操作无法撤销。") }
-                .confirmationDialog("删除“\(trip.destination)”旅行？", isPresented: $showDeleteTrip, titleVisibility: .visible) {
-                    Button("删除旅行", role: .destructive) { store.deleteTrip(tripID); dismiss() }
-                } message: { Text("攻略会移入垃圾桶，保留 30 天，期间可以恢复。") }
-            } else { ContentUnavailableView("旅行已删除", systemImage: "suitcase") }
-        }
+    }
+
+    private func deleteSelectedDay(_ trip: Trip) {
+        var changed = trip
+        changed.days.remove(at: selectedDay)
+        selectedDay = min(selectedDay, changed.days.count - 1)
+        store.update(changed)
     }
 
     private func dayReorderView(_ trip: Trip) -> some View {
