@@ -159,7 +159,7 @@ struct TripDetailView: View {
             if let trip {
                 VStack(spacing: 0) {
                     if singleDay { controls(trip) }
-                    if singleDay { dailyView(trip) } else { tableView(trip) }
+                    if singleDay { dailyView(trip) } else { tableView(trip).padding(.top, 16) }
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(Color(.systemGroupedBackground))
@@ -184,6 +184,7 @@ struct TripDetailView: View {
                             .foregroundStyle(.secondary)
                             .fixedSize()
                     }
+                    .sharedBackgroundVisibility(.hidden)
                     ToolbarItem(placement: .topBarTrailing) {
                         Button { addDay(trip) } label: {
                             Label("加一天", systemImage: "plus").labelStyle(.titleAndIcon)
