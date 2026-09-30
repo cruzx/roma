@@ -2,6 +2,21 @@ import XCTest
 @testable import Roam
 
 final class TravelStoreTests: XCTestCase {
+    func testTransportNumberSurvivesJSONAndOlderItemsStillDecode() throws {
+        var flight = PlanItem(title: "广州 → 东京", category: .transport)
+        flight.transportMode = .flight
+        flight.transportNumber = "CA1234"
+        let encoded = try JSONEncoder().encode(flight)
+        let restored = try JSONDecoder().decode(PlanItem.self, from: encoded)
+        XCTAssertEqual(restored.transportMode, .flight)
+        XCTAssertEqual(restored.transportNumber, "CA1234")
+        var legacy = try XCTUnwrap(JSONSerialization.jsonObject(with: encoded) as? [String: Any])
+        legacy.removeValue(forKey: "transportMode")
+        legacy.removeValue(forKey: "transportNumber")
+        let olderItem = try JSONDecoder().decode(PlanItem.self, from: JSONSerialization.data(withJSONObject: legacy))
+        XCTAssertNil(olderItem.transportMode)
+        XCTAssertNil(olderItem.transportNumber)
+    }
     @MainActor func testMoveItemKeepsIdentityAndDoesNotDuplicate() async {
         let file = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString + ".json")
         defer { try? FileManager.default.removeItem(at: file) }

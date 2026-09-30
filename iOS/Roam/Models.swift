@@ -30,6 +30,35 @@ enum TransportMode: String, Codable, CaseIterable, Identifiable {
     case walk = "步行", bicycle = "骑行", ferry = "轮渡", driving = "自驾"
 
     var id: String { rawValue }
+    var numberLabel: String? {
+        switch self {
+        case .flight: "航班号"
+        case .highSpeedRail, .jr, .shinkansen, .train: "车次"
+        case .subway: "线路号"
+        case .bus: "线路 / 班次"
+        case .taxi: "车牌号 / 订单号"
+        case .ferry: "航次"
+        case .driving: "车牌号"
+        case .bicycle: "租车编号"
+        case .walk: nil
+        }
+    }
+    var numberExample: String {
+        switch self {
+        case .flight: "如 CA1234"
+        case .highSpeedRail: "如 G123"
+        case .jr: "如 JR 车次"
+        case .shinkansen: "如 のぞみ 123 号"
+        case .train: "如 K123"
+        case .subway: "如 2 号线"
+        case .bus: "如 101 路"
+        case .taxi: "车牌或订单号"
+        case .ferry: "如 123 航次"
+        case .driving: "车牌号"
+        case .bicycle: "租车编号"
+        case .walk: ""
+        }
+    }
     var symbol: String {
         switch self {
         case .taxi, .driving: "car.side.fill"
@@ -65,6 +94,7 @@ struct PlanItem: Identifiable, Codable, Equatable {
     var time = ""
     var category: PlanCategory
     var transportMode: TransportMode? = nil
+    var transportNumber: String? = nil
     var place: PlanPlace? = nil
     var places: [PlanWaypoint]? = nil
 

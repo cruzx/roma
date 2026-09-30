@@ -354,7 +354,7 @@ struct TripDetailView: View {
                 } else {
                     ForEach(items.prefix(2)) { item in
                         if category == .transport, let mode = item.transportMode {
-                            Label(mode.rawValue, systemImage: mode.symbol)
+                            Label([mode.rawValue, item.transportNumber].compactMap { $0 }.filter { !$0.isEmpty }.joined(separator: " · "), systemImage: mode.symbol)
                                 .font(.caption.weight(.semibold)).foregroundStyle(category.color)
                         }
                         Text(item.title).font(.subheadline.weight(.medium)).foregroundStyle(.primary).lineLimit(2)
@@ -449,7 +449,7 @@ struct TripDetailView: View {
                                 .padding(.horizontal, 8).padding(.vertical, 4).background(category.color.opacity(0.08), in: Capsule())
                         }
                         if category == .transport, let mode = item.transportMode {
-                            Label(mode.rawValue, systemImage: mode.symbol)
+                            Label([mode.rawValue, item.transportNumber].compactMap { $0 }.filter { !$0.isEmpty }.joined(separator: " · "), systemImage: mode.symbol)
                                 .font(.subheadline.weight(.semibold)).foregroundStyle(category.color)
                         }
                         Text(item.title).font(.title3.weight(.semibold))
@@ -675,6 +675,7 @@ struct ItemEditor: View {
     @State private var time: String
     @State private var category: PlanCategory
     @State private var transportMode: TransportMode?
+    @State private var transportNumber: String
     @State private var dayID: UUID
     @State private var endDayID: UUID
     @State private var multipleNights = false
@@ -689,6 +690,7 @@ struct ItemEditor: View {
         _time = State(initialValue: selection.item?.time ?? "")
         _category = State(initialValue: selection.category)
         _transportMode = State(initialValue: selection.item?.transportMode)
+        _transportNumber = State(initialValue: selection.item?.transportNumber ?? "")
         _dayID = State(initialValue: selection.dayID)
         _endDayID = State(initialValue: selection.dayID)
     }
@@ -708,6 +710,15 @@ struct ItemEditor: View {
                                 Label(mode.rawValue, systemImage: mode.symbol).tag(Optional(mode))
                             }
                         }.accessibilityIdentifier("transport-mode")
+                        if let mode = transportMode, let label = mode.numberLabel {
+                            LabeledContent(label) {
+                                TextField(mode.numberExample, text: $transportNumber)
+                                    .multilineTextAlignment(.trailing)
+                                    .textInputAutocapitalization(.characters)
+                                    .autocorrectionDisabled()
+                                    .accessibilityIdentifier("transport-number")
+                            }
+                        }
                     }
                 }
                 if let trip {
@@ -785,6 +796,8 @@ struct ItemEditor: View {
                     Button("保存") {
                         var item = PlanItem(id: selection.item?.id ?? UUID(), title: title.trimmingCharacters(in: .whitespacesAndNewlines), detail: detail, time: time, category: category, places: places)
                         item.transportMode = category == .transport ? transportMode : nil
+                        let number = transportNumber.trimmingCharacters(in: .whitespacesAndNewlines)
+                        item.transportNumber = category == .transport && transportMode?.numberLabel != nil && !number.isEmpty ? number : nil
                         store.upsert(item, tripID: tripID, from: selection.item == nil ? nil : selection.dayID, to: dayID, through: multipleNights ? endDayID : nil)
                         dismiss()
                     }.disabled(!valid).accessibilityIdentifier("save-item")
@@ -797,6 +810,7 @@ struct ItemEditor: View {
                 }
             }
             .onChange(of: dayID) { _, new in endDayID = new }
+            .onChange(of: transportMode) { _, _ in transportNumber = "" }
             .confirmationDialog("删除这项安排？", isPresented: $confirmDelete, titleVisibility: .visible) {
                 Button("删除", role: .destructive) {
                     if let item = selection.item { store.removeItem(item.id, tripID: tripID, dayID: selection.dayID) }
