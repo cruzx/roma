@@ -11,7 +11,7 @@ struct RoamApp: App {
     }
     var body: some Scene {
         WindowGroup {
-            RootView().environmentObject(store)
+            RootView().modifier(TripImportModifier()).environmentObject(store)
                 .onChange(of: scenePhase) { _, phase in
                     if phase == .active { Task { await store.cloud?.synchronize() } }
                 }

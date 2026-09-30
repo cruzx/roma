@@ -52,7 +52,12 @@ struct LibraryView: View {
                         .accessibilityIdentifier("cloud-sync")
                 }
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("新建旅行", systemImage: "plus") { showCreate = true }
+                    Menu {
+                        Button("新建旅行", systemImage: "plus") { showCreate = true }
+                        Button("导入旅行文件", systemImage: "square.and.arrow.down") {
+                            NotificationCenter.default.post(name: .importRoamTrip, object: nil)
+                        }
+                    } label: { Image(systemName: "plus") }
                         .accessibilityIdentifier("new-trip")
                 }
             }
@@ -173,6 +178,9 @@ struct TripDetailView: View {
                     ToolbarItem(placement: .topBarTrailing) {
                         Menu {
                             Button(trip.status == .wish ? "加入行程 / 编辑旅行" : "编辑旅行", systemImage: "pencil") { showTripEditor = true }
+                            ShareLink(item: TripPackage(trip: trip), preview: SharePreview(trip.destination)) {
+                                Label("分享旅行 / AirDrop", systemImage: "square.and.arrow.up")
+                            }.accessibilityIdentifier("share-trip")
                             Button("查看地图路线", systemImage: "point.topleft.down.to.point.bottomright.curvepath") { showRoute = true }
                             Button("新增一天", systemImage: "calendar.badge.plus") { addDay(trip) }
                             if trip.days.count > 1 {
