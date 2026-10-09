@@ -2,9 +2,11 @@ import SwiftUI
 
 @main
 struct RoamApp: App {
+    @StateObject private var language = AppLanguageStore()
     @StateObject private var store: TravelStore
     @Environment(\.scenePhase) private var scenePhase
     init() {
+        DoodleIcon.configureNativeControls()
         let testing = ProcessInfo.processInfo.arguments.contains("--uitesting") ||
             ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil ||
             ProcessInfo.processInfo.environment["XCTestBundlePath"] != nil
@@ -13,13 +15,18 @@ struct RoamApp: App {
     }
     var body: some Scene {
         WindowGroup {
-            RootView().modifier(TripImportModifier()).environmentObject(store)
+            RootView().modifier(TripImportModifier()).id(language.identifier).environmentObject(store)
                 .background(MacWindowSetup())
                 .onChange(of: scenePhase) { _, phase in
-                    if phase == .active { store.purgeExpiredTrash(); Task { await store.cloud?.synchronize() } }
+                    if phase == .active { language.refresh(); store.collectPendingShares(); store.purgeExpiredTrash(); Task { await store.cloud?.synchronize() } }
                 }
                 .tint(.blue)
-                .environment(\.locale, Locale(identifier: "zh_CN"))
+                .environmentObject(language)
+                .environment(\.locale, language.locale)
+                .sheet(isPresented: $language.isSettingsPresented) {
+                    LanguageSettingsView().environmentObject(language).environment(\.locale, language.locale)
+                }
+                .onReceive(NotificationCenter.default.publisher(for: NSLocale.currentLocaleDidChangeNotification)) { _ in language.refresh() }
                 .alert("保存遇到问题", isPresented: Binding(get: { store.saveError != nil }, set: { if !$0 { store.saveError = nil } })) {
                     Button("重试") { store.saveError = nil; store.save() }
                 } message: { Text(store.saveError ?? "") }
@@ -37,7 +44,7 @@ struct MacWindowSetup: UIViewRepresentable {
         func configure() {
             guard let scene = window?.windowScene else { return }
             scene.sizeRestrictions?.minimumSize = CGSize(width: 860, height: 640)
-            scene.title = "漫游"
+            scene.title = AppLocalization.text("漫游")
         }
     }
 }

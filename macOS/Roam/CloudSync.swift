@@ -78,7 +78,7 @@ struct CloudLedger: Codable {
             if local.parent == incoming.revision { continue }
             if var preserved = incoming.trip ?? local.trip {
                 preserved.id = UUID()
-                preserved.destination += "（冲突副本）"
+                preserved.destination = AppLocalization.format("%@（冲突副本）", preserved.destination)
                 let copyID = preserved.id.uuidString
                 library.trips[copyID] = CloudTripVersion(trip: preserved)
                 library.order.append(copyID); pending.insert(copyID)
@@ -205,7 +205,7 @@ final class RoamCloudSync {
                         store.cloudStatus = "更改已保存在本机，等待同步"
                         return
                     }
-                    store.cloudStatus = conflictCount > 0 ? "已同步，保留了 \(conflictCount) 份冲突副本" : "iCloud 已同步"
+                    store.setCloudSyncResult(conflictCount: conflictCount)
                     return
                 } catch let error as CKError where error.code == .serverRecordChanged && attempt < 2 { continue }
             }
@@ -242,8 +242,8 @@ struct CloudSyncView: View {
         NavigationStack {
             Form {
                 Section {
-                    Label(store.cloudStatus, systemImage: "icloud")
-                    if let date = store.cloudLastSync { Text("最近同步：" + date.formatted(date: .abbreviated, time: .shortened)).font(.caption).foregroundStyle(.secondary) }
+                    Label(store.cloudStatus, doodleSystemImage: "icloud")
+                    if let date = store.cloudLastSync { Text(AppLocalization.format("最近同步：%@", date.formatted(Date.FormatStyle(date: .abbreviated, time: .shortened).locale(AppLocalization.locale)))).font(.caption).foregroundStyle(.secondary) }
                     Button("立即同步") { Task { await store.cloud?.synchronize() } }
                         .disabled(!RoamCloudSync.isConfigured)
                 }

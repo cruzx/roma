@@ -1,0 +1,12 @@
+{
+  "repo": "https://github.com/mingcute-design/mingcute-icons",
+  "commit": "ca98bb55513a22ff0dab713aaf7870b512944653",
+  "license": "Apache-2.0",
+  "urls": {
+    "luggage.svg": "https://raw.githubusercontent.com/mingcute-design/mingcute-icons/ca98bb55513a22ff0dab713aaf7870b512944653/packages/svg/core-filled/luggage.svg",
+    "notebook-2.svg": "https://raw.githubusercontent.com/mingcute-design/mingcute-icons/ca98bb55513a22ff0dab713aaf7870b512944653/packages/svg/core-filled/notebook-2.svg",
+    "search-3.svg": "https://raw.githubusercontent.com/mingcute-design/mingcute-icons/ca98bb55513a22ff0dab713aaf7870b512944653/packages/svg/core-filled/search-3.svg",
+    "settings-3.svg": "https://raw.githubusercontent.com/mingcute-design/mingcute-icons/ca98bb55513a22ff0dab713aaf7870b512944653/packages/svg/core-filled/settings-3.svg",
+    "LICENSE": "https://raw.githubusercontent.com/mingcute-design/mingcute-icons/ca98bb55513a22ff0dab713aaf7870b512944653/LICENSE"
+  }
+}

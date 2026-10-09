@@ -1,0 +1,2784 @@
+[
+  {
+    "id": "beijing",
+    "destination": "北京",
+    "country": "中国",
+    "theme": "古都与胡同",
+    "summary": "4 天走过宫城、胡同与园林；把长城单独留一天，避免跨城赶场。",
+    "cover": "template-beijing",
+    "reviewedOn": "2026-09-30",
+    "sources": [
+      {
+        "title": "北京文旅：城市必看",
+        "url": "https://topic.visitbeijing.com.cn/site/2024/EN/bjbrcgds/"
+      },
+      {
+        "title": "北京文旅：景点目录",
+        "url": "https://english.visitbeijing.com.cn/attraction"
+      }
+    ],
+    "days": [
+      {
+        "title": "宫城与中轴线",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "故宫博物院",
+            "detail": "留出半天，按自己的兴趣选择宫殿与展馆，不追求全部走完。",
+            "time": "09:00",
+            "photo": {
+              "asset": "sight-beijing-01",
+              "thumbnail": "sight-beijing-01-thumb",
+              "title": "故宫博物院",
+              "author": "Pixelflake",
+              "license": "CC BY-SA 3.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/3.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:The_Forbidden_City_-_View_from_Coal_Hill.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "景山公园",
+            "detail": "午后登高看看宫城轮廓，雨天可缩短停留。",
+            "time": "14:30",
+            "photo": {
+              "asset": "sight-beijing-02",
+              "thumbnail": "sight-beijing-02-thumb",
+              "title": "景山公园",
+              "author": "Charlie fong（冯成）",
+              "license": "Public domain",
+              "licenseURL": "https://creativecommons.org/publicdomain/mark/1.0/",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Jingshan_park.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "前门与大栅栏",
+            "detail": "傍晚逛街巷，晚饭后按体力决定是否继续。",
+            "time": "17:00",
+            "photo": {
+              "asset": "sight-beijing-03",
+              "thumbnail": "sight-beijing-03-thumb",
+              "title": "大栅栏",
+              "author": "WiNG",
+              "license": "CC BY-SA 3.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/3.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Dashala_Enterance_2010.jpg"
+            }
+          },
+          {
+            "category": "吃什么",
+            "title": "北京风味晚餐",
+            "detail": "烤鸭或家常京菜二选一，确认菜单与人均后点菜。",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "地铁到宫城周边，再步行串联",
+            "detail": "故宫参观方向与入口以预约信息为准；去前门可另乘地铁。",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "住在东城地铁站附近",
+            "detail": "建议以东四或灯市口附近为据点，具体酒店与订单自行填写。",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "今天的小提醒",
+            "detail": "先按所选日期确认故宫预约和开放安排；示例时间可随预约调整。",
+            "time": ""
+          }
+        ]
+      },
+      {
+        "title": "胡同里的慢生活",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "北海公园",
+            "detail": "上午沿湖走一段，找一处坐下休息。",
+            "time": "09:30",
+            "photo": {
+              "asset": "sight-beijing-04",
+              "thumbnail": "sight-beijing-04-thumb",
+              "title": "北海公园",
+              "author": "xiquinhosilva",
+              "license": "CC BY 2.0",
+              "licenseURL": "https://creativecommons.org/licenses/by/2.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Beihai_Park_65414.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "什刹海",
+            "detail": "午后围绕水岸散步，把咖啡时间留出来。",
+            "time": "14:00",
+            "photo": {
+              "asset": "sight-beijing-05",
+              "thumbnail": "sight-beijing-05-thumb",
+              "title": "什刹海",
+              "author": "FANG Chen",
+              "license": "CC BY-SA 2.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/2.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Beijing_Shichahai_1.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "鼓楼周边胡同",
+            "detail": "走公共街巷，不打扰居民，不把每条巷子都排满。",
+            "time": "16:30",
+            "photo": {
+              "asset": "sight-beijing-06",
+              "thumbnail": "sight-beijing-06-thumb",
+              "title": "北京鼓楼",
+              "author": "Toadspike",
+              "license": "CC BY-SA 4.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Beijing_Drum_Tower.jpg"
+            }
+          },
+          {
+            "category": "吃什么",
+            "title": "胡同小吃与面食",
+            "detail": "炸酱面、烧饼等按喜好选择；不把排队名店设为必到。",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "地铁加分段步行",
+            "detail": "北海、什刹海、鼓楼之间分段走，累了可用公共交通接驳。",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "住在东城地铁站附近",
+            "detail": "建议以东四或灯市口附近为据点，具体酒店与订单自行填写。",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "今天的小提醒",
+            "detail": "雨天改为附近室内展馆；进入胡同注意保持安静。",
+            "time": ""
+          }
+        ]
+      },
+      {
+        "title": "长城的一天",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "慕田峪长城",
+            "detail": "选择适合体力的一段，预留上下山、休息和接驳时间。",
+            "time": "10:00",
+            "photo": {
+              "asset": "sight-beijing-07",
+              "thumbnail": "sight-beijing-07-thumb",
+              "title": "慕田峪长城",
+              "author": "Velatrix",
+              "license": "CC0",
+              "licenseURL": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Great_Wall_of_China_July_2006.JPG"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "山下休息",
+            "detail": "午后补充水和食物；不再叠加城区大景点。",
+            "time": "14:00"
+          },
+          {
+            "category": "吃什么",
+            "title": "长城周边午餐",
+            "detail": "选明码标价的餐厅，随身带水与简单补给。",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "从市区预约往返接驳",
+            "detail": "出发前确认集合点、返程时刻和运营方；不要依赖临时揽客。",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "住在东城地铁站附近",
+            "detail": "建议以东四或灯市口附近为据点，具体酒店与订单自行填写。",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "今天的小提醒",
+            "detail": "大风、降雨或结冰时按景区通知调整；不走未开放城墙。",
+            "time": ""
+          }
+        ]
+      },
+      {
+        "title": "园林与返程",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "颐和园",
+            "detail": "上午选一条湖边或长廊路线，留足散步时间。",
+            "time": "09:30",
+            "photo": {
+              "asset": "sight-beijing-08",
+              "thumbnail": "sight-beijing-08-thumb",
+              "title": "颐和园",
+              "author": "xiquinhosilva",
+              "license": "CC BY 2.0",
+              "licenseURL": "https://creativecommons.org/licenses/by/2.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Longevity_Hill_of_the_Summer_Palace.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "自由活动与行李整理",
+            "detail": "午后回住处取行李；返程较早可整天改为轻松安排。",
+            "time": "14:00"
+          },
+          {
+            "category": "吃什么",
+            "title": "清淡午餐",
+            "detail": "园林周边找面食或家常菜，避免为餐厅绕远。",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "地铁往返园林，预留机场或车站时间",
+            "detail": "按照实际航班和车票反推离店时间。",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "住在东城地铁站附近",
+            "detail": "建议以东四或灯市口附近为据点，具体酒店与订单自行填写。",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "今天的小提醒",
+            "detail": "返程日优先保证交通余量；如遇闭园，调换到其他天。",
+            "time": ""
+          }
+        ]
+      }
+    ],
+    "coverCredit": {
+      "title": "Forbidden City Panorama 1.jpg",
+      "author": "Tojan76",
+      "license": "CC BY-SA 3.0",
+      "licenseURL": "https://creativecommons.org/licenses/by-sa/3.0",
+      "url": "https://commons.wikimedia.org/wiki/File:Forbidden_City_Panorama_1.jpg",
+      "note": "图片经缩放、压缩，显示时可能裁切；其许可独立于应用代码。"
+    }
+  },
+  {
+    "id": "shanghai",
+    "destination": "上海",
+    "country": "中国",
+    "theme": "江岸与街区",
+    "summary": "3 天从外滩到浦东，再慢逛梧桐街区；经典景观与城市生活各留一天。",
+    "cover": "template-shanghai",
+    "reviewedOn": "2026-09-30",
+    "sources": [
+      {
+        "title": "上海官方旅游：外滩",
+        "url": "https://www.meet-in-shanghai.net/en/huangpu-district/the-bund-648313/"
+      },
+      {
+        "title": "上海市政府：城市旅行",
+        "url": "https://english.shanghai.gov.cn/en-TravelinShanghai/index.html"
+      }
+    ],
+    "days": [
+      {
+        "title": "老城厢与外滩",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "豫园与城隍庙周边",
+            "detail": "上午选园林或老城街区慢逛，园林门票另行确认。",
+            "time": "09:30",
+            "photo": {
+              "asset": "sight-shanghai-09",
+              "thumbnail": "sight-shanghai-09-thumb",
+              "title": "豫园湖心亭",
+              "author": "Stefan Fussan",
+              "license": "CC BY-SA 3.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/3.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Shanghai_-_Yu_Garden_-_0035.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "南京东路",
+            "detail": "午后向江边移动，安排一次休息，不追求逛完所有商场。",
+            "time": "14:00",
+            "photo": {
+              "asset": "sight-shanghai-10",
+              "thumbnail": "sight-shanghai-10-thumb",
+              "title": "南京东路",
+              "author": "Melvin Loi",
+              "license": "CC BY-SA 2.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/2.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:East_Nanjing_Road_2020_(50361842166).jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "外滩江岸",
+            "detail": "傍晚看两岸景色，拍照时不占用通行空间。",
+            "time": "17:30",
+            "photo": {
+              "asset": "sight-shanghai-11",
+              "thumbnail": "sight-shanghai-11-thumb",
+              "title": "外滩江岸",
+              "author": "钉钉",
+              "license": "CC BY-SA 4.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:The_Bund_2.jpg"
+            }
+          },
+          {
+            "category": "吃什么",
+            "title": "小笼与本帮菜",
+            "detail": "午餐尝小笼，晚餐挑一两道本帮菜，按食量安排。",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "地铁加步行串联老城与江岸",
+            "detail": "商圈之间可乘地铁，跨江出行留到第二天。",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "住在静安或人民广场周边",
+            "detail": "选择靠近地铁的住宿，兼顾机场接驳和两岸行程。",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "今天的小提醒",
+            "detail": "夜景受天气影响；雨天可改逛室内展馆或商场。",
+            "time": ""
+          }
+        ]
+      },
+      {
+        "title": "浦东的城市天际线",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "陆家嘴滨江",
+            "detail": "沿江看城市建筑，上午走一段即可。",
+            "time": "10:00",
+            "photo": {
+              "asset": "sight-shanghai-12",
+              "thumbnail": "sight-shanghai-12-thumb",
+              "title": "陆家嘴滨江",
+              "author": "xiquinhosilva",
+              "license": "CC BY 2.0",
+              "licenseURL": "https://creativecommons.org/licenses/by/2.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Huangpu_Park_20124-Shanghai_(32208802494).jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "浦东美术馆或观景台",
+            "detail": "按兴趣选择一项，展览与入场时段出发前确认。",
+            "time": "14:00",
+            "photo": {
+              "asset": "sight-shanghai-13",
+              "thumbnail": "sight-shanghai-13-thumb",
+              "title": "浦东美术馆与陆家嘴（远景）",
+              "author": "Simon Wade",
+              "license": "CC BY-SA 4.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Museum_of_Art_Pudong_from_the_Bund.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "滨江晚风",
+            "detail": "傍晚再回江岸，天气不好则提前结束。",
+            "time": "17:00",
+            "photo": {
+              "asset": "sight-shanghai-12",
+              "thumbnail": "sight-shanghai-12-thumb",
+              "title": "陆家嘴滨江",
+              "author": "xiquinhosilva",
+              "license": "CC BY 2.0",
+              "licenseURL": "https://creativecommons.org/licenses/by/2.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Huangpu_Park_20124-Shanghai_(32208802494).jpg"
+            }
+          },
+          {
+            "category": "吃什么",
+            "title": "浦东简餐",
+            "detail": "就近吃饭，给展馆与休息留时间。",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "地铁跨江到陆家嘴",
+            "detail": "优先公共交通；不用为了每个观景点反复过江。",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "住在静安或人民广场周边",
+            "detail": "选择靠近地铁的住宿，兼顾机场接驳和两岸行程。",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "今天的小提醒",
+            "detail": "观景台并非必选；能见度差时把时间留给室内展览。",
+            "time": ""
+          }
+        ]
+      },
+      {
+        "title": "梧桐街区与返程",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "武康路与安福路",
+            "detail": "上午沿公共街道散步，尊重居民和店铺入口。",
+            "time": "09:30",
+            "photo": {
+              "asset": "sight-shanghai-14",
+              "thumbnail": "sight-shanghai-14-thumb",
+              "title": "武康路街景",
+              "author": "SSYoung",
+              "license": "CC BY-SA 4.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Wukang_Road,_Shanghai,_May_2016.JPG"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "徐汇街区咖啡时间",
+            "detail": "留一段没有指定目的地的自由时间。",
+            "time": "12:30",
+            "photo": {
+              "asset": "sight-shanghai-14",
+              "thumbnail": "sight-shanghai-14-thumb",
+              "title": "徐汇武康路街景",
+              "author": "SSYoung",
+              "license": "CC BY-SA 4.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Wukang_Road,_Shanghai,_May_2016.JPG"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "取行李与返程",
+            "detail": "根据实际班次缩短午后安排。",
+            "time": "15:00"
+          },
+          {
+            "category": "吃什么",
+            "title": "咖啡与街区午餐",
+            "detail": "挑附近可即时入座的店，减少排队。",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "地铁到徐汇，返程按交通订单安排",
+            "detail": "机场或高铁站以自己的出发地为准。",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "住在静安或人民广场周边",
+            "detail": "选择靠近地铁的住宿，兼顾机场接驳和两岸行程。",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "今天的小提醒",
+            "detail": "拍照不要进入私人住宅；返程日不追加远郊项目。",
+            "time": ""
+          }
+        ]
+      }
+    ],
+    "coverCredit": {
+      "title": "Pudong Shanghai November 2017 panorama.jpg",
+      "author": "King of Hearts",
+      "license": "CC BY-SA 4.0",
+      "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+      "url": "https://commons.wikimedia.org/wiki/File:Pudong_Shanghai_November_2017_panorama.jpg",
+      "note": "图片经缩放、压缩，显示时可能裁切；其许可独立于应用代码。"
+    }
+  },
+  {
+    "id": "guangzhou",
+    "destination": "广州",
+    "country": "中国",
+    "theme": "西关与珠江",
+    "summary": "3 天以西关、江岸和老城为主，把早茶与散步当作旅行的一部分。",
+    "cover": "template-guangzhou",
+    "reviewedOn": "2026-09-30",
+    "sources": [
+      {
+        "title": "广州官方：荔湾胜境",
+        "url": "https://www.gz.gov.cn/zlgz/gzly/wzgz/ycbj/content/post_10387427.html"
+      },
+      {
+        "title": "广州官方：广州塔旅游区",
+        "url": "https://www.gz.gov.cn/zt/ddgzjpwhlyxlx/gjgzjp/content/post_8734115.html"
+      }
+    ],
+    "days": [
+      {
+        "title": "西关与骑楼",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "陈家祠",
+            "detail": "上午看建筑装饰与馆内展陈，开放和预约另行确认。",
+            "time": "10:00",
+            "photo": {
+              "asset": "sight-guangzhou-15",
+              "thumbnail": "sight-guangzhou-15-thumb",
+              "title": "陈家祠",
+              "author": "Shujianyang",
+              "license": "CC BY-SA 4.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Chen_Clan_Ancestral_Hall_2025.06_02.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "永庆坊与恩宁路",
+            "detail": "午后走骑楼与街巷，留时间看小店。",
+            "time": "14:00",
+            "photo": {
+              "asset": "sight-guangzhou-16",
+              "thumbnail": "sight-guangzhou-16-thumb",
+              "title": "恩宁路骑楼",
+              "author": "Tombus20032000",
+              "license": "CC BY-SA 4.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Enning_Lu_2026.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "沙面",
+            "detail": "傍晚在岛上散步，按体力选一段。",
+            "time": "17:00",
+            "photo": {
+              "asset": "sight-guangzhou-17",
+              "thumbnail": "sight-guangzhou-17-thumb",
+              "title": "沙面",
+              "author": "David Wong",
+              "license": "CC BY-SA 3.0",
+              "licenseURL": "http://creativecommons.org/licenses/by-sa/3.0/",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:ShamianIsland.JPG"
+            }
+          },
+          {
+            "category": "吃什么",
+            "title": "广式早茶",
+            "detail": "虾饺、烧卖、肠粉按食量组合，了解茶位与服务费用。",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "地铁串联荔湾，街区内步行",
+            "detail": "陈家祠、永庆坊、沙面之间结合公共交通，不全程硬走。",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "住在越秀或荔湾地铁沿线",
+            "detail": "靠近公园前、陈家祠等交通节点即可，住宿由自己预订。",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "今天的小提醒",
+            "detail": "高温时把午后安排缩短；雨天可优先馆内活动。",
+            "time": ""
+          }
+        ]
+      },
+      {
+        "title": "珠江两岸",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "广东省博物馆",
+            "detail": "上午留半天看常设展；按所选日期确认预约。",
+            "time": "09:30",
+            "photo": {
+              "asset": "sight-guangzhou-18",
+              "thumbnail": "sight-guangzhou-18-thumb",
+              "title": "广东省博物馆",
+              "author": "そらみみ",
+              "license": "CC BY-SA 4.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Guangdong_Museum_20170915-2.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "花城广场",
+            "detail": "午后沿广场散步，天气炎热时在附近休息。",
+            "time": "15:30",
+            "photo": {
+              "asset": "sight-guangzhou-19",
+              "thumbnail": "sight-guangzhou-19-thumb",
+              "title": "花城广场",
+              "author": "Zhou Guanhuai",
+              "license": "CC0",
+              "licenseURL": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Huacheng_Square_Guangzhou.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "广州塔周边江岸",
+            "detail": "傍晚看江景，登塔作为可选项。",
+            "time": "17:30",
+            "photo": {
+              "asset": "sight-guangzhou-20",
+              "thumbnail": "sight-guangzhou-20-thumb",
+              "title": "广州塔",
+              "author": "Tim Wu",
+              "license": "CC BY-SA 4.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Canton_Tower_20241027_(cropped).jpg"
+            }
+          },
+          {
+            "category": "吃什么",
+            "title": "粤菜与糖水",
+            "detail": "午餐就近吃粤菜，晚饭后按喜好尝糖水。",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "地铁到珠江新城与广州塔",
+            "detail": "跨江优先地铁；如选游船需另查码头与船票。",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "住在越秀或荔湾地铁沿线",
+            "detail": "靠近公园前、陈家祠等交通节点即可，住宿由自己预订。",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "今天的小提醒",
+            "detail": "博物馆与广州塔分别确认开放安排；不把登塔与游船都设为必选。",
+            "time": ""
+          }
+        ]
+      },
+      {
+        "title": "老城街区与返程",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "越秀公园",
+            "detail": "上午散步，按体力选择路线。",
+            "time": "09:00",
+            "photo": {
+              "asset": "sight-guangzhou-21",
+              "thumbnail": "sight-guangzhou-21-thumb",
+              "title": "越秀公园",
+              "author": "Df112001",
+              "license": "CC BY-SA 3.0",
+              "licenseURL": "http://creativecommons.org/licenses/by-sa/3.0/",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Yxp.JPG"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "北京路步行街",
+            "detail": "午餐前后看街区与老城气息。",
+            "time": "12:00",
+            "photo": {
+              "asset": "sight-guangzhou-22",
+              "thumbnail": "sight-guangzhou-22-thumb",
+              "title": "北京路步行街",
+              "author": "Windmemories",
+              "license": "CC BY-SA 4.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:20250222_Street_scene_of_Beijing_Road_02.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "取行李与返程",
+            "detail": "下午为机场或车站接驳留余量。",
+            "time": "15:00"
+          },
+          {
+            "category": "吃什么",
+            "title": "肠粉或云吞面",
+            "detail": "选住处或车站附近餐厅，避免赶路时排长队。",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "地铁到老城，再按班次返程",
+            "detail": "机场、广州南等枢纽距离不同，以实际导航预估为准。",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "住在越秀或荔湾地铁沿线",
+            "detail": "靠近公园前、陈家祠等交通节点即可，住宿由自己预订。",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "今天的小提醒",
+            "detail": "室外安排带水和雨具；返程日不跨到长距离郊区。",
+            "time": ""
+          }
+        ]
+      }
+    ],
+    "coverCredit": {
+      "title": "Canton Tower 20220626 (cropped).jpg",
+      "author": "Tim Wu",
+      "license": "CC BY-SA 4.0",
+      "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+      "url": "https://commons.wikimedia.org/wiki/File:Canton_Tower_20220626_(cropped).jpg",
+      "note": "图片经缩放、压缩，显示时可能裁切；其许可独立于应用代码。"
+    }
+  },
+  {
+    "id": "kyoto",
+    "destination": "京都",
+    "country": "日本",
+    "theme": "寺院与四季",
+    "summary": "4 天分开东山、岚山、伏见与市中心，早起看风景，午后留出休息。",
+    "cover": "template-kyoto",
+    "reviewedOn": "2026-09-30",
+    "sources": [
+      {
+        "title": "京都官方：东山晨间路线",
+        "url": "https://kyoto.travel/en/itineraries/higashiyama-at-dawn/"
+      },
+      {
+        "title": "京都官方：岚山地区",
+        "url": "https://kyoto.travel/en/areas/saga-arashiyama/"
+      },
+      {
+        "title": "京都官方：交通指南",
+        "url": "https://kyoto.travel/en/getting-around/"
+      }
+    ],
+    "days": [
+      {
+        "title": "东山清晨",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "清水寺",
+            "detail": "早些出发参观；入场与开放以寺院公告为准。",
+            "time": "08:30",
+            "photo": {
+              "asset": "sight-kyoto-23",
+              "thumbnail": "sight-kyoto-23-thumb",
+              "title": "清水寺",
+              "author": "Jordy Meow",
+              "license": "CC BY-SA 3.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/3.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Kiyomizu.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "二年坂与三年坂",
+            "detail": "沿石阶街道慢慢下行，在店铺内休息。",
+            "time": "10:30",
+            "photo": {
+              "asset": "sight-kyoto-24",
+              "thumbnail": "sight-kyoto-24-thumb",
+              "title": "二年坂",
+              "author": "Basile Morin",
+              "license": "CC BY-SA 4.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Pedestrian_road_with_pavements_and_paper_umbrellas,_Higashiyama-ku,_Kyoto,_Japan,_early_morning.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "八坂神社与祇园",
+            "detail": "午后到神社与公共街巷，不进入禁止拍照的私有道路。",
+            "time": "14:30",
+            "photo": {
+              "asset": "sight-kyoto-25",
+              "thumbnail": "sight-kyoto-25-thumb",
+              "title": "八坂神社西楼门",
+              "author": "DXR",
+              "license": "CC BY-SA 4.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Nishiromon_Gate,_Yasaka_Shrine,_Kyoto,_West_view_20190416_1.jpg"
+            }
+          },
+          {
+            "category": "吃什么",
+            "title": "东山午餐与日式甜点",
+            "detail": "尝荞麦面或定食，茶点留作休息时的可选项。",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "铁路接驳到东山，区域内步行",
+            "detail": "结合京都官方交通指南选铁路与必要的公交接驳，避开拥挤路线。",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "住在京都站或四条周边",
+            "detail": "按铁路接驳和夜间餐饮习惯选据点，不指定商业酒店。",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "今天的小提醒",
+            "detail": "部分路段为居民区与私道；不要追拍艺伎或阻挡通道。",
+            "time": ""
+          }
+        ]
+      },
+      {
+        "title": "岚山的一天",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "岚山竹林",
+            "detail": "上午选主步道，避开人群聚集位置。",
+            "time": "09:00",
+            "photo": {
+              "asset": "sight-kyoto-26",
+              "thumbnail": "sight-kyoto-26-thumb",
+              "title": "岚山竹林",
+              "author": "Basile Morin",
+              "license": "CC BY-SA 4.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Bamboo_Grove,_Arashiyama,_Kyoto,_Japan.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "天龙寺庭园",
+            "detail": "按兴趣选择庭园参观，给静坐和休息留时间。",
+            "time": "11:00",
+            "photo": {
+              "asset": "sight-kyoto-27",
+              "thumbnail": "sight-kyoto-27-thumb",
+              "title": "天龙寺庭园",
+              "author": "osakaosaka",
+              "license": "CC BY-SA 3.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/3.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Tenryuji_Kyoto.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "渡月桥与河岸",
+            "detail": "午后沿河走一段，晚些返回市区。",
+            "time": "14:30",
+            "photo": {
+              "asset": "sight-kyoto-28",
+              "thumbnail": "sight-kyoto-28-thumb",
+              "title": "渡月桥",
+              "author": "Basile Morin",
+              "license": "CC BY-SA 4.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Togetsu-kyo_bridge_at_dusk,_Kyoto,_Japan.jpg"
+            }
+          },
+          {
+            "category": "吃什么",
+            "title": "岚山豆腐料理或面食",
+            "detail": "就近吃饭，不为了热门餐厅打乱路线。",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "铁路往返岚山",
+            "detail": "按住宿位置比较 JR、阪急或岚电接驳；车票另行确认。",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "住在京都站或四条周边",
+            "detail": "按铁路接驳和夜间餐饮习惯选据点，不指定商业酒店。",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "今天的小提醒",
+            "detail": "雨天缩短河岸步行；不把岚山和东山塞在同一天。",
+            "time": ""
+          }
+        ]
+      },
+      {
+        "title": "伏见与市中心",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "伏见稻荷大社",
+            "detail": "上午走鸟居参道，登高距离按体力决定。",
+            "time": "08:30",
+            "photo": {
+              "asset": "sight-kyoto-29",
+              "thumbnail": "sight-kyoto-29-thumb",
+              "title": "伏见稻荷大社",
+              "author": "Basile Morin",
+              "license": "CC BY-SA 4.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Torii_path_with_lantern_at_Fushimi_Inari_Taisha_Shrine,_Kyoto,_Japan.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "锦市场",
+            "detail": "午后看市中心街区，购买食物后在允许区域用餐。",
+            "time": "13:30",
+            "photo": {
+              "asset": "sight-kyoto-30",
+              "thumbnail": "sight-kyoto-30-thumb",
+              "title": "锦市场",
+              "author": "matsuyuki",
+              "license": "CC BY-SA 2.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/2.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Nishiki_Ichiba_by_matsuyuki.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "鸭川与四条",
+            "detail": "傍晚沿河休息，遇雨改为室内活动。",
+            "time": "16:30",
+            "photo": {
+              "asset": "sight-kyoto-31",
+              "thumbnail": "sight-kyoto-31-thumb",
+              "title": "鸭川樱花河岸",
+              "author": "Moja",
+              "license": "CC BY-SA 3.0",
+              "licenseURL": "http://creativecommons.org/licenses/by-sa/3.0/",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Kamogawa_sakura.jpg"
+            }
+          },
+          {
+            "category": "吃什么",
+            "title": "市场小食与定食",
+            "detail": "选择少量不同口味，晚饭回住处周边安排。",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "铁路到伏见，午后转市中心",
+            "detail": "优先铁路移动；出站后用步行导航确认入口。",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "住在京都站或四条周边",
+            "detail": "按铁路接驳和夜间餐饮习惯选据点，不指定商业酒店。",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "今天的小提醒",
+            "detail": "伏见稻荷上行有台阶；不是必须走完整座山。",
+            "time": ""
+          }
+        ]
+      },
+      {
+        "title": "城与园林的留白",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "二条城",
+            "detail": "上午参观建筑与庭园，休馆安排另行确认。",
+            "time": "09:30",
+            "photo": {
+              "asset": "sight-kyoto-32",
+              "thumbnail": "sight-kyoto-32-thumb",
+              "title": "二条城",
+              "author": "Tino Warinowski (Chino)",
+              "license": "Public domain",
+              "licenseURL": "https://creativecommons.org/publicdomain/mark/1.0/",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:NinomaruPalace.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "御苑周边或京都站",
+            "detail": "午后按返程方向选一处轻松散步。",
+            "time": "13:00",
+            "photo": {
+              "asset": "sight-kyoto-33",
+              "thumbnail": "sight-kyoto-33-thumb",
+              "title": "京都御所",
+              "author": "加茂川の民",
+              "license": "CC0",
+              "licenseURL": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:%E7%BE%8E%E3%81%97%E3%81%8D%E4%BA%AC%E9%83%BD%E5%BE%A1%E6%89%80.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "取行李与离开京都",
+            "detail": "根据实际车票反推收尾时间。",
+            "time": "15:00"
+          },
+          {
+            "category": "吃什么",
+            "title": "出发前的轻松午餐",
+            "detail": "定食或便当即可，留时间整理行李。",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "地铁接驳二条城，再前往出发车站",
+            "detail": "大型行李尽量留在住宿，不携带进入狭窄街巷。",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "住在京都站或四条周边",
+            "detail": "按铁路接驳和夜间餐饮习惯选据点，不指定商业酒店。",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "今天的小提醒",
+            "detail": "樱花与红叶时间每年不同；可按季节替换园林，不保证观赏效果。",
+            "time": ""
+          }
+        ]
+      }
+    ],
+    "coverCredit": {
+      "title": "Water reflection of Kinkaku-ji Temple a sunny day, Kyoto, Japan.jpg",
+      "author": "Basile Morin",
+      "license": "CC BY-SA 4.0",
+      "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+      "url": "https://commons.wikimedia.org/wiki/File:Water_reflection_of_Kinkaku-ji_Temple_a_sunny_day,_Kyoto,_Japan.jpg",
+      "note": "图片经缩放、压缩，显示时可能裁切；其许可独立于应用代码。"
+    }
+  },
+  {
+    "id": "kobe",
+    "destination": "神户",
+    "country": "日本",
+    "theme": "港口与山城",
+    "summary": "3 天以港口、北野和有马为主；城市散步与温泉各留一天。",
+    "cover": "template-kobe",
+    "reviewedOn": "2026-09-30",
+    "sources": [
+      {
+        "title": "神户官方：初访指南",
+        "url": "https://www.feel-kobe.jp/en/stories/firsttime"
+      },
+      {
+        "title": "神户官方：Harborland",
+        "url": "https://www.feel-kobe.jp/en/attractions/detail_1008.html"
+      }
+    ],
+    "days": [
+      {
+        "title": "元町与港口",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "南京町与元町",
+            "detail": "上午逛街区，先熟悉城市动线。",
+            "time": "10:00",
+            "photo": {
+              "asset": "sight-kobe-34",
+              "thumbnail": "sight-kobe-34-thumb",
+              "title": "南京町",
+              "author": "663highland",
+              "license": "CC BY 2.5",
+              "licenseURL": "https://creativecommons.org/licenses/by/2.5",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Kobe_nankinmachi01s3200.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "美利坚公园",
+            "detail": "午后沿海边看港口建筑，港塔入内作为可选。",
+            "time": "14:00",
+            "photo": {
+              "asset": "sight-kobe-35",
+              "thumbnail": "sight-kobe-35-thumb",
+              "title": "美利坚公园",
+              "author": "Mocchy",
+              "license": "Public domain",
+              "licenseURL": "https://creativecommons.org/publicdomain/mark/1.0/",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Kobe_Meriken_Park_(daytime).JPG"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "Harborland",
+            "detail": "傍晚走滨水区域，按天气决定是否等夜景。",
+            "time": "17:00",
+            "photo": {
+              "asset": "sight-kobe-36",
+              "thumbnail": "sight-kobe-36-thumb",
+              "title": "Harborland",
+              "author": "Oilstreet",
+              "license": "CC BY 2.5",
+              "licenseURL": "https://creativecommons.org/licenses/by/2.5",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Harborland_Kobe_Japan01-r.jpg"
+            }
+          },
+          {
+            "category": "吃什么",
+            "title": "南京町小食",
+            "detail": "尝几份小食即可，晚餐挑元町附近普通餐厅。",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "铁路到元町，步行串联港口",
+            "detail": "港口区域分段走，回三宫可用铁路或公共交通。",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "住在三宫或元町周边",
+            "detail": "以铁路换乘方便为优先；有马温泉可选当日往返或自行改为过夜。",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "今天的小提醒",
+            "detail": "海边风大时缩短停留；游船与港塔门票需另行确认。",
+            "time": ""
+          }
+        ]
+      },
+      {
+        "title": "北野与三宫",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "北野异人馆街",
+            "detail": "上午看坡道和公共街景，选一两处开放馆舍参观。",
+            "time": "09:30",
+            "photo": {
+              "asset": "sight-kobe-37",
+              "thumbnail": "sight-kobe-37-thumb",
+              "title": "北野风见鸡馆",
+              "author": "663highland",
+              "license": "CC BY 2.5",
+              "licenseURL": "https://creativecommons.org/licenses/by/2.5",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Kobe_kitano_thomas_house07_2816.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "三宫街区",
+            "detail": "午后回市中心休息，逛街和咖啡任选。",
+            "time": "14:00",
+            "photo": {
+              "asset": "sight-kobe-38",
+              "thumbnail": "sight-kobe-38-thumb",
+              "title": "三宫街区",
+              "author": "DVMG",
+              "license": "CC BY 3.0",
+              "licenseURL": "https://creativecommons.org/licenses/by/3.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Sannomiya_Center-Gai_-_panoramio.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "市区晚餐",
+            "detail": "把傍晚留给预约的餐厅，或自由用餐。",
+            "time": "17:30"
+          },
+          {
+            "category": "吃什么",
+            "title": "神户牛料理可选",
+            "detail": "先确认餐厅、菜单和预算；不默认套餐或预订成功。",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "三宫出发步行或短程接驳",
+            "detail": "北野有坡道，体力有限时可用公共交通或出租车接驳。",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "住在三宫或元町周边",
+            "detail": "以铁路换乘方便为优先；有马温泉可选当日往返或自行改为过夜。",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "今天的小提醒",
+            "detail": "用餐预约与取消条款由自己确认；不为名店排满整天。",
+            "time": ""
+          }
+        ]
+      },
+      {
+        "title": "有马温泉与返程",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "有马温泉街",
+            "detail": "上午到温泉街慢逛，买一份当地小点心。",
+            "time": "10:00",
+            "photo": {
+              "asset": "sight-kobe-39",
+              "thumbnail": "sight-kobe-39-thumb",
+              "title": "有马温泉·金之汤",
+              "author": "663highland",
+              "license": "CC BY 2.5",
+              "licenseURL": "https://creativecommons.org/licenses/by/2.5",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Kin-no-yu_Arima_Onsen03s3s.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "日归温泉可选",
+            "detail": "选择营业中的设施，入浴要求与预约另行确认。",
+            "time": "12:30",
+            "photo": {
+              "asset": "sight-kobe-39",
+              "thumbnail": "sight-kobe-39-thumb",
+              "title": "有马温泉·金之汤",
+              "author": "663highland",
+              "license": "CC BY 2.5",
+              "licenseURL": "https://creativecommons.org/licenses/by/2.5",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Kin-no-yu_Arima_Onsen03s3s.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "返回三宫取行李",
+            "detail": "若返程较早，将温泉改到第二天或取消。",
+            "time": "15:00"
+          },
+          {
+            "category": "吃什么",
+            "title": "温泉街午餐",
+            "detail": "附近定食或面食，留足回程时间。",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "提前确认三宫与有马的往返交通",
+            "detail": "比较铁路和巴士接驳，按当天班次安排。",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "住在三宫或元町周边",
+            "detail": "以铁路换乘方便为优先；有马温泉可选当日往返或自行改为过夜。",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "今天的小提醒",
+            "detail": "温泉设施的入浴规则各不相同，出发前确认；不要赶最后一班返程。",
+            "time": ""
+          }
+        ]
+      }
+    ],
+    "coverCredit": {
+      "title": "Kobe skyline and Harbor Highway.jpg",
+      "author": "Dudva",
+      "license": "CC0",
+      "licenseURL": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "url": "https://commons.wikimedia.org/wiki/File:Kobe_skyline_and_Harbor_Highway.jpg",
+      "note": "图片经缩放、压缩，显示时可能裁切；其许可独立于应用代码。"
+    }
+  },
+  {
+    "id": "fuji",
+    "destination": "富士山",
+    "country": "日本",
+    "theme": "湖畔看山",
+    "summary": "3 天游河口湖、富士吉田与忍野，重点是湖畔观景，不包含登顶。",
+    "cover": "template-fuji",
+    "reviewedOn": "2026-09-30",
+    "sources": [
+      {
+        "title": "日本国家旅游局：富士五湖",
+        "url": "https://www.japan.travel/en/itineraries/fuji-five-lakes-itinerary/"
+      },
+      {
+        "title": "日本国家旅游局：忍野八海",
+        "url": "https://www.japan.travel/en/spot/1327/"
+      }
+    ],
+    "days": [
+      {
+        "title": "抵达河口湖",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "河口湖湖畔",
+            "detail": "抵达后先放行李，再沿住处附近水岸散步。",
+            "time": "13:00",
+            "photo": {
+              "asset": "sight-fuji-40",
+              "thumbnail": "sight-fuji-40-thumb",
+              "title": "河口湖湖畔",
+              "author": "Midori",
+              "license": "CC BY 3.0",
+              "licenseURL": "https://creativecommons.org/licenses/by/3.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Lake_Kawaguchiko_Sakura_Mount_Fuji_4.JPG"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "大石公园",
+            "detail": "午后按天气和接驳情况前往，能见度差可改第二天。",
+            "time": "15:00",
+            "photo": {
+              "asset": "sight-fuji-41",
+              "thumbnail": "sight-fuji-41-thumb",
+              "title": "大石公园",
+              "author": "Alpsdake",
+              "license": "CC BY-SA 4.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Mount_Fuji_from_Oishi_Park.jpg"
+            }
+          },
+          {
+            "category": "吃什么",
+            "title": "山梨馎饦面",
+            "detail": "尝当地面食；晚间餐厅营业情况提前确认。",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "东京出发至河口湖",
+            "detail": "提前确认新宿方向高速巴士或铁路路线及预约，不写死车次。",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "住在河口湖站或湖畔",
+            "detail": "选择能方便到达交通站点的住处；晚餐是否需预约提前确认。",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "今天的小提醒",
+            "detail": "富士山可能被云遮挡；行程可换天，不承诺看到山顶。",
+            "time": ""
+          }
+        ]
+      },
+      {
+        "title": "富士吉田与湖畔",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "新仓山浅间公园",
+            "detail": "上午按天气选观景点；台阶较多，按体力决定是否上行。",
+            "time": "09:00",
+            "photo": {
+              "asset": "sight-fuji-42",
+              "thumbnail": "sight-fuji-42-thumb",
+              "title": "新仓山浅间公园·忠灵塔",
+              "author": "reggiepen (Flickr)",
+              "license": "CC BY 2.0",
+              "licenseURL": "https://creativecommons.org/licenses/by/2.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Chuurei-tou_Fujiyoshida_17025277650_c59733d6ba_o.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "富士吉田街区",
+            "detail": "午后沿公共街道散步，不在车道停留拍照。",
+            "time": "13:00",
+            "photo": {
+              "asset": "sight-fuji-43",
+              "thumbnail": "sight-fuji-43-thumb",
+              "title": "富士吉田本町通",
+              "author": "DimiTalen",
+              "license": "CC0",
+              "licenseURL": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Honcho_Street_with_Mount_Fuji_in_the_daytime,_Fujiyoshida,_2016.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "河口湖夕景",
+            "detail": "回湖边休息，不再增加远距离景点。",
+            "time": "16:00",
+            "photo": {
+              "asset": "sight-fuji-40",
+              "thumbnail": "sight-fuji-40-thumb",
+              "title": "河口湖与富士山",
+              "author": "Midori",
+              "license": "CC BY 3.0",
+              "licenseURL": "https://creativecommons.org/licenses/by/3.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Lake_Kawaguchiko_Sakura_Mount_Fuji_4.JPG"
+            }
+          },
+          {
+            "category": "吃什么",
+            "title": "吉田乌冬",
+            "detail": "午餐就近选择乌冬，营业时间自行确认。",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "铁路或巴士往返富士吉田",
+            "detail": "先确认接驳与步行入口，留返程余量。",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "住在河口湖站或湖畔",
+            "detail": "选择能方便到达交通站点的住处；晚餐是否需预约提前确认。",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "今天的小提醒",
+            "detail": "不模仿危险路口拍照；恶劣天气可改为室内展馆或休息。",
+            "time": ""
+          }
+        ]
+      },
+      {
+        "title": "忍野八海与返程",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "忍野八海",
+            "detail": "上午看村落与池塘，保持公共通道畅通。",
+            "time": "09:30",
+            "photo": {
+              "asset": "sight-fuji-44",
+              "thumbnail": "sight-fuji-44-thumb",
+              "title": "忍野八海",
+              "author": "Snap55",
+              "license": "CC BY 3.0",
+              "licenseURL": "https://creativecommons.org/licenses/by/3.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Hannoki_Pond,_Oshino_Hakkai.JPG"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "返回河口湖取行李",
+            "detail": "午后留出返程接驳，不再追加跨湖游览。",
+            "time": "13:00"
+          },
+          {
+            "category": "吃什么",
+            "title": "村落简餐",
+            "detail": "选明码标价的餐厅，提前考虑回程途中补给。",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "巴士到忍野，返回河口湖再离开",
+            "detail": "班次间隔可能较长；所选日期核对去程与回程。",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "住在河口湖站或湖畔",
+            "detail": "选择能方便到达交通站点的住处；晚餐是否需预约提前确认。",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "今天的小提醒",
+            "detail": "本模板是山脚观景行程，不是登山计划；山区交通随天气调整。",
+            "time": ""
+          }
+        ]
+      }
+    ],
+    "coverCredit": {
+      "title": "Lake Kawaguchiko Sakura Mount Fuji 4.JPG",
+      "author": "Midori",
+      "license": "CC BY 3.0",
+      "licenseURL": "https://creativecommons.org/licenses/by/3.0",
+      "url": "https://commons.wikimedia.org/wiki/File:Lake_Kawaguchiko_Sakura_Mount_Fuji_4.JPG",
+      "note": "图片经缩放、压缩，显示时可能裁切；其许可独立于应用代码。"
+    }
+  },
+  {
+    "id": "newyork",
+    "destination": "纽约",
+    "country": "美国",
+    "theme": "艺术与街区",
+    "summary": "5 天按中城、中央公园、下城、布鲁克林和西侧街区分区，留出适应时差的空间。",
+    "cover": "template-newyork",
+    "reviewedOn": "2026-09-30",
+    "sources": [
+      {
+        "title": "自由女神国家纪念区：参观指南",
+        "url": "https://www.nps.gov/stli/planyourvisit/index.htm"
+      },
+      {
+        "title": "大都会艺术博物馆：参观指南",
+        "url": "https://www.metmuseum.org/plan-your-visit"
+      },
+      {
+        "title": "纽约官方旅游地图",
+        "url": "https://www.nyctourism.com/NYCTourismOVM-090924.pdf"
+      }
+    ],
+    "days": [
+      {
+        "title": "中城初见",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "中央车站",
+            "detail": "上午看看车站公共大厅，不阻挡通勤动线。",
+            "time": "10:00",
+            "photo": {
+              "asset": "sight-newyork-grand-central-terminal",
+              "thumbnail": "sight-newyork-grand-central-terminal-thumb",
+              "title": "纽约中央车站主大厅",
+              "author": "D. Benjamin Miller",
+              "license": "CC0",
+              "licenseURL": "https://creativecommons.org/publicdomain/zero/1.0/deed.en",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Main_Concourse%2C_Grand_Central_Terminal%2C_August_30%2C_2024_-_001_%28cropped%29.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "布莱恩特公园与图书馆周边",
+            "detail": "午后散步休息，室内开放和参观要求另查。",
+            "time": "13:30",
+            "photo": {
+              "asset": "sight-newyork-bryant-park",
+              "thumbnail": "sight-newyork-bryant-park-thumb",
+              "title": "布莱恩特公园",
+              "author": "Jean-Christophe BENOIST",
+              "license": "CC BY 3.0",
+              "licenseURL": "https://creativecommons.org/licenses/by/3.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:New-York_-_Bryant_Park.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "时代广场",
+            "detail": "傍晚短暂停留；想看演出可以替换晚间安排。",
+            "time": "17:00",
+            "photo": {
+              "asset": "sight-newyork-times-square",
+              "thumbnail": "sight-newyork-times-square-thumb",
+              "title": "时代广场",
+              "author": "Terabass",
+              "license": "CC BY-SA 3.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/3.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:New_york_times_square-terabass.jpg"
+            }
+          },
+          {
+            "category": "吃什么",
+            "title": "贝果与纽约披萨",
+            "detail": "简单用餐即可，给时差和休息留空间。",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "地铁到中城，附近步行",
+            "detail": "出行前查 MTA 运营公告，留意周末线路调整。",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "住在曼哈顿地铁站附近",
+            "detail": "根据预算和交通选择中城或下城，确认总价与附加费用。",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "今天的小提醒",
+            "detail": "第一天不排满；演出票只通过自己确认的渠道购买。",
+            "time": ""
+          }
+        ]
+      },
+      {
+        "title": "中央公园与艺术",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "中央公园",
+            "detail": "上午选一条短路线，按天气和体力调整。",
+            "time": "09:30",
+            "photo": {
+              "asset": "sight-newyork-central-park",
+              "thumbnail": "sight-newyork-central-park-thumb",
+              "title": "中央公园贝塞斯达露台",
+              "author": "Zachary V. Sunderman",
+              "license": "CC BY-SA 4.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Bethesda_Terrace%2C_Central_Park_%28November%2C_2019%29.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "大都会艺术博物馆",
+            "detail": "午后留半天，只选感兴趣的馆藏主题。",
+            "time": "13:00",
+            "photo": {
+              "asset": "sight-newyork-metropolitan-museum-of-art",
+              "thumbnail": "sight-newyork-metropolitan-museum-of-art-thumb",
+              "title": "大都会艺术博物馆",
+              "author": "Hugo Schneider",
+              "license": "CC BY-SA 2.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/2.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Metropolitan_Museum_of_Art_%28The_Met%29_-_Central_Park%2C_NYC.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "上东区晚餐",
+            "detail": "结束后在附近吃饭，减少跨城往返。",
+            "time": "17:00"
+          },
+          {
+            "category": "吃什么",
+            "title": "公园周边午餐",
+            "detail": "选附近咖啡馆或简餐，不把整天时间花在排队。",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "地铁或公交到中央公园与上东区",
+            "detail": "博物馆与公园按当天开放安排调换顺序。",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "住在曼哈顿地铁站附近",
+            "detail": "根据预算和交通选择中城或下城，确认总价与附加费用。",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "今天的小提醒",
+            "detail": "大都会通常周三闭馆，出发前核对官方开放日；不要照搬模板日期。",
+            "time": ""
+          }
+        ]
+      },
+      {
+        "title": "自由女神与下城",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "自由女神岛与埃利斯岛",
+            "detail": "作为半天以上重点；按票种决定参观范围。",
+            "time": "09:00",
+            "photo": {
+              "asset": "sight-newyork-statue-of-liberty",
+              "thumbnail": "sight-newyork-statue-of-liberty-thumb",
+              "title": "自由女神像",
+              "author": "AskALotl",
+              "license": "CC0",
+              "licenseURL": "https://creativecommons.org/publicdomain/zero/1.0/deed.en",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Front_view_of_Statue_of_Liberty_%28cropped%29.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "炮台公园",
+            "detail": "返航后休息，今天不赶其他大型博物馆。",
+            "time": "15:00",
+            "photo": {
+              "asset": "sight-newyork-the-battery-manhattan",
+              "thumbnail": "sight-newyork-the-battery-manhattan-thumb",
+              "title": "炮台公园",
+              "author": "Gryffindor",
+              "license": "CC BY-SA 3.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/3.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Battery_Park.JPG"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "金融区公共街道",
+            "detail": "有余力再短程散步，否则直接回住处。",
+            "time": "16:00",
+            "photo": {
+              "asset": "sight-newyork-wall-street",
+              "thumbnail": "sight-newyork-wall-street-thumb",
+              "title": "华尔街",
+              "author": "Ajay Suresh",
+              "license": "CC BY 4.0",
+              "licenseURL": "https://creativecommons.org/licenses/by/4.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Wall_Street_%2855314253740%29.jpg"
+            }
+          },
+          {
+            "category": "吃什么",
+            "title": "下城轻松晚餐",
+            "detail": "船程前后按自己情况安排简餐。",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "到官方渡轮出发点，往返乘授权渡轮",
+            "detail": "按票面安检集合要求预留时间；实际开航时间另行确认。",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "住在曼哈顿地铁站附近",
+            "detail": "根据预算和交通选择中城或下城，确认总价与附加费用。",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "今天的小提醒",
+            "detail": "通过 NPS 链接确认唯一授权售票方 Statue City Cruises；基座与皇冠需单独提前预约。",
+            "time": ""
+          }
+        ]
+      },
+      {
+        "title": "布鲁克林江岸",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "布鲁克林大桥",
+            "detail": "上午步行过桥或只走一段，不占用通行空间。",
+            "time": "09:30",
+            "photo": {
+              "asset": "sight-newyork-brooklyn-bridge",
+              "thumbnail": "sight-newyork-brooklyn-bridge-thumb",
+              "title": "布鲁克林大桥",
+              "author": "Christian David",
+              "license": "CC BY-SA 4.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Brooklyn_Bridge_and_the_Lower_Manhattan_skyline_from_Pebble_Beach%2C_New_York.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "DUMBO",
+            "detail": "午后看街区和江岸，找一处坐下休息。",
+            "time": "13:00",
+            "photo": {
+              "asset": "sight-newyork-dumbo-brooklyn",
+              "thumbnail": "sight-newyork-dumbo-brooklyn-thumb",
+              "title": "DUMBO 华盛顿街望向曼哈顿大桥",
+              "author": "Wgreaves",
+              "license": "CC BY-SA 4.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:View_of_Manhattan_Bridge_from_Washington_Street_in_DUMBO%2C_Brooklyn.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "布鲁克林桥公园",
+            "detail": "傍晚沿水岸看曼哈顿，天气不好可提前返程。",
+            "time": "16:00",
+            "photo": {
+              "asset": "sight-newyork-brooklyn-bridge-park",
+              "thumbnail": "sight-newyork-brooklyn-bridge-park-thumb",
+              "title": "布鲁克林桥公园",
+              "author": "Wgreaves",
+              "license": "CC BY-SA 4.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:View_of_Brooklyn_Bridge_Park_from_Manhattan_Bridge.jpg"
+            }
+          },
+          {
+            "category": "吃什么",
+            "title": "布鲁克林披萨或咖啡",
+            "detail": "根据即时排队情况选店，不设必吃名店。",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "地铁接驳两岸，桥上步行",
+            "detail": "往返可只走一次桥，另一程乘地铁节省体力。",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "住在曼哈顿地铁站附近",
+            "detail": "根据预算和交通选择中城或下城，确认总价与附加费用。",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "今天的小提醒",
+            "detail": "桥面有风，穿舒适鞋；街区拍照不站车道。",
+            "time": ""
+          }
+        ]
+      },
+      {
+        "title": "西侧街区与返程",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "高线公园",
+            "detail": "上午挑一段步道，入园和开放情况另行确认。",
+            "time": "09:30",
+            "photo": {
+              "asset": "sight-newyork-high-line",
+              "thumbnail": "sight-newyork-high-line-thumb",
+              "title": "高线公园",
+              "author": "Dansnguyen",
+              "license": "CC0",
+              "licenseURL": "https://creativecommons.org/publicdomain/zero/1.0/deed.en",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:High_Line_Park%2C_Section_1a.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "切尔西市场",
+            "detail": "午餐后整理行李，按返程时间缩短停留。",
+            "time": "12:00",
+            "photo": {
+              "asset": "sight-newyork-chelsea-market",
+              "thumbnail": "sight-newyork-chelsea-market-thumb",
+              "title": "切尔西市场",
+              "author": "Ajay Suresh from New York, NY, USA",
+              "license": "CC BY 2.0",
+              "licenseURL": "https://creativecommons.org/licenses/by/2.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Chelsea_Market_%2849052085186%29.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "前往机场或车站",
+            "detail": "用实际订单安排接驳和到达时间。",
+            "time": "15:00"
+          },
+          {
+            "category": "吃什么",
+            "title": "市场午餐",
+            "detail": "按喜好选择一份简餐，不必把所有摊位都吃一遍。",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "地铁到切尔西，返程按机场选择路线",
+            "detail": "不同机场接驳差异大，确认自己的航站楼。",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "住在曼哈顿地铁站附近",
+            "detail": "根据预算和交通选择中城或下城，确认总价与附加费用。",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "今天的小提醒",
+            "detail": "下雨可跳过户外步道；预留行李提取和机场安检时间。",
+            "time": ""
+          }
+        ]
+      }
+    ],
+    "coverCredit": {
+      "title": "Lower Manhattan from Jersey City September 2020 panorama.jpg",
+      "author": "King of Hearts",
+      "license": "CC BY-SA 4.0",
+      "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+      "url": "https://commons.wikimedia.org/wiki/File:Lower_Manhattan_from_Jersey_City_September_2020_panorama.jpg",
+      "note": "图片经缩放、压缩，显示时可能裁切；其许可独立于应用代码。"
+    }
+  },
+  {
+    "id": "paris",
+    "destination": "巴黎",
+    "country": "法国",
+    "theme": "艺术与塞纳河",
+    "summary": "4 天把博物馆、河岸与街区分开；少量必看景点搭配自由散步。",
+    "cover": "template-paris",
+    "reviewedOn": "2026-09-30",
+    "sources": [
+      {
+        "title": "巴黎官方旅游局：经典景点",
+        "url": "https://parisjetaime.com/eng/article/the-essentials-a264"
+      },
+      {
+        "title": "巴黎官方旅游局：按街区游览",
+        "url": "https://parisjetaime.com/eng/article/50-top-sights-and-attractions-in-a-weekend-a1012"
+      },
+      {
+        "title": "巴黎官方旅游局：蒙马特",
+        "url": "https://parisjetaime.com/eng/article/montmartre-village-in-paris-a728"
+      }
+    ],
+    "days": [
+      {
+        "title": "塞纳河与铁塔",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "特罗卡德罗周边",
+            "detail": "上午看看铁塔全景，按现场人流换拍摄位置。",
+            "time": "09:30",
+            "photo": {
+              "asset": "sight-paris-trocad-ro",
+              "thumbnail": "sight-paris-trocad-ro-thumb",
+              "title": "特罗卡德罗花园望向埃菲尔铁塔",
+              "author": "Nelson Pérez",
+              "license": "CC BY-SA 3.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/3.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Eiffel_Tower_from_Jardins_du_Trocad%C3%A9ro_2008.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "埃菲尔铁塔与战神广场",
+            "detail": "午后逛塔下公园；登塔按预约另行安排。",
+            "time": "13:00",
+            "photo": {
+              "asset": "sight-paris-eiffel-tower",
+              "thumbnail": "sight-paris-eiffel-tower-thumb",
+              "title": "埃菲尔铁塔",
+              "author": "Benh LIEU SONG",
+              "license": "CC BY-SA 3.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/3.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Tour_Eiffel_Wikimedia_Commons_%28cropped%29.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "塞纳河步行或游船",
+            "detail": "傍晚二选一，不必重复同一路段。",
+            "time": "17:00",
+            "photo": {
+              "asset": "sight-paris-seine",
+              "thumbnail": "sight-paris-seine-thumb",
+              "title": "巴黎塞纳河",
+              "author": "Mortimer62",
+              "license": "CC BY-SA 2.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/2.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Bercy%2C_Paris_01.jpg"
+            }
+          },
+          {
+            "category": "吃什么",
+            "title": "面包店早餐与小酒馆晚餐",
+            "detail": "按菜单选餐，不指定价格或预订状态。",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "地铁接驳，河岸内分段步行",
+            "detail": "登塔和游船预约时间优先于示例时间。",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "住在地铁站附近的市区",
+            "detail": "按预算选择左岸或玛黑周边等交通方便区域，具体住宿自行确认。",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "今天的小提醒",
+            "detail": "登塔与游船需要分别确认票种；雨天可改为室内活动。",
+            "time": ""
+          }
+        ]
+      },
+      {
+        "title": "卢浮宫与花园",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "卢浮宫",
+            "detail": "上午留半天，先选择馆藏主题，避免走马观花。",
+            "time": "09:00",
+            "photo": {
+              "asset": "sight-paris-louvre",
+              "thumbnail": "sight-paris-louvre-thumb",
+              "title": "卢浮宫",
+              "author": "Benh LIEU SONG ( Flickr )",
+              "license": "CC BY-SA 3.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/3.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Louvre_Museum_Wikimedia_Commons.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "杜乐丽花园",
+            "detail": "午后散步休息；天气不佳可缩短。",
+            "time": "14:30",
+            "photo": {
+              "asset": "sight-paris-tuileries-garden",
+              "thumbnail": "sight-paris-tuileries-garden-thumb",
+              "title": "杜乐丽花园",
+              "author": "Guilhem Vellut from Tokyo, Japan",
+              "license": "CC BY 2.0",
+              "licenseURL": "https://creativecommons.org/licenses/by/2.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Crowd_in_the_Jardin_des_Tuileries%2C_Paris_July_2014.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "皇家宫殿周边",
+            "detail": "傍晚在附近街区找晚餐。",
+            "time": "16:30",
+            "photo": {
+              "asset": "sight-paris-palais-royal",
+              "thumbnail": "sight-paris-palais-royal-thumb",
+              "title": "巴黎皇家宫殿",
+              "author": "Marie-Lan Nguyen; Grondin（色阶调整）",
+              "license": "Public domain",
+              "licenseURL": "https://commons.wikimedia.org/wiki/File:Conseil_d%27Etat_Paris_WA.jpg#Licensing",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Conseil_d%27Etat_Paris_WA.jpg"
+            }
+          },
+          {
+            "category": "吃什么",
+            "title": "博物馆周边简餐",
+            "detail": "不要跨城追餐厅，留时间休息。",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "地铁到卢浮宫，附近步行",
+            "detail": "以所订入口和时间为准，避免错误入口排队。",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "住在地铁站附近的市区",
+            "detail": "按预算选择左岸或玛黑周边等交通方便区域，具体住宿自行确认。",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "今天的小提醒",
+            "detail": "确认卢浮宫所选日期开放日和预约要求；当天只安排一座大型博物馆。",
+            "time": ""
+          }
+        ]
+      },
+      {
+        "title": "西岱岛与左岸",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "巴黎圣母院周边",
+            "detail": "上午看西岱岛；进入建筑以官方预约和开放规则为准。",
+            "time": "09:30",
+            "photo": {
+              "asset": "sight-paris-notre-dame-de-paris",
+              "thumbnail": "sight-paris-notre-dame-de-paris-thumb",
+              "title": "巴黎圣母院周边",
+              "author": "Ali Sabbagh",
+              "license": "CC0",
+              "licenseURL": "https://creativecommons.org/publicdomain/zero/1.0/deed.en",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Notre-Dame_de_Paris%2C_4_October_2017.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "圣礼拜堂可选",
+            "detail": "有兴趣再预约参观，不把排队设为必经流程。",
+            "time": "11:30",
+            "photo": {
+              "asset": "sight-paris-sainte-chapelle",
+              "thumbnail": "sight-paris-sainte-chapelle-thumb",
+              "title": "圣礼拜堂上层礼拜堂",
+              "author": "Didier B ( Sam67fr )",
+              "license": "CC BY-SA 2.5",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/2.5",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Sainte_Chapelle_-_Upper_level_1.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "拉丁区与卢森堡公园",
+            "detail": "午后按体力慢逛左岸。",
+            "time": "14:00",
+            "photo": {
+              "asset": "sight-paris-jardin-du-luxembourg",
+              "thumbnail": "sight-paris-jardin-du-luxembourg-thumb",
+              "title": "卢森堡公园",
+              "author": "Kirua",
+              "license": "Public domain",
+              "licenseURL": "https://commons.wikimedia.org/wiki/File:LuxembourgMontparnasse.JPG#Licensing",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:LuxembourgMontparnasse.JPG"
+            }
+          },
+          {
+            "category": "吃什么",
+            "title": "左岸咖啡与法式家常餐",
+            "detail": "给一顿慢慢吃的午餐留时间。",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "地铁到西岱岛，左岸步行接驳",
+            "detail": "过桥后分段走，累了回到地铁站结束行程。",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "住在地铁站附近的市区",
+            "detail": "按预算选择左岸或玛黑周边等交通方便区域，具体住宿自行确认。",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "今天的小提醒",
+            "detail": "教堂参观保持安静；入内项目根据预约替换。",
+            "time": ""
+          }
+        ]
+      },
+      {
+        "title": "蒙马特与返程",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "蒙马特街区",
+            "detail": "上午从山脚慢慢走，坡道和台阶按体力选择。",
+            "time": "09:30",
+            "photo": {
+              "asset": "sight-paris-montmartre",
+              "thumbnail": "sight-paris-montmartre-thumb",
+              "title": "蒙马特小丘广场",
+              "author": "David Monniaux",
+              "license": "CC BY-SA 3.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/3.0/",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Paris_Montmartre_Place_du_Tertre_dsc07247.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "圣心堂周边观景",
+            "detail": "短暂停留后下山，不为最后一张照片赶路。",
+            "time": "11:30",
+            "photo": {
+              "asset": "sight-paris-sacr-c-ur-paris",
+              "thumbnail": "sight-paris-sacr-c-ur-paris-thumb",
+              "title": "圣心堂",
+              "author": "Tonchino",
+              "license": "CC BY-SA 3.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/3.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Le_sacre_coeur.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "回住处取行李",
+            "detail": "午后按实际航班或车票出发。",
+            "time": "14:00"
+          },
+          {
+            "category": "吃什么",
+            "title": "街区早午餐",
+            "detail": "选择邻近餐厅，给返程留余量。",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "地铁往返蒙马特，另查机场接驳",
+            "detail": "确认出发机场与交通票种，避免把市内票当机场票。",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "住在地铁站附近的市区",
+            "detail": "按预算选择左岸或玛黑周边等交通方便区域，具体住宿自行确认。",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "今天的小提醒",
+            "detail": "返程日跳过远郊；留意个人物品，不接受来路不明的代购门票。",
+            "time": ""
+          }
+        ]
+      }
+    ],
+    "coverCredit": {
+      "title": "Bercy, Paris 01.jpg",
+      "author": "Mortimer62",
+      "license": "CC BY-SA 2.0",
+      "licenseURL": "https://creativecommons.org/licenses/by-sa/2.0",
+      "url": "https://commons.wikimedia.org/wiki/File:Bercy%2C_Paris_01.jpg",
+      "note": "图片经缩放、压缩，显示时可能裁切；其许可独立于应用代码。"
+    }
+  },
+  {
+    "id": "london",
+    "destination": "伦敦",
+    "country": "英国",
+    "theme": "河岸与博物馆",
+    "summary": "4 天游泰晤士河、皇家街区与博物馆；大馆只选重点，不靠打卡数量充实行程。",
+    "cover": "template-london",
+    "reviewedOn": "2026-09-30",
+    "sources": [
+      {
+        "title": "伦敦官方：初访行程",
+        "url": "https://www.visitlondon.com/things-to-do/visiting-london-for-the-first-time/firsttime-visitors-itinerary"
+      },
+      {
+        "title": "伦敦官方：三日灵感",
+        "url": "https://www.visitlondon.com/things-to-do/sightseeing/london-itinerary/three-days-in-london-itinerary"
+      }
+    ],
+    "days": [
+      {
+        "title": "威斯敏斯特与南岸",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "大本钟与议会广场",
+            "detail": "上午看河岸与建筑外观，室内游览另查。",
+            "time": "09:30",
+            "photo": {
+              "asset": "sight-london-big-ben",
+              "thumbnail": "sight-london-big-ben-thumb",
+              "title": "大本钟与威斯敏斯特宫",
+              "author": "Christian David",
+              "license": "CC BY-SA 4.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Elizabeth_Tower_and_the_north_front_of_the_Palace_of_Westminster%2C_London.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "威斯敏斯特教堂可选",
+            "detail": "入内按开放与预约安排，不参观可换为公园休息。",
+            "time": "11:00",
+            "photo": {
+              "asset": "sight-london-westminster-abbey",
+              "thumbnail": "sight-london-westminster-abbey-thumb",
+              "title": "威斯敏斯特教堂",
+              "author": "Antiquary",
+              "license": "CC BY 4.0",
+              "licenseURL": "https://creativecommons.org/licenses/by/4.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Westminster_Abbey%2C_Westminster.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "南岸步道",
+            "detail": "午后沿泰晤士河散步，伦敦眼作为可选项。",
+            "time": "14:00",
+            "photo": {
+              "asset": "sight-london-south-bank",
+              "thumbnail": "sight-london-south-bank-thumb",
+              "title": "伦敦南岸皇家节日音乐厅外步道",
+              "author": "Doyle of London",
+              "license": "CC BY-SA 4.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:South_Bank_outside_Royal_Festival_Hall_%2801%29.jpg"
+            }
+          },
+          {
+            "category": "吃什么",
+            "title": "英式简餐",
+            "detail": "午餐就近选择，下午可找咖啡馆避雨。",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "地铁到 Westminster，过桥后步行",
+            "detail": "同一天集中在河岸，不为了观景反复换区。",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "住在公共交通方便的市区",
+            "detail": "按预算与机场接驳选 Bloomsbury、Waterloo 等区域，酒店自行预订。",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "今天的小提醒",
+            "detail": "礼拜和活动可能影响教堂参观；当天先核对开放安排。",
+            "time": ""
+          }
+        ]
+      },
+      {
+        "title": "博物馆与西区",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "大英博物馆",
+            "detail": "上午留半天，选择感兴趣的展区，不追求看完整馆。",
+            "time": "10:00",
+            "photo": {
+              "asset": "sight-london-british-museum",
+              "thumbnail": "sight-london-british-museum-thumb",
+              "title": "大英博物馆",
+              "author": "Ham",
+              "license": "CC BY-SA 3.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/3.0/",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:British_Museum_from_NE_2.JPG"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "考文特花园",
+            "detail": "午后逛市集与公共街区，给休息留空间。",
+            "time": "14:30",
+            "photo": {
+              "asset": "sight-london-covent-garden",
+              "thumbnail": "sight-london-covent-garden-thumb",
+              "title": "考文特花园",
+              "author": "Diliff; SilkTork（裁切）",
+              "license": "CC BY 2.5",
+              "licenseURL": "https://creativecommons.org/licenses/by/2.5",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Covent_Garden_Interior_May_2006_crop.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "西区演出可选",
+            "detail": "晚间按所购演出票安排，或改为普通晚餐。",
+            "time": "18:00"
+          },
+          {
+            "category": "吃什么",
+            "title": "考文特花园晚餐",
+            "detail": "是否预约按具体店铺决定，不默认有座位。",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "地铁加 Bloomsbury 街区步行",
+            "detail": "演出结束先确认回住处的交通。",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "住在公共交通方便的市区",
+            "detail": "按预算与机场接驳选 Bloomsbury、Waterloo 等区域，酒店自行预订。",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "今天的小提醒",
+            "detail": "博物馆临展与常设展预约要求可能不同；演出时间以票面为准。",
+            "time": ""
+          }
+        ]
+      },
+      {
+        "title": "伦敦塔与东侧河岸",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "伦敦塔",
+            "detail": "上午参观，按兴趣选重点，门票自行确认。",
+            "time": "09:30",
+            "photo": {
+              "asset": "sight-london-tower-of-london",
+              "thumbnail": "sight-london-tower-of-london-thumb",
+              "title": "伦敦塔",
+              "author": "[Duncan] from Nottingham, UK",
+              "license": "CC BY 2.0",
+              "licenseURL": "https://creativecommons.org/licenses/by/2.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Tower_of_London_from_the_Shard_%288515883950%29.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "塔桥",
+            "detail": "午后看桥与两岸；入内参观作为可选。",
+            "time": "13:00",
+            "photo": {
+              "asset": "sight-london-tower-bridge",
+              "thumbnail": "sight-london-tower-bridge-thumb",
+              "title": "塔桥",
+              "author": "© User:Colin / Wikimedia Commons",
+              "license": "CC BY-SA 4.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Tower_Bridge_from_London_City_Hall_2015.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "博罗市场周边",
+            "detail": "晚些看街区和餐饮，营业安排另查。",
+            "time": "15:00",
+            "photo": {
+              "asset": "sight-london-borough-market",
+              "thumbnail": "sight-london-borough-market-thumb",
+              "title": "博罗市场",
+              "author": "Øyvind Holmstad / © PermaLiv AS",
+              "license": "CC BY-SA 4.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:London_2018_March_IMG_0663.jpg"
+            }
+          },
+          {
+            "category": "吃什么",
+            "title": "市场午餐与炸鱼薯条",
+            "detail": "按营业和排队情况选择，留一个附近替代店。",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "地铁到 Tower Hill，河岸步行接驳",
+            "detail": "市场位于河对岸，用步行或公共交通按体力选择。",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "住在公共交通方便的市区",
+            "detail": "按预算与机场接驳选 Bloomsbury、Waterloo 等区域，酒店自行预订。",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "今天的小提醒",
+            "detail": "雨天先安排室内项目；桥面和河岸不阻挡通行。",
+            "time": ""
+          }
+        ]
+      },
+      {
+        "title": "皇家街区与离开",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "白金汉宫外观与圣詹姆斯公园",
+            "detail": "上午选短路线；不默认有换岗仪式。",
+            "time": "09:30",
+            "photo": {
+              "asset": "sight-london-buckingham-palace",
+              "thumbnail": "sight-london-buckingham-palace-thumb",
+              "title": "白金汉宫外观",
+              "author": "Julian Herzog",
+              "license": "CC BY 4.0",
+              "licenseURL": "https://creativecommons.org/licenses/by/4.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Buckingham_Palace_London_Morning_2020_01_%28cropped%29.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "特拉法加广场",
+            "detail": "午后按返程时间短暂停留，或直接回住处。",
+            "time": "12:00",
+            "photo": {
+              "asset": "sight-london-trafalgar-square",
+              "thumbnail": "sight-london-trafalgar-square-thumb",
+              "title": "特拉法加广场",
+              "author": "Diliff",
+              "license": "CC BY-SA 3.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/3.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Trafalgar_Square%2C_London_2_-_Jun_2009.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "取行李与机场接驳",
+            "detail": "以实际机场和航站楼安排交通。",
+            "time": "14:00"
+          },
+          {
+            "category": "吃什么",
+            "title": "出发前的早午餐",
+            "detail": "不安排耗时较长的下午茶，避免赶班次。",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "地铁与步行，返程按机场单独查询",
+            "detail": "伦敦不同机场接驳不同，不把地铁统一当直达方案。",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "住在公共交通方便的市区",
+            "detail": "按预算与机场接驳选 Bloomsbury、Waterloo 等区域，酒店自行预订。",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "今天的小提醒",
+            "detail": "换岗、宫殿开放和演出均非每日固定项目；查当天官方日程。",
+            "time": ""
+          }
+        ]
+      }
+    ],
+    "coverCredit": {
+      "title": "Tower Bridge from London City Hall 2015.jpg",
+      "author": "Colin",
+      "license": "CC BY-SA 4.0",
+      "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+      "url": "https://commons.wikimedia.org/wiki/File:Tower_Bridge_from_London_City_Hall_2015.jpg",
+      "note": "图片经缩放、压缩，显示时可能裁切；其许可独立于应用代码。"
+    }
+  },
+  {
+    "id": "dalian",
+    "destination": "大连",
+    "country": "中国",
+    "theme": "海岸与城市漫步",
+    "summary": "3 天以星海湾、东港和滨海路为主，每天只走一段海岸。",
+    "cover": "template-dalian",
+    "reviewedOn": "2026-09-30",
+    "sources": [
+      {
+        "title": "辽宁省政府：大连海岸路线",
+        "url": "https://www.ln.gov.cn/web/ywdt/qsgd/ass_2_1/2024060709090185410/index.shtml"
+      },
+      {
+        "title": "大连交通集团：观光巴士信息",
+        "url": "https://www.dltransgrp.com/subway/subwayShow.do?columnId=serviceCenter3link&newsId=e7de5245031e41278fbcad0d3ae9c03f"
+      }
+    ],
+    "days": [
+      {
+        "title": "星海湾慢慢走",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "星海广场",
+            "detail": "上午在广场与海边散步，不把步行距离排得太长。",
+            "time": "10:00",
+            "photo": {
+              "asset": "sight-dalian-45",
+              "thumbnail": "sight-dalian-45-thumb",
+              "title": "星海广场",
+              "author": "HSJ233",
+              "license": "CC BY-SA 4.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Xinghai_Square_.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "滨海路西段",
+            "detail": "午后选一段可通行步道，按体力折返。",
+            "time": "14:00",
+            "photo": {
+              "asset": "sight-dalian-46",
+              "thumbnail": "sight-dalian-46-thumb",
+              "title": "星海湾大桥与海岸",
+              "author": "Yhz1221",
+              "license": "CC BY-SA 4.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Dalian_Xinghai_Bay_Bridge.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "星海湾夕景",
+            "detail": "傍晚回海边休息，风大可提前结束。",
+            "time": "17:00",
+            "photo": {
+              "asset": "sight-dalian-46",
+              "thumbnail": "sight-dalian-46-thumb",
+              "title": "星海湾大桥与海岸",
+              "author": "Yhz1221",
+              "license": "CC BY-SA 4.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Dalian_Xinghai_Bay_Bridge.jpg"
+            }
+          },
+          {
+            "category": "吃什么",
+            "title": "海鲜与大连家常菜",
+            "detail": "点菜前确认单价、计价单位和加工费用，不把某店设为必吃。",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "公共交通到星海湾，短段步行",
+            "detail": "滨海路不用走全程，分段以公交或出租车接驳。",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "住在中山广场或星海湾周边",
+            "detail": "喜欢城市餐饮选中山广场，偏海景选星海湾，兼顾交通与预算。",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "今天的小提醒",
+            "detail": "海边风与气温变化明显；不翻越围栏，不走封闭栈道。",
+            "time": ""
+          }
+        ]
+      },
+      {
+        "title": "东港与城市街区",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "中山广场",
+            "detail": "上午看公共空间与周边建筑，给街区散步留时间。",
+            "time": "09:30",
+            "photo": {
+              "asset": "sight-dalian-47",
+              "thumbnail": "sight-dalian-47-thumb",
+              "title": "中山广场",
+              "author": "kanegen",
+              "license": "CC BY 2.0",
+              "licenseURL": "https://creativecommons.org/licenses/by/2.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:%E5%A4%A7%E8%BF%9E%E5%B8%82%E4%B8%AD%E5%B1%B1%E8%B7%AF.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "东港滨水区域",
+            "detail": "午后沿港边走一段，天气不好改附近室内休息。",
+            "time": "14:00",
+            "photo": {
+              "asset": "sight-dalian-48",
+              "thumbnail": "sight-dalian-48-thumb",
+              "title": "东港国际会议中心",
+              "author": "準建築人手札網站 Forgemind ArchiMedia",
+              "license": "CC BY 2.0",
+              "licenseURL": "https://creativecommons.org/licenses/by/2.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Dalian_International_Conference_Center.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "港东五街周边",
+            "detail": "傍晚按现场交通情况短暂停留，不站车道拍照。",
+            "time": "16:30",
+            "photo": {
+              "asset": "sight-dalian-49",
+              "thumbnail": "sight-dalian-49-thumb",
+              "title": "东港滨水（周边实景）",
+              "author": "Ffggss",
+              "license": "CC BY-SA 4.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:%E5%A4%A7%E8%BF%9E%E4%B8%9C%E6%B8%AF.jpg",
+              "note": "周边环境参考，并非该景点本体照片"
+            }
+          },
+          {
+            "category": "吃什么",
+            "title": "东北家常菜",
+            "detail": "选择附近餐厅，想吃海鲜可与前一天调换。",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "地铁与短程公共交通串联",
+            "detail": "交通和步行路段根据住处调整，不依赖固定旅游车班次。",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "住在中山广场或星海湾周边",
+            "detail": "喜欢城市餐饮选中山广场，偏海景选星海湾，兼顾交通与预算。",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "今天的小提醒",
+            "detail": "音乐喷泉不是固定保证项目；现场演出安排需查询当天公告。",
+            "time": ""
+          }
+        ]
+      },
+      {
+        "title": "渔人码头与返程",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "老虎滩渔人码头",
+            "detail": "上午看港湾与街区，留一段咖啡休息时间。",
+            "time": "09:30",
+            "photo": {
+              "asset": "sight-dalian-50",
+              "thumbnail": "sight-dalian-50-thumb",
+              "title": "老虎滩海岸（周边实景）",
+              "author": "chp13579753",
+              "license": "CC BY-SA 3.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/3.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:%E8%80%81%E8%99%8E%E6%BB%A9%E9%A3%8E%E5%85%89_-_panoramio.jpg",
+              "note": "周边环境参考，并非该景点本体照片"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "海岸短走",
+            "detail": "午餐后就近走一段，不再追加远处海岛或郊区。",
+            "time": "12:30",
+            "photo": {
+              "asset": "sight-dalian-50",
+              "thumbnail": "sight-dalian-50-thumb",
+              "title": "老虎滩海岸",
+              "author": "chp13579753",
+              "license": "CC BY-SA 3.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/3.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:%E8%80%81%E8%99%8E%E6%BB%A9%E9%A3%8E%E5%85%89_-_panoramio.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "取行李与返程",
+            "detail": "午后按自己的机票或车票出发。",
+            "time": "14:00"
+          },
+          {
+            "category": "吃什么",
+            "title": "港湾午餐",
+            "detail": "清淡面食或家常菜，按返程时间选择。",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "公共交通接驳渔人码头，返程另查",
+            "detail": "按实际班次预留车站或机场时间。",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "住在中山广场或星海湾周边",
+            "detail": "喜欢城市餐饮选中山广场，偏海景选星海湾，兼顾交通与预算。",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "今天的小提醒",
+            "detail": "坏天气取消海边停留；这条路线不默认包含海洋公园门票。",
+            "time": ""
+          }
+        ]
+      }
+    ],
+    "coverCredit": {
+      "title": "Dalian Xinghai Bay Bridge.jpg",
+      "author": "Yhz1221",
+      "license": "CC BY-SA 4.0",
+      "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+      "url": "https://commons.wikimedia.org/wiki/File:Dalian_Xinghai_Bay_Bridge.jpg",
+      "note": "图片经缩放、压缩，显示时可能裁切；其许可独立于应用代码。"
+    }
+  }
+]

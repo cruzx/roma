@@ -78,7 +78,7 @@ struct CloudLedger: Codable {
             if local.parent == incoming.revision { continue }
             if var preserved = incoming.trip ?? local.trip {
                 preserved.id = UUID()
-                preserved.destination += "（冲突副本）"
+                preserved.destination = AppLocalization.format("%@（冲突副本）", preserved.destination)
                 let copyID = preserved.id.uuidString
                 library.trips[copyID] = CloudTripVersion(trip: preserved)
                 library.order.append(copyID); pending.insert(copyID)
@@ -102,8 +102,12 @@ struct CloudLedger: Codable {
 @MainActor
 final class RoamCloudSync {
     static var isConfigured: Bool {
+        #if targetEnvironment(simulator)
+        return false
+        #else
         let value = Bundle.main.object(forInfoDictionaryKey: "RoamCloudEnabled")
         return (value as? Bool) == true || ["YES", "true", "1"].contains(value as? String ?? "")
+        #endif
     }
     static let containerID = "iCloud.com.xiangchengjin.roam"
     private weak var store: TravelStore?
@@ -205,7 +209,7 @@ final class RoamCloudSync {
                         store.cloudStatus = "更改已保存在本机，等待同步"
                         return
                     }
-                    store.cloudStatus = conflictCount > 0 ? "已同步，保留了 \(conflictCount) 份冲突副本" : "iCloud 已同步"
+                    store.setCloudSyncResult(conflictCount: conflictCount)
                     return
                 } catch let error as CKError where error.code == .serverRecordChanged && attempt < 2 { continue }
             }
@@ -237,13 +241,14 @@ final class RoamCloudSync {
 
 struct CloudSyncView: View {
     @EnvironmentObject private var store: TravelStore
+    @EnvironmentObject private var stickers: StickerBoardStore
     @Environment(\.dismiss) private var dismiss
     var body: some View {
         NavigationStack {
             Form {
                 Section {
-                    Label(store.cloudStatus, systemImage: "icloud")
-                    if let date = store.cloudLastSync { Text("最近同步：" + date.formatted(date: .abbreviated, time: .shortened)).font(.caption).foregroundStyle(.secondary) }
+                    Label(store.cloudStatus, doodleSystemImage: "icloud")
+                    if let date = store.cloudLastSync { Text(AppLocalization.format("最近同步：%@", date.formatted(Date.FormatStyle(date: .abbreviated, time: .shortened).locale(AppLocalization.locale)))).font(.caption).foregroundStyle(.secondary) }
                     Button("立即同步") { Task { await store.cloud?.synchronize() } }
                         .disabled(!RoamCloudSync.isConfigured)
                 }
@@ -251,6 +256,17 @@ struct CloudSyncView: View {
                     Text("iPhone 和 Mac 登录同一个 iCloud 账户，即可同步旅行、每日安排、地点、路线顺序和首页排序。")
                     Text("离线时仍会保存到本机；打开 App 后会自动重试。同一旅行发生同时编辑冲突时，会保留冲突副本供你整理。")
                     Text("云端数据保存在你的私人 iCloud 空间，不会公开给其他用户。")
+                }
+                Section("Travel Journal") {
+                    Label(AppLocalization.text(stickers.cloudStatus), doodleSystemImage: "icloud")
+                    if let date = stickers.cloudLastSync {
+                        Text(AppLocalization.format("最近同步：%@", date.formatted(Date.FormatStyle(date: .abbreviated, time: .shortened).locale(AppLocalization.locale))))
+                            .font(.caption).foregroundStyle(.secondary)
+                    }
+                    Text("贴纸、文字、描边和位置会自动同步到你的私人 iCloud。离线时先保存在本机，联网后自动重试。")
+                    Text("在支持旅游手账的设备上登录同一个 iCloud 账户，即可继续编辑；同时编辑的不同内容会保留为副本。")
+                    Button("立即同步") { Task { await stickers.cloud?.synchronize() } }
+                        .disabled(!RoamCloudSync.isConfigured)
                 }
             }
             .navigationTitle("iCloud 同步").navigationBarTitleDisplayMode(.inline)

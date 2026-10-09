@@ -1,0 +1,2784 @@
+[
+  {
+    "id": "beijing",
+    "destination": "Beijing",
+    "country": "China",
+    "theme": "Ancient Capital & Hutongs",
+    "summary": "Spend 4 days exploring palaces, hutongs and gardens. Set aside a full day for the Great Wall so you are not rushing across the city.",
+    "cover": "template-beijing",
+    "reviewedOn": "2026-09-30",
+    "sources": [
+      {
+        "title": "Visit Beijing: City Highlights",
+        "url": "https://topic.visitbeijing.com.cn/site/2024/EN/bjbrcgds/"
+      },
+      {
+        "title": "Visit Beijing: Attractions",
+        "url": "https://english.visitbeijing.com.cn/attraction"
+      }
+    ],
+    "days": [
+      {
+        "title": "The Forbidden City & Central Axis",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "The Palace Museum",
+            "detail": "Allow half a day and choose the palaces and galleries that interest you. There is no need to see everything.",
+            "time": "09:00",
+            "photo": {
+              "asset": "sight-beijing-01",
+              "thumbnail": "sight-beijing-01-thumb",
+              "title": "The Palace Museum",
+              "author": "Pixelflake",
+              "license": "CC BY-SA 3.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/3.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:The_Forbidden_City_-_View_from_Coal_Hill.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "Jingshan Park",
+            "detail": "Head uphill in the afternoon for views over the palace complex. Keep the visit shorter if it rains.",
+            "time": "14:30",
+            "photo": {
+              "asset": "sight-beijing-02",
+              "thumbnail": "sight-beijing-02-thumb",
+              "title": "Jingshan Park",
+              "author": "Charlie fong（冯成）",
+              "license": "Public domain",
+              "licenseURL": "https://creativecommons.org/publicdomain/mark/1.0/",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Jingshan_park.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "Qianmen & Dashilar",
+            "detail": "Explore the lanes in the early evening, then decide after dinner whether you have energy for more.",
+            "time": "17:00",
+            "photo": {
+              "asset": "sight-beijing-03",
+              "thumbnail": "sight-beijing-03-thumb",
+              "title": "Dashilar",
+              "author": "WiNG",
+              "license": "CC BY-SA 3.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/3.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Dashala_Enterance_2010.jpg"
+            }
+          },
+          {
+            "category": "吃什么",
+            "title": "A Beijing-style dinner",
+            "detail": "Choose roast duck or homestyle Beijing dishes. Check the menu and expected cost per person before ordering.",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "Take the subway near the palace, then explore on foot",
+            "detail": "Follow your reservation details for the Palace Museum entrance and visiting direction. You can take another subway ride to Qianmen.",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "Stay near a subway station in Dongcheng",
+            "detail": "Use the area around Dongsi or Dengshikou as a base. Add your own hotel and booking details.",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "A few tips for today",
+            "detail": "Check Palace Museum reservations and opening arrangements for your chosen date first. Adjust the suggested times to match your booking.",
+            "time": ""
+          }
+        ]
+      },
+      {
+        "title": "A Slower Day in the Hutongs",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "Beihai Park",
+            "detail": "Walk along part of the lake in the morning and find somewhere to sit and rest.",
+            "time": "09:30",
+            "photo": {
+              "asset": "sight-beijing-04",
+              "thumbnail": "sight-beijing-04-thumb",
+              "title": "Beihai Park",
+              "author": "xiquinhosilva",
+              "license": "CC BY 2.0",
+              "licenseURL": "https://creativecommons.org/licenses/by/2.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Beihai_Park_65414.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "Shichahai",
+            "detail": "Stroll around the waterfront in the afternoon and leave time for a coffee break.",
+            "time": "14:00",
+            "photo": {
+              "asset": "sight-beijing-05",
+              "thumbnail": "sight-beijing-05-thumb",
+              "title": "Shichahai",
+              "author": "FANG Chen",
+              "license": "CC BY-SA 2.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/2.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Beijing_Shichahai_1.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "Hutongs around the Drum Tower",
+            "detail": "Keep to public lanes, respect residents and leave some alleys unexplored.",
+            "time": "16:30",
+            "photo": {
+              "asset": "sight-beijing-06",
+              "thumbnail": "sight-beijing-06-thumb",
+              "title": "Beijing Drum Tower",
+              "author": "Toadspike",
+              "license": "CC BY-SA 4.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Beijing_Drum_Tower.jpg"
+            }
+          },
+          {
+            "category": "吃什么",
+            "title": "Hutong snacks & noodles",
+            "detail": "Try zhajiangmian, shaobing or whatever appeals to you. A famous spot with a queue need not be a must-do.",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "Subway rides & short walks",
+            "detail": "Walk the route between Beihai, Shichahai and the Drum Tower in sections, using public transport when you need a break.",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "Stay near a subway station in Dongcheng",
+            "detail": "Use the area around Dongsi or Dengshikou as a base. Add your own hotel and booking details.",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "A few tips for today",
+            "detail": "In the rain, switch to a nearby indoor exhibition. Keep your voice down in residential hutongs.",
+            "time": ""
+          }
+        ]
+      },
+      {
+        "title": "A Day at the Great Wall",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "Mutianyu Great Wall",
+            "detail": "Choose a section that suits your fitness and allow time for getting up and down, resting and transfers.",
+            "time": "10:00",
+            "photo": {
+              "asset": "sight-beijing-07",
+              "thumbnail": "sight-beijing-07-thumb",
+              "title": "Mutianyu Great Wall",
+              "author": "Velatrix",
+              "license": "CC0",
+              "licenseURL": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Great_Wall_of_China_July_2006.JPG"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "Rest at the foot of the hills",
+            "detail": "Recharge with food and water in the afternoon. Do not add another major city sight today.",
+            "time": "14:00"
+          },
+          {
+            "category": "吃什么",
+            "title": "Lunch near the Great Wall",
+            "detail": "Choose a restaurant with clearly displayed prices, and bring water and a few snacks.",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "Book a return transfer from the city",
+            "detail": "Confirm the meeting point, return time and operator before leaving. Avoid relying on people touting rides on the spot.",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "Stay near a subway station in Dongcheng",
+            "detail": "Use the area around Dongsi or Dengshikou as a base. Add your own hotel and booking details.",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "A few tips for today",
+            "detail": "Adjust your plans to the attraction's notices in strong wind, rain or icy conditions. Stay off sections of the wall that are not open.",
+            "time": ""
+          }
+        ]
+      },
+      {
+        "title": "Gardens & Departure",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "Summer Palace",
+            "detail": "Choose a lakeside or Long Corridor route in the morning and allow plenty of time to wander.",
+            "time": "09:30",
+            "photo": {
+              "asset": "sight-beijing-08",
+              "thumbnail": "sight-beijing-08-thumb",
+              "title": "Summer Palace",
+              "author": "xiquinhosilva",
+              "license": "CC BY 2.0",
+              "licenseURL": "https://creativecommons.org/licenses/by/2.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Longevity_Hill_of_the_Summer_Palace.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "Free time & luggage collection",
+            "detail": "Return to your accommodation for your bags in the afternoon. If you leave early, keep the whole day light.",
+            "time": "14:00"
+          },
+          {
+            "category": "吃什么",
+            "title": "A light lunch",
+            "detail": "Find noodles or homestyle dishes near the gardens rather than detouring for a restaurant.",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "Subway to the gardens, with time for your airport or station transfer",
+            "detail": "Work backwards from your actual flight or train time to decide when to leave your accommodation.",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "Stay near a subway station in Dongcheng",
+            "detail": "Use the area around Dongsi or Dengshikou as a base. Add your own hotel and booking details.",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "A few tips for today",
+            "detail": "Prioritize a comfortable travel buffer on departure day. If the gardens are closed, swap this visit with another day.",
+            "time": ""
+          }
+        ]
+      }
+    ],
+    "coverCredit": {
+      "title": "Forbidden City Panorama 1.jpg",
+      "author": "Tojan76",
+      "license": "CC BY-SA 3.0",
+      "licenseURL": "https://creativecommons.org/licenses/by-sa/3.0",
+      "url": "https://commons.wikimedia.org/wiki/File:Forbidden_City_Panorama_1.jpg",
+      "note": "Images are resized and compressed, and may be cropped for display. Their licenses are independent of the app code."
+    }
+  },
+  {
+    "id": "shanghai",
+    "destination": "Shanghai",
+    "country": "China",
+    "theme": "Riverfronts & Neighborhoods",
+    "summary": "Spend 3 days moving from the Bund to Pudong, then slowing down in the plane-tree-lined streets. Give the classic skyline and everyday city life their own time.",
+    "cover": "template-shanghai",
+    "reviewedOn": "2026-09-30",
+    "sources": [
+      {
+        "title": "Shanghai Official Tourism: The Bund",
+        "url": "https://www.meet-in-shanghai.net/en/huangpu-district/the-bund-648313/"
+      },
+      {
+        "title": "Shanghai Municipal Government: City Travel",
+        "url": "https://english.shanghai.gov.cn/en-TravelinShanghai/index.html"
+      }
+    ],
+    "days": [
+      {
+        "title": "The Old Town & the Bund",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "Yu Garden & the City God Temple area",
+            "detail": "Spend the morning in the garden or the old-town streets. Check garden tickets separately.",
+            "time": "09:30",
+            "photo": {
+              "asset": "sight-shanghai-09",
+              "thumbnail": "sight-shanghai-09-thumb",
+              "title": "Huxinting Teahouse at Yu Garden",
+              "author": "Stefan Fussan",
+              "license": "CC BY-SA 3.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/3.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Shanghai_-_Yu_Garden_-_0035.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "East Nanjing Road",
+            "detail": "Make your way towards the river in the afternoon with a rest stop along the way. There is no need to visit every mall.",
+            "time": "14:00",
+            "photo": {
+              "asset": "sight-shanghai-10",
+              "thumbnail": "sight-shanghai-10-thumb",
+              "title": "East Nanjing Road",
+              "author": "Melvin Loi",
+              "license": "CC BY-SA 2.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/2.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:East_Nanjing_Road_2020_(50361842166).jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "The Bund waterfront",
+            "detail": "Enjoy views of both riverbanks in the early evening, keeping the walkway clear when taking photos.",
+            "time": "17:30",
+            "photo": {
+              "asset": "sight-shanghai-11",
+              "thumbnail": "sight-shanghai-11-thumb",
+              "title": "The Bund waterfront",
+              "author": "钉钉",
+              "license": "CC BY-SA 4.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:The_Bund_2.jpg"
+            }
+          },
+          {
+            "category": "吃什么",
+            "title": "Soup dumplings & Shanghai dishes",
+            "detail": "Try xiaolongbao for lunch and one or two Shanghai dishes at dinner, ordering to suit your appetite.",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "Subway & walking through the old town to the river",
+            "detail": "Use the subway between shopping areas and save the river crossing for tomorrow.",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "Stay around Jing'an or People's Square",
+            "detail": "Choose accommodation near the subway, with airport connections and trips to both sides of the river in mind.",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "A few tips for today",
+            "detail": "The weather affects skyline views. If it rains, visit an indoor exhibition or shopping mall instead.",
+            "time": ""
+          }
+        ]
+      },
+      {
+        "title": "Pudong's Skyline",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "Lujiazui riverside",
+            "detail": "Take a morning walk along part of the river to enjoy the city architecture.",
+            "time": "10:00",
+            "photo": {
+              "asset": "sight-shanghai-12",
+              "thumbnail": "sight-shanghai-12-thumb",
+              "title": "Lujiazui riverside",
+              "author": "xiquinhosilva",
+              "license": "CC BY 2.0",
+              "licenseURL": "https://creativecommons.org/licenses/by/2.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Huangpu_Park_20124-Shanghai_(32208802494).jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "Museum of Art Pudong or an observation deck",
+            "detail": "Choose one according to your interests. Confirm exhibitions and admission slots before you go.",
+            "time": "14:00",
+            "photo": {
+              "asset": "sight-shanghai-13",
+              "thumbnail": "sight-shanghai-13-thumb",
+              "title": "Museum of Art Pudong & Lujiazui, seen from a distance",
+              "author": "Simon Wade",
+              "license": "CC BY-SA 4.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Museum_of_Art_Pudong_from_the_Bund.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "An evening by the river",
+            "detail": "Return to the waterfront in the early evening, or finish sooner if the weather turns.",
+            "time": "17:00",
+            "photo": {
+              "asset": "sight-shanghai-12",
+              "thumbnail": "sight-shanghai-12-thumb",
+              "title": "Lujiazui riverside",
+              "author": "xiquinhosilva",
+              "license": "CC BY 2.0",
+              "licenseURL": "https://creativecommons.org/licenses/by/2.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Huangpu_Park_20124-Shanghai_(32208802494).jpg"
+            }
+          },
+          {
+            "category": "吃什么",
+            "title": "A simple meal in Pudong",
+            "detail": "Eat nearby so you have more time for the museum and a break.",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "Take the subway across the river to Lujiazui",
+            "detail": "Use public transport and avoid repeatedly crossing the river for individual viewpoints.",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "Stay around Jing'an or People's Square",
+            "detail": "Choose accommodation near the subway, with airport connections and trips to both sides of the river in mind.",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "A few tips for today",
+            "detail": "An observation deck is optional. In poor visibility, spend the time on an indoor exhibition instead.",
+            "time": ""
+          }
+        ]
+      },
+      {
+        "title": "Tree-Lined Streets & Departure",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "Wukang Road & Anfu Road",
+            "detail": "Walk the public streets in the morning, respecting residents and keeping shop entrances clear.",
+            "time": "09:30",
+            "photo": {
+              "asset": "sight-shanghai-14",
+              "thumbnail": "sight-shanghai-14-thumb",
+              "title": "Wukang Road streetscape",
+              "author": "SSYoung",
+              "license": "CC BY-SA 4.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Wukang_Road,_Shanghai,_May_2016.JPG"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "Coffee time in Xuhui",
+            "detail": "Leave some free time without a fixed destination.",
+            "time": "12:30",
+            "photo": {
+              "asset": "sight-shanghai-14",
+              "thumbnail": "sight-shanghai-14-thumb",
+              "title": "Wukang Road in Xuhui",
+              "author": "SSYoung",
+              "license": "CC BY-SA 4.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Wukang_Road,_Shanghai,_May_2016.JPG"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "Collect your bags & depart",
+            "detail": "Shorten the afternoon plans to fit your actual departure time.",
+            "time": "15:00"
+          },
+          {
+            "category": "吃什么",
+            "title": "Coffee & lunch in the neighborhood",
+            "detail": "Choose a nearby place with a table available and spend less time queuing.",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "Subway to Xuhui, then follow your onward travel booking",
+            "detail": "Plan your transfer around the airport or high-speed rail station you are actually using.",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "Stay around Jing'an or People's Square",
+            "detail": "Choose accommodation near the subway, with airport connections and trips to both sides of the river in mind.",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "A few tips for today",
+            "detail": "Do not enter private homes to take photos. Skip distant suburban trips on departure day.",
+            "time": ""
+          }
+        ]
+      }
+    ],
+    "coverCredit": {
+      "title": "Pudong Shanghai November 2017 panorama.jpg",
+      "author": "King of Hearts",
+      "license": "CC BY-SA 4.0",
+      "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+      "url": "https://commons.wikimedia.org/wiki/File:Pudong_Shanghai_November_2017_panorama.jpg",
+      "note": "Images are resized and compressed, and may be cropped for display. Their licenses are independent of the app code."
+    }
+  },
+  {
+    "id": "guangzhou",
+    "destination": "Guangzhou",
+    "country": "China",
+    "theme": "Xiguan & the Pearl River",
+    "summary": "Spend 3 days around Xiguan, the river and the old town, making morning dim sum and leisurely walks part of the trip.",
+    "cover": "template-guangzhou",
+    "reviewedOn": "2026-09-30",
+    "sources": [
+      {
+        "title": "Guangzhou Official Guide: Sights of Liwan",
+        "url": "https://www.gz.gov.cn/zlgz/gzly/wzgz/ycbj/content/post_10387427.html"
+      },
+      {
+        "title": "Guangzhou Official Guide: Canton Tower Tourist Area",
+        "url": "https://www.gz.gov.cn/zt/ddgzjpwhlyxlx/gjgzjp/content/post_8734115.html"
+      }
+    ],
+    "days": [
+      {
+        "title": "Xiguan & the Arcade Streets",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "Chen Clan Ancestral Hall",
+            "detail": "Spend the morning looking at the architectural details and exhibitions. Check opening hours and reservations separately.",
+            "time": "10:00",
+            "photo": {
+              "asset": "sight-guangzhou-15",
+              "thumbnail": "sight-guangzhou-15-thumb",
+              "title": "Chen Clan Ancestral Hall",
+              "author": "Shujianyang",
+              "license": "CC BY-SA 4.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Chen_Clan_Ancestral_Hall_2025.06_02.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "Yongqing Fang & Enning Road",
+            "detail": "Explore the arcades and lanes in the afternoon, leaving time to browse small shops.",
+            "time": "14:00",
+            "photo": {
+              "asset": "sight-guangzhou-16",
+              "thumbnail": "sight-guangzhou-16-thumb",
+              "title": "Enning Road arcades",
+              "author": "Tombus20032000",
+              "license": "CC BY-SA 4.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Enning_Lu_2026.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "Shamian Island",
+            "detail": "Take an early-evening walk around part of the island, at a pace that suits you.",
+            "time": "17:00",
+            "photo": {
+              "asset": "sight-guangzhou-17",
+              "thumbnail": "sight-guangzhou-17-thumb",
+              "title": "Shamian Island",
+              "author": "David Wong",
+              "license": "CC BY-SA 3.0",
+              "licenseURL": "http://creativecommons.org/licenses/by-sa/3.0/",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:ShamianIsland.JPG"
+            }
+          },
+          {
+            "category": "吃什么",
+            "title": "Cantonese morning dim sum",
+            "detail": "Mix har gow, siu mai and rice noodle rolls to suit your appetite. Check tea and service charges.",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "Subway between Liwan sights, walking within each neighborhood",
+            "detail": "Combine public transport with walks between Chen Clan Academy, Yongqing Fang and Shamian rather than walking every stretch.",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "Stay along a subway line in Yuexiu or Liwan",
+            "detail": "Look near transport hubs such as Gongyuanqian or Chen Clan Academy. Book your own accommodation.",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "A few tips for today",
+            "detail": "Shorten afternoon activities in hot weather. On rainy days, prioritize indoor visits.",
+            "time": ""
+          }
+        ]
+      },
+      {
+        "title": "Both Sides of the Pearl River",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "Guangdong Museum",
+            "detail": "Set aside half a day for the permanent exhibitions, starting in the morning. Check reservations for your chosen date.",
+            "time": "09:30",
+            "photo": {
+              "asset": "sight-guangzhou-18",
+              "thumbnail": "sight-guangzhou-18-thumb",
+              "title": "Guangdong Museum",
+              "author": "そらみみ",
+              "license": "CC BY-SA 4.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Guangdong_Museum_20170915-2.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "Huacheng Square",
+            "detail": "Walk through the square in the afternoon, taking a break nearby if it is hot.",
+            "time": "15:30",
+            "photo": {
+              "asset": "sight-guangzhou-19",
+              "thumbnail": "sight-guangzhou-19-thumb",
+              "title": "Huacheng Square",
+              "author": "Zhou Guanhuai",
+              "license": "CC0",
+              "licenseURL": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Huacheng_Square_Guangzhou.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "Riverside near Canton Tower",
+            "detail": "Enjoy river views in the early evening. Going up the tower is optional.",
+            "time": "17:30",
+            "photo": {
+              "asset": "sight-guangzhou-20",
+              "thumbnail": "sight-guangzhou-20-thumb",
+              "title": "Canton Tower",
+              "author": "Tim Wu",
+              "license": "CC BY-SA 4.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Canton_Tower_20241027_(cropped).jpg"
+            }
+          },
+          {
+            "category": "吃什么",
+            "title": "Cantonese dishes & sweet soups",
+            "detail": "Have Cantonese food nearby for lunch and try a sweet soup after dinner if you like.",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "Subway to Zhujiang New Town & Canton Tower",
+            "detail": "Use the subway to cross the river. If you choose a cruise, check its pier and tickets separately.",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "Stay along a subway line in Yuexiu or Liwan",
+            "detail": "Look near transport hubs such as Gongyuanqian or Chen Clan Academy. Book your own accommodation.",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "A few tips for today",
+            "detail": "Check opening arrangements for the museum and Canton Tower separately. Neither a tower visit nor a cruise needs to be compulsory.",
+            "time": ""
+          }
+        ]
+      },
+      {
+        "title": "The Old Town & Departure",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "Yuexiu Park",
+            "detail": "Take a morning walk on a route that suits your energy level.",
+            "time": "09:00",
+            "photo": {
+              "asset": "sight-guangzhou-21",
+              "thumbnail": "sight-guangzhou-21-thumb",
+              "title": "Yuexiu Park",
+              "author": "Df112001",
+              "license": "CC BY-SA 3.0",
+              "licenseURL": "http://creativecommons.org/licenses/by-sa/3.0/",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Yxp.JPG"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "Beijing Road Pedestrian Street",
+            "detail": "Explore the streets and old-town atmosphere around lunchtime.",
+            "time": "12:00",
+            "photo": {
+              "asset": "sight-guangzhou-22",
+              "thumbnail": "sight-guangzhou-22-thumb",
+              "title": "Beijing Road Pedestrian Street",
+              "author": "Windmemories",
+              "license": "CC BY-SA 4.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:20250222_Street_scene_of_Beijing_Road_02.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "Collect your bags & depart",
+            "detail": "Leave a buffer in the afternoon for your airport or station transfer.",
+            "time": "15:00"
+          },
+          {
+            "category": "吃什么",
+            "title": "Rice noodle rolls or wonton noodles",
+            "detail": "Eat near your accommodation or station to avoid a long queue when you need to leave.",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "Subway to the old town, then onward travel",
+            "detail": "The airport and hubs such as Guangzhou South are at different distances. Use your actual navigation estimate.",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "Stay along a subway line in Yuexiu or Liwan",
+            "detail": "Look near transport hubs such as Gongyuanqian or Chen Clan Academy. Book your own accommodation.",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "A few tips for today",
+            "detail": "Bring water and rain gear for outdoor plans. Avoid distant suburban trips on departure day.",
+            "time": ""
+          }
+        ]
+      }
+    ],
+    "coverCredit": {
+      "title": "Canton Tower 20220626 (cropped).jpg",
+      "author": "Tim Wu",
+      "license": "CC BY-SA 4.0",
+      "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+      "url": "https://commons.wikimedia.org/wiki/File:Canton_Tower_20220626_(cropped).jpg",
+      "note": "Images are resized and compressed, and may be cropped for display. Their licenses are independent of the app code."
+    }
+  },
+  {
+    "id": "kyoto",
+    "destination": "Kyoto",
+    "country": "Japan",
+    "theme": "Temples & the Seasons",
+    "summary": "Explore Higashiyama, Arashiyama, Fushimi and central Kyoto on separate days over 4 days. Start early for the scenery and leave room to rest in the afternoon.",
+    "cover": "template-kyoto",
+    "reviewedOn": "2026-09-30",
+    "sources": [
+      {
+        "title": "Kyoto Official Guide: A Morning Route in Higashiyama",
+        "url": "https://kyoto.travel/en/itineraries/higashiyama-at-dawn/"
+      },
+      {
+        "title": "Kyoto Official Guide: Arashiyama",
+        "url": "https://kyoto.travel/en/areas/saga-arashiyama/"
+      },
+      {
+        "title": "Kyoto Official Guide: Getting Around",
+        "url": "https://kyoto.travel/en/getting-around/"
+      }
+    ],
+    "days": [
+      {
+        "title": "An Early Start in Higashiyama",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "Kiyomizu-dera",
+            "detail": "Set out early. Check the temple's own notices for admission and opening hours.",
+            "time": "08:30",
+            "photo": {
+              "asset": "sight-kyoto-23",
+              "thumbnail": "sight-kyoto-23-thumb",
+              "title": "Kiyomizu-dera",
+              "author": "Jordy Meow",
+              "license": "CC BY-SA 3.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/3.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Kiyomizu.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "Ninenzaka & Sannenzaka",
+            "detail": "Walk slowly down the stone-stepped streets and take breaks inside shops.",
+            "time": "10:30",
+            "photo": {
+              "asset": "sight-kyoto-24",
+              "thumbnail": "sight-kyoto-24-thumb",
+              "title": "Ninenzaka",
+              "author": "Basile Morin",
+              "license": "CC BY-SA 4.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Pedestrian_road_with_pavements_and_paper_umbrellas,_Higashiyama-ku,_Kyoto,_Japan,_early_morning.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "Yasaka Shrine & Gion",
+            "detail": "Visit the shrine and public lanes in the afternoon. Stay off private roads where photography is prohibited.",
+            "time": "14:30",
+            "photo": {
+              "asset": "sight-kyoto-25",
+              "thumbnail": "sight-kyoto-25-thumb",
+              "title": "Yasaka Shrine's West Gate",
+              "author": "DXR",
+              "license": "CC BY-SA 4.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Nishiromon_Gate,_Yasaka_Shrine,_Kyoto,_West_view_20190416_1.jpg"
+            }
+          },
+          {
+            "category": "吃什么",
+            "title": "Lunch & Japanese sweets in Higashiyama",
+            "detail": "Try soba or a set meal, with tea and sweets as an optional rest stop.",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "Rail connections to Higashiyama, then explore on foot",
+            "detail": "Use Kyoto's official transport guide to choose trains and any necessary bus connections, avoiding crowded routes.",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "Stay around Kyoto Station or Shijo",
+            "detail": "Choose a base to suit your rail connections and evening dining habits. No specific hotel is recommended.",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "A few tips for today",
+            "detail": "Some streets are residential or private. Do not follow geisha to take photos or block passageways.",
+            "time": ""
+          }
+        ]
+      },
+      {
+        "title": "A Day in Arashiyama",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "Arashiyama Bamboo Grove",
+            "detail": "Follow the main path in the morning and avoid stopping where crowds gather.",
+            "time": "09:00",
+            "photo": {
+              "asset": "sight-kyoto-26",
+              "thumbnail": "sight-kyoto-26-thumb",
+              "title": "Arashiyama Bamboo Grove",
+              "author": "Basile Morin",
+              "license": "CC BY-SA 4.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Bamboo_Grove,_Arashiyama,_Kyoto,_Japan.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "Tenryu-ji Garden",
+            "detail": "Visit the garden if it interests you, allowing time to sit quietly and rest.",
+            "time": "11:00",
+            "photo": {
+              "asset": "sight-kyoto-27",
+              "thumbnail": "sight-kyoto-27-thumb",
+              "title": "Tenryu-ji Garden",
+              "author": "osakaosaka",
+              "license": "CC BY-SA 3.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/3.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Tenryuji_Kyoto.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "Togetsukyo Bridge & the river",
+            "detail": "Walk along part of the river in the afternoon and return to the city later.",
+            "time": "14:30",
+            "photo": {
+              "asset": "sight-kyoto-28",
+              "thumbnail": "sight-kyoto-28-thumb",
+              "title": "Togetsukyo Bridge",
+              "author": "Basile Morin",
+              "license": "CC BY-SA 4.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Togetsu-kyo_bridge_at_dusk,_Kyoto,_Japan.jpg"
+            }
+          },
+          {
+            "category": "吃什么",
+            "title": "Tofu dishes or noodles in Arashiyama",
+            "detail": "Eat nearby rather than rearranging the route for a popular restaurant.",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "Train to and from Arashiyama",
+            "detail": "Compare JR, Hankyu and Randen connections from your accommodation. Check tickets separately.",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "Stay around Kyoto Station or Shijo",
+            "detail": "Choose a base to suit your rail connections and evening dining habits. No specific hotel is recommended.",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "A few tips for today",
+            "detail": "Shorten the riverside walk in the rain. Avoid squeezing Arashiyama and Higashiyama into the same day.",
+            "time": ""
+          }
+        ]
+      },
+      {
+        "title": "Fushimi & Central Kyoto",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "Fushimi Inari Taisha",
+            "detail": "Walk the torii-lined paths in the morning and climb only as far as you feel comfortable.",
+            "time": "08:30",
+            "photo": {
+              "asset": "sight-kyoto-29",
+              "thumbnail": "sight-kyoto-29-thumb",
+              "title": "Fushimi Inari Taisha",
+              "author": "Basile Morin",
+              "license": "CC BY-SA 4.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Torii_path_with_lantern_at_Fushimi_Inari_Taisha_Shrine,_Kyoto,_Japan.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "Nishiki Market",
+            "detail": "Explore the central neighborhood in the afternoon. Eat purchased food only in permitted areas.",
+            "time": "13:30",
+            "photo": {
+              "asset": "sight-kyoto-30",
+              "thumbnail": "sight-kyoto-30-thumb",
+              "title": "Nishiki Market",
+              "author": "matsuyuki",
+              "license": "CC BY-SA 2.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/2.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Nishiki_Ichiba_by_matsuyuki.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "The Kamo River & Shijo",
+            "detail": "Rest by the river in the early evening, switching to indoor activities if it rains.",
+            "time": "16:30",
+            "photo": {
+              "asset": "sight-kyoto-31",
+              "thumbnail": "sight-kyoto-31-thumb",
+              "title": "Cherry blossoms along the Kamo River",
+              "author": "Moja",
+              "license": "CC BY-SA 3.0",
+              "licenseURL": "http://creativecommons.org/licenses/by-sa/3.0/",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Kamogawa_sakura.jpg"
+            }
+          },
+          {
+            "category": "吃什么",
+            "title": "Market snacks & set meals",
+            "detail": "Try small portions of different flavors, then have dinner near your accommodation.",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "Train to Fushimi, then into the city center",
+            "detail": "Prioritize rail travel. After leaving the station, use walking directions to find the entrance.",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "Stay around Kyoto Station or Shijo",
+            "detail": "Choose a base to suit your rail connections and evening dining habits. No specific hotel is recommended.",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "A few tips for today",
+            "detail": "The uphill paths at Fushimi Inari include steps. You do not have to walk the entire mountain.",
+            "time": ""
+          }
+        ]
+      },
+      {
+        "title": "A Castle, Gardens & Time to Spare",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "Nijo Castle",
+            "detail": "Visit the buildings and gardens in the morning. Check closure dates separately.",
+            "time": "09:30",
+            "photo": {
+              "asset": "sight-kyoto-32",
+              "thumbnail": "sight-kyoto-32-thumb",
+              "title": "Nijo Castle",
+              "author": "Tino Warinowski (Chino)",
+              "license": "Public domain",
+              "licenseURL": "https://creativecommons.org/publicdomain/mark/1.0/",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:NinomaruPalace.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "Around Kyoto Gyoen or Kyoto Station",
+            "detail": "Choose a gentle afternoon walk that fits your onward journey.",
+            "time": "13:00",
+            "photo": {
+              "asset": "sight-kyoto-33",
+              "thumbnail": "sight-kyoto-33-thumb",
+              "title": "Kyoto Imperial Palace",
+              "author": "加茂川の民",
+              "license": "CC0",
+              "licenseURL": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:%E7%BE%8E%E3%81%97%E3%81%8D%E4%BA%AC%E9%83%BD%E5%BE%A1%E6%89%80.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "Collect your bags & leave Kyoto",
+            "detail": "Work backwards from your actual train time to decide when to finish.",
+            "time": "15:00"
+          },
+          {
+            "category": "吃什么",
+            "title": "An easy lunch before departure",
+            "detail": "A set meal or bento leaves time to organize your luggage.",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "Subway to Nijo Castle, then to your departure station",
+            "detail": "Leave large bags at your accommodation if possible rather than bringing them through narrow lanes.",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "Stay around Kyoto Station or Shijo",
+            "detail": "Choose a base to suit your rail connections and evening dining habits. No specific hotel is recommended.",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "A few tips for today",
+            "detail": "Cherry blossom and autumn foliage dates vary each year. Swap gardens to suit the season; particular displays are not guaranteed.",
+            "time": ""
+          }
+        ]
+      }
+    ],
+    "coverCredit": {
+      "title": "Water reflection of Kinkaku-ji Temple a sunny day, Kyoto, Japan.jpg",
+      "author": "Basile Morin",
+      "license": "CC BY-SA 4.0",
+      "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+      "url": "https://commons.wikimedia.org/wiki/File:Water_reflection_of_Kinkaku-ji_Temple_a_sunny_day,_Kyoto,_Japan.jpg",
+      "note": "Images are resized and compressed, and may be cropped for display. Their licenses are independent of the app code."
+    }
+  },
+  {
+    "id": "kobe",
+    "destination": "Kobe",
+    "country": "Japan",
+    "theme": "Harbor & Hills",
+    "summary": "Spend 3 days around the harbor, Kitano and Arima, giving city walks and hot springs their own day.",
+    "cover": "template-kobe",
+    "reviewedOn": "2026-09-30",
+    "sources": [
+      {
+        "title": "Kobe Official Guide: First-Time Visitors",
+        "url": "https://www.feel-kobe.jp/en/stories/firsttime"
+      },
+      {
+        "title": "Kobe Official Guide: Harborland",
+        "url": "https://www.feel-kobe.jp/en/attractions/detail_1008.html"
+      }
+    ],
+    "days": [
+      {
+        "title": "Motomachi & the Harbor",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "Nankinmachi & Motomachi",
+            "detail": "Explore the neighborhood in the morning and get a feel for the city.",
+            "time": "10:00",
+            "photo": {
+              "asset": "sight-kobe-34",
+              "thumbnail": "sight-kobe-34-thumb",
+              "title": "Nankinmachi",
+              "author": "663highland",
+              "license": "CC BY 2.5",
+              "licenseURL": "https://creativecommons.org/licenses/by/2.5",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Kobe_nankinmachi01s3200.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "Meriken Park",
+            "detail": "See the harbor buildings on an afternoon waterfront walk. Going inside the Port Tower is optional.",
+            "time": "14:00",
+            "photo": {
+              "asset": "sight-kobe-35",
+              "thumbnail": "sight-kobe-35-thumb",
+              "title": "Meriken Park",
+              "author": "Mocchy",
+              "license": "Public domain",
+              "licenseURL": "https://creativecommons.org/publicdomain/mark/1.0/",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Kobe_Meriken_Park_(daytime).JPG"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "Harborland",
+            "detail": "Walk the waterfront in the early evening and decide whether to stay for night views based on the weather.",
+            "time": "17:00",
+            "photo": {
+              "asset": "sight-kobe-36",
+              "thumbnail": "sight-kobe-36-thumb",
+              "title": "Harborland",
+              "author": "Oilstreet",
+              "license": "CC BY 2.5",
+              "licenseURL": "https://creativecommons.org/licenses/by/2.5",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Harborland_Kobe_Japan01-r.jpg"
+            }
+          },
+          {
+            "category": "吃什么",
+            "title": "Nankinmachi snacks",
+            "detail": "Try a few small bites, then choose an everyday restaurant near Motomachi for dinner.",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "Train to Motomachi, then walk towards the harbor",
+            "detail": "Break the harbor walk into sections. Return to Sannomiya by train or other public transport.",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "Stay around Sannomiya or Motomachi",
+            "detail": "Prioritize convenient rail connections. Visit Arima Onsen as a day trip, or arrange your own overnight stay.",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "A few tips for today",
+            "detail": "Keep waterfront visits shorter in strong winds. Check cruise and Port Tower tickets separately.",
+            "time": ""
+          }
+        ]
+      },
+      {
+        "title": "Kitano & Sannomiya",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "Kitano Ijinkan district",
+            "detail": "Explore the slopes and public streets in the morning, choosing one or two open historic houses to visit.",
+            "time": "09:30",
+            "photo": {
+              "asset": "sight-kobe-37",
+              "thumbnail": "sight-kobe-37-thumb",
+              "title": "Kitano Weathercock House",
+              "author": "663highland",
+              "license": "CC BY 2.5",
+              "licenseURL": "https://creativecommons.org/licenses/by/2.5",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Kobe_kitano_thomas_house07_2816.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "Sannomiya neighborhood",
+            "detail": "Return to the center in the afternoon for a break, browsing or coffee.",
+            "time": "14:00",
+            "photo": {
+              "asset": "sight-kobe-38",
+              "thumbnail": "sight-kobe-38-thumb",
+              "title": "Sannomiya neighborhood",
+              "author": "DVMG",
+              "license": "CC BY 3.0",
+              "licenseURL": "https://creativecommons.org/licenses/by/3.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Sannomiya_Center-Gai_-_panoramio.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "Dinner in the city",
+            "detail": "Leave the evening for a restaurant you have booked, or choose freely on the day.",
+            "time": "17:30"
+          },
+          {
+            "category": "吃什么",
+            "title": "An optional Kobe beef meal",
+            "detail": "Confirm the restaurant, menu and budget first. No set menu or successful reservation is assumed.",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "Walk or take a short transfer from Sannomiya",
+            "detail": "Kitano has slopes. Use public transport or a taxi if walking is tiring.",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "Stay around Sannomiya or Motomachi",
+            "detail": "Prioritize convenient rail connections. Visit Arima Onsen as a day trip, or arrange your own overnight stay.",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "A few tips for today",
+            "detail": "Confirm dining reservations and cancellation terms yourself. Avoid filling the day with queues for famous restaurants.",
+            "time": ""
+          }
+        ]
+      },
+      {
+        "title": "Arima Onsen & Departure",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "Arima Onsen town",
+            "detail": "Explore the hot-spring town in the morning and try a local snack.",
+            "time": "10:00",
+            "photo": {
+              "asset": "sight-kobe-39",
+              "thumbnail": "sight-kobe-39-thumb",
+              "title": "Kin no Yu, Arima Onsen",
+              "author": "663highland",
+              "license": "CC BY 2.5",
+              "licenseURL": "https://creativecommons.org/licenses/by/2.5",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Kin-no-yu_Arima_Onsen03s3s.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "An optional day-use hot spring",
+            "detail": "Choose a facility that is open and check bathing rules and reservations separately.",
+            "time": "12:30",
+            "photo": {
+              "asset": "sight-kobe-39",
+              "thumbnail": "sight-kobe-39-thumb",
+              "title": "Kin no Yu, Arima Onsen",
+              "author": "663highland",
+              "license": "CC BY 2.5",
+              "licenseURL": "https://creativecommons.org/licenses/by/2.5",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Kin-no-yu_Arima_Onsen03s3s.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "Return to Sannomiya for your bags",
+            "detail": "If you depart early, move the hot-spring trip to day two or leave it out.",
+            "time": "15:00"
+          },
+          {
+            "category": "吃什么",
+            "title": "Lunch in the hot-spring town",
+            "detail": "Have a nearby set meal or noodles and leave plenty of time to return.",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "Check return transport between Sannomiya & Arima in advance",
+            "detail": "Compare rail and bus connections and plan around that day's timetable.",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "Stay around Sannomiya or Motomachi",
+            "detail": "Prioritize convenient rail connections. Visit Arima Onsen as a day trip, or arrange your own overnight stay.",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "A few tips for today",
+            "detail": "Bathing rules differ between hot-spring facilities, so check before you go. Avoid relying on the last return service.",
+            "time": ""
+          }
+        ]
+      }
+    ],
+    "coverCredit": {
+      "title": "Kobe skyline and Harbor Highway.jpg",
+      "author": "Dudva",
+      "license": "CC0",
+      "licenseURL": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "url": "https://commons.wikimedia.org/wiki/File:Kobe_skyline_and_Harbor_Highway.jpg",
+      "note": "Images are resized and compressed, and may be cropped for display. Their licenses are independent of the app code."
+    }
+  },
+  {
+    "id": "fuji",
+    "destination": "Mount Fuji",
+    "country": "Japan",
+    "theme": "Views from the Lakes",
+    "summary": "Explore Lake Kawaguchi, Fujiyoshida and Oshino over 3 days. This trip focuses on views from the lakeshore and does not include a summit climb.",
+    "cover": "template-fuji",
+    "reviewedOn": "2026-09-30",
+    "sources": [
+      {
+        "title": "Japan National Tourism Organization: Fuji Five Lakes",
+        "url": "https://www.japan.travel/en/itineraries/fuji-five-lakes-itinerary/"
+      },
+      {
+        "title": "Japan National Tourism Organization: Oshino Hakkai",
+        "url": "https://www.japan.travel/en/spot/1327/"
+      }
+    ],
+    "days": [
+      {
+        "title": "Arrive at Lake Kawaguchi",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "Lake Kawaguchi waterfront",
+            "detail": "Drop off your bags after arriving, then walk along the lakeshore near your accommodation.",
+            "time": "13:00",
+            "photo": {
+              "asset": "sight-fuji-40",
+              "thumbnail": "sight-fuji-40-thumb",
+              "title": "Lake Kawaguchi waterfront",
+              "author": "Midori",
+              "license": "CC BY 3.0",
+              "licenseURL": "https://creativecommons.org/licenses/by/3.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Lake_Kawaguchiko_Sakura_Mount_Fuji_4.JPG"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "Oishi Park",
+            "detail": "Visit in the afternoon if the weather and transport connections suit. Move it to tomorrow if visibility is poor.",
+            "time": "15:00",
+            "photo": {
+              "asset": "sight-fuji-41",
+              "thumbnail": "sight-fuji-41-thumb",
+              "title": "Oishi Park",
+              "author": "Alpsdake",
+              "license": "CC BY-SA 4.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Mount_Fuji_from_Oishi_Park.jpg"
+            }
+          },
+          {
+            "category": "吃什么",
+            "title": "Yamanashi hoto noodles",
+            "detail": "Try the local noodles and check evening restaurant opening hours ahead of time.",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "Travel from Tokyo to Kawaguchiko",
+            "detail": "Check highway buses from the Shinjuku area or rail routes and reservations in advance. Choose the service that suits you.",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "Stay near Kawaguchiko Station or the lake",
+            "detail": "Choose accommodation with convenient access to transport, and check ahead whether dinner needs a reservation.",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "A few tips for today",
+            "detail": "Clouds may hide Mount Fuji. Swap days as needed; a view of the summit is not guaranteed.",
+            "time": ""
+          }
+        ]
+      },
+      {
+        "title": "Fujiyoshida & the Lakeshore",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "Arakurayama Sengen Park",
+            "detail": "Choose a morning viewpoint according to the weather. There are many steps, so decide how far to climb based on your fitness.",
+            "time": "09:00",
+            "photo": {
+              "asset": "sight-fuji-42",
+              "thumbnail": "sight-fuji-42-thumb",
+              "title": "Chureito Pagoda, Arakurayama Sengen Park",
+              "author": "reggiepen (Flickr)",
+              "license": "CC BY 2.0",
+              "licenseURL": "https://creativecommons.org/licenses/by/2.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Chuurei-tou_Fujiyoshida_17025277650_c59733d6ba_o.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "Fujiyoshida streets",
+            "detail": "Explore public streets in the afternoon. Do not stand in the road to take photos.",
+            "time": "13:00",
+            "photo": {
+              "asset": "sight-fuji-43",
+              "thumbnail": "sight-fuji-43-thumb",
+              "title": "Honcho Street, Fujiyoshida",
+              "author": "DimiTalen",
+              "license": "CC0",
+              "licenseURL": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Honcho_Street_with_Mount_Fuji_in_the_daytime,_Fujiyoshida,_2016.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "Evening views at Lake Kawaguchi",
+            "detail": "Return to the lake to relax rather than adding a distant sight.",
+            "time": "16:00",
+            "photo": {
+              "asset": "sight-fuji-40",
+              "thumbnail": "sight-fuji-40-thumb",
+              "title": "Lake Kawaguchi & Mount Fuji",
+              "author": "Midori",
+              "license": "CC BY 3.0",
+              "licenseURL": "https://creativecommons.org/licenses/by/3.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Lake_Kawaguchiko_Sakura_Mount_Fuji_4.JPG"
+            }
+          },
+          {
+            "category": "吃什么",
+            "title": "Yoshida udon",
+            "detail": "Choose nearby udon for lunch and check opening hours yourself.",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "Train or bus to and from Fujiyoshida",
+            "detail": "Check connections and walking access points first, leaving a buffer for the return journey.",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "Stay near Kawaguchiko Station or the lake",
+            "detail": "Choose accommodation with convenient access to transport, and check ahead whether dinner needs a reservation.",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "A few tips for today",
+            "detail": "Do not copy photos taken at dangerous road junctions. In severe weather, choose an indoor exhibition or take a rest.",
+            "time": ""
+          }
+        ]
+      },
+      {
+        "title": "Oshino Hakkai & Departure",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "Oshino Hakkai",
+            "detail": "Explore the village and ponds in the morning, keeping public paths clear.",
+            "time": "09:30",
+            "photo": {
+              "asset": "sight-fuji-44",
+              "thumbnail": "sight-fuji-44-thumb",
+              "title": "Oshino Hakkai",
+              "author": "Snap55",
+              "license": "CC BY 3.0",
+              "licenseURL": "https://creativecommons.org/licenses/by/3.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Hannoki_Pond,_Oshino_Hakkai.JPG"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "Return to Kawaguchiko for your bags",
+            "detail": "Allow time for your onward connections in the afternoon rather than adding another lake visit.",
+            "time": "13:00"
+          },
+          {
+            "category": "吃什么",
+            "title": "A simple village lunch",
+            "detail": "Choose a restaurant with clearly displayed prices and plan food or drinks for the return journey.",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "Bus to Oshino, then back to Kawaguchiko before departure",
+            "detail": "Services may be infrequent. Check both outbound and return timetables for your chosen date.",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "Stay near Kawaguchiko Station or the lake",
+            "detail": "Choose accommodation with convenient access to transport, and check ahead whether dinner needs a reservation.",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "A few tips for today",
+            "detail": "This is a sightseeing trip at the foot of the mountain, not a climbing itinerary. Mountain transport may change with the weather.",
+            "time": ""
+          }
+        ]
+      }
+    ],
+    "coverCredit": {
+      "title": "Lake Kawaguchiko Sakura Mount Fuji 4.JPG",
+      "author": "Midori",
+      "license": "CC BY 3.0",
+      "licenseURL": "https://creativecommons.org/licenses/by/3.0",
+      "url": "https://commons.wikimedia.org/wiki/File:Lake_Kawaguchiko_Sakura_Mount_Fuji_4.JPG",
+      "note": "Images are resized and compressed, and may be cropped for display. Their licenses are independent of the app code."
+    }
+  },
+  {
+    "id": "newyork",
+    "destination": "New York",
+    "country": "United States",
+    "theme": "Art & Neighborhoods",
+    "summary": "Spend 5 days exploring Midtown, Central Park, Lower Manhattan, Brooklyn and the West Side in separate areas, with room to adjust to jet lag.",
+    "cover": "template-newyork",
+    "reviewedOn": "2026-09-30",
+    "sources": [
+      {
+        "title": "Statue of Liberty National Monument: Plan Your Visit",
+        "url": "https://www.nps.gov/stli/planyourvisit/index.htm"
+      },
+      {
+        "title": "The Metropolitan Museum of Art: Plan Your Visit",
+        "url": "https://www.metmuseum.org/plan-your-visit"
+      },
+      {
+        "title": "Official New York City Tourism Map",
+        "url": "https://www.nyctourism.com/NYCTourismOVM-090924.pdf"
+      }
+    ],
+    "days": [
+      {
+        "title": "A First Look at Midtown",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "Grand Central Terminal",
+            "detail": "See the public concourse in the morning without blocking commuters.",
+            "time": "10:00",
+            "photo": {
+              "asset": "sight-newyork-grand-central-terminal",
+              "thumbnail": "sight-newyork-grand-central-terminal-thumb",
+              "title": "Main Concourse, Grand Central Terminal",
+              "author": "D. Benjamin Miller",
+              "license": "CC0",
+              "licenseURL": "https://creativecommons.org/publicdomain/zero/1.0/deed.en",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Main_Concourse%2C_Grand_Central_Terminal%2C_August_30%2C_2024_-_001_%28cropped%29.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "Bryant Park & the library area",
+            "detail": "Walk and rest in the afternoon. Check indoor opening hours and visiting requirements separately.",
+            "time": "13:30",
+            "photo": {
+              "asset": "sight-newyork-bryant-park",
+              "thumbnail": "sight-newyork-bryant-park-thumb",
+              "title": "Bryant Park",
+              "author": "Jean-Christophe BENOIST",
+              "license": "CC BY 3.0",
+              "licenseURL": "https://creativecommons.org/licenses/by/3.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:New-York_-_Bryant_Park.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "Times Square",
+            "detail": "Make a brief early-evening stop. If you want to see a show, replace the evening plans with it.",
+            "time": "17:00",
+            "photo": {
+              "asset": "sight-newyork-times-square",
+              "thumbnail": "sight-newyork-times-square-thumb",
+              "title": "Times Square",
+              "author": "Terabass",
+              "license": "CC BY-SA 3.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/3.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:New_york_times_square-terabass.jpg"
+            }
+          },
+          {
+            "category": "吃什么",
+            "title": "Bagels & New York pizza",
+            "detail": "Keep meals simple and leave room for rest and adjusting to the time difference.",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "Subway to Midtown, then walk nearby",
+            "detail": "Check MTA service notices before travelling, especially weekend changes.",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "Stay near a subway station in Manhattan",
+            "detail": "Choose Midtown or Lower Manhattan to suit your budget and transport needs. Confirm the total price and additional fees.",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "A few tips for today",
+            "detail": "Keep the first day light. Buy show tickets only through a seller you have verified yourself.",
+            "time": ""
+          }
+        ]
+      },
+      {
+        "title": "Central Park & Art",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "Central Park",
+            "detail": "Choose a short morning route and adjust it to the weather and your energy level.",
+            "time": "09:30",
+            "photo": {
+              "asset": "sight-newyork-central-park",
+              "thumbnail": "sight-newyork-central-park-thumb",
+              "title": "Bethesda Terrace, Central Park",
+              "author": "Zachary V. Sunderman",
+              "license": "CC BY-SA 4.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Bethesda_Terrace%2C_Central_Park_%28November%2C_2019%29.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "The Metropolitan Museum of Art",
+            "detail": "Allow half a day in the afternoon and focus on the collections that interest you.",
+            "time": "13:00",
+            "photo": {
+              "asset": "sight-newyork-metropolitan-museum-of-art",
+              "thumbnail": "sight-newyork-metropolitan-museum-of-art-thumb",
+              "title": "The Metropolitan Museum of Art",
+              "author": "Hugo Schneider",
+              "license": "CC BY-SA 2.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/2.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Metropolitan_Museum_of_Art_%28The_Met%29_-_Central_Park%2C_NYC.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "Dinner on the Upper East Side",
+            "detail": "Eat nearby after your visit to avoid crossing the city again.",
+            "time": "17:00"
+          },
+          {
+            "category": "吃什么",
+            "title": "Lunch near the park",
+            "detail": "Choose a nearby café or simple meal rather than spending the day in queues.",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "Subway or bus to Central Park & the Upper East Side",
+            "detail": "Swap the museum and park visits around if needed to suit that day's opening hours.",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "Stay near a subway station in Manhattan",
+            "detail": "Choose Midtown or Lower Manhattan to suit your budget and transport needs. Confirm the total price and additional fees.",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "A few tips for today",
+            "detail": "The Met is usually closed on Wednesdays. Check official opening days before leaving rather than following the template dates blindly.",
+            "time": ""
+          }
+        ]
+      },
+      {
+        "title": "The Statue of Liberty & Lower Manhattan",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "Liberty Island & Ellis Island",
+            "detail": "Make this the day's main visit, allowing at least half a day. Your ticket type determines what you can access.",
+            "time": "09:00",
+            "photo": {
+              "asset": "sight-newyork-statue-of-liberty",
+              "thumbnail": "sight-newyork-statue-of-liberty-thumb",
+              "title": "Statue of Liberty",
+              "author": "AskALotl",
+              "license": "CC0",
+              "licenseURL": "https://creativecommons.org/publicdomain/zero/1.0/deed.en",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Front_view_of_Statue_of_Liberty_%28cropped%29.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "The Battery",
+            "detail": "Rest here after the ferry returns. Avoid adding another major museum today.",
+            "time": "15:00",
+            "photo": {
+              "asset": "sight-newyork-the-battery-manhattan",
+              "thumbnail": "sight-newyork-the-battery-manhattan-thumb",
+              "title": "The Battery",
+              "author": "Gryffindor",
+              "license": "CC BY-SA 3.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/3.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Battery_Park.JPG"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "Financial District streets",
+            "detail": "Take a short walk if you have energy left, or go straight back to your accommodation.",
+            "time": "16:00",
+            "photo": {
+              "asset": "sight-newyork-wall-street",
+              "thumbnail": "sight-newyork-wall-street-thumb",
+              "title": "Wall Street",
+              "author": "Ajay Suresh",
+              "license": "CC BY 4.0",
+              "licenseURL": "https://creativecommons.org/licenses/by/4.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Wall_Street_%2855314253740%29.jpg"
+            }
+          },
+          {
+            "category": "吃什么",
+            "title": "An easy dinner in Lower Manhattan",
+            "detail": "Arrange simple meals around your ferry trip to suit your needs.",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "Travel to the official departure point & take the authorized ferry",
+            "detail": "Allow time for the security and meeting instructions on your ticket. Check the actual sailing time separately.",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "Stay near a subway station in Manhattan",
+            "detail": "Choose Midtown or Lower Manhattan to suit your budget and transport needs. Confirm the total price and additional fees.",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "A few tips for today",
+            "detail": "Use the NPS link to confirm Statue City Cruises as the sole authorized ticket seller. Pedestal and crown access require separate advance reservations.",
+            "time": ""
+          }
+        ]
+      },
+      {
+        "title": "Brooklyn's Waterfront",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "Brooklyn Bridge",
+            "detail": "Walk across the bridge or just part of it in the morning, keeping the path clear.",
+            "time": "09:30",
+            "photo": {
+              "asset": "sight-newyork-brooklyn-bridge",
+              "thumbnail": "sight-newyork-brooklyn-bridge-thumb",
+              "title": "Brooklyn Bridge",
+              "author": "Christian David",
+              "license": "CC BY-SA 4.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Brooklyn_Bridge_and_the_Lower_Manhattan_skyline_from_Pebble_Beach%2C_New_York.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "DUMBO",
+            "detail": "Explore the neighborhood and waterfront in the afternoon and find somewhere to sit and rest.",
+            "time": "13:00",
+            "photo": {
+              "asset": "sight-newyork-dumbo-brooklyn",
+              "thumbnail": "sight-newyork-dumbo-brooklyn-thumb",
+              "title": "Manhattan Bridge from Washington Street, DUMBO",
+              "author": "Wgreaves",
+              "license": "CC BY-SA 4.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:View_of_Manhattan_Bridge_from_Washington_Street_in_DUMBO%2C_Brooklyn.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "Brooklyn Bridge Park",
+            "detail": "Look across the waterfront towards Manhattan in the early evening. Return sooner if the weather turns.",
+            "time": "16:00",
+            "photo": {
+              "asset": "sight-newyork-brooklyn-bridge-park",
+              "thumbnail": "sight-newyork-brooklyn-bridge-park-thumb",
+              "title": "Brooklyn Bridge Park",
+              "author": "Wgreaves",
+              "license": "CC BY-SA 4.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:View_of_Brooklyn_Bridge_Park_from_Manhattan_Bridge.jpg"
+            }
+          },
+          {
+            "category": "吃什么",
+            "title": "Brooklyn pizza or coffee",
+            "detail": "Choose a place based on current queues rather than treating a famous restaurant as essential.",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "Subway connections on both sides, with a walk over the bridge",
+            "detail": "Walk the bridge in one direction and take the subway for the other to save energy.",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "Stay near a subway station in Manhattan",
+            "detail": "Choose Midtown or Lower Manhattan to suit your budget and transport needs. Confirm the total price and additional fees.",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "A few tips for today",
+            "detail": "It can be windy on the bridge, so wear comfortable shoes. Stay out of the road when taking neighborhood photos.",
+            "time": ""
+          }
+        ]
+      },
+      {
+        "title": "The West Side & Departure",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "The High Line",
+            "detail": "Choose a section for a morning walk. Check access and opening arrangements separately.",
+            "time": "09:30",
+            "photo": {
+              "asset": "sight-newyork-high-line",
+              "thumbnail": "sight-newyork-high-line-thumb",
+              "title": "The High Line",
+              "author": "Dansnguyen",
+              "license": "CC0",
+              "licenseURL": "https://creativecommons.org/publicdomain/zero/1.0/deed.en",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:High_Line_Park%2C_Section_1a.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "Chelsea Market",
+            "detail": "Organize your bags after lunch and shorten the visit to fit your departure time.",
+            "time": "12:00",
+            "photo": {
+              "asset": "sight-newyork-chelsea-market",
+              "thumbnail": "sight-newyork-chelsea-market-thumb",
+              "title": "Chelsea Market",
+              "author": "Ajay Suresh from New York, NY, USA",
+              "license": "CC BY 2.0",
+              "licenseURL": "https://creativecommons.org/licenses/by/2.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Chelsea_Market_%2849052085186%29.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "Head to the airport or station",
+            "detail": "Use your actual booking to plan the transfer and arrival time.",
+            "time": "15:00"
+          },
+          {
+            "category": "吃什么",
+            "title": "Lunch at the market",
+            "detail": "Choose a simple meal you like rather than trying every stall.",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "Subway to Chelsea, then a route to your departure airport",
+            "detail": "Airport connections vary considerably. Confirm your own terminal.",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "Stay near a subway station in Manhattan",
+            "detail": "Choose Midtown or Lower Manhattan to suit your budget and transport needs. Confirm the total price and additional fees.",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "A few tips for today",
+            "detail": "Skip the outdoor walkway if it rains. Allow time to collect luggage and pass through airport security.",
+            "time": ""
+          }
+        ]
+      }
+    ],
+    "coverCredit": {
+      "title": "Lower Manhattan from Jersey City September 2020 panorama.jpg",
+      "author": "King of Hearts",
+      "license": "CC BY-SA 4.0",
+      "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+      "url": "https://commons.wikimedia.org/wiki/File:Lower_Manhattan_from_Jersey_City_September_2020_panorama.jpg",
+      "note": "Images are resized and compressed, and may be cropped for display. Their licenses are independent of the app code."
+    }
+  },
+  {
+    "id": "paris",
+    "destination": "Paris",
+    "country": "France",
+    "theme": "Art & the Seine",
+    "summary": "Explore museums, riverbanks and neighborhoods on separate days over 4 days. Combine a few must-see sights with unhurried walks.",
+    "cover": "template-paris",
+    "reviewedOn": "2026-09-30",
+    "sources": [
+      {
+        "title": "Paris Official Tourist Office: Classic Sights",
+        "url": "https://parisjetaime.com/eng/article/the-essentials-a264"
+      },
+      {
+        "title": "Paris Official Tourist Office: Explore by Neighborhood",
+        "url": "https://parisjetaime.com/eng/article/50-top-sights-and-attractions-in-a-weekend-a1012"
+      },
+      {
+        "title": "Paris Official Tourist Office: Montmartre",
+        "url": "https://parisjetaime.com/eng/article/montmartre-village-in-paris-a728"
+      }
+    ],
+    "days": [
+      {
+        "title": "The Seine & the Eiffel Tower",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "Around the Trocadéro",
+            "detail": "Enjoy a morning view of the Eiffel Tower, changing your photo spot according to the crowds.",
+            "time": "09:30",
+            "photo": {
+              "asset": "sight-paris-trocad-ro",
+              "thumbnail": "sight-paris-trocad-ro-thumb",
+              "title": "Eiffel Tower from the Trocadéro Gardens",
+              "author": "Nelson Pérez",
+              "license": "CC BY-SA 3.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/3.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Eiffel_Tower_from_Jardins_du_Trocad%C3%A9ro_2008.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "Eiffel Tower & Champ de Mars",
+            "detail": "Explore the park below the tower in the afternoon. Arrange a tower visit separately around your reservation.",
+            "time": "13:00",
+            "photo": {
+              "asset": "sight-paris-eiffel-tower",
+              "thumbnail": "sight-paris-eiffel-tower-thumb",
+              "title": "Eiffel Tower",
+              "author": "Benh LIEU SONG",
+              "license": "CC BY-SA 3.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/3.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Tour_Eiffel_Wikimedia_Commons_%28cropped%29.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "A Seine walk or cruise",
+            "detail": "Choose one in the early evening rather than repeating the same stretch.",
+            "time": "17:00",
+            "photo": {
+              "asset": "sight-paris-seine",
+              "thumbnail": "sight-paris-seine-thumb",
+              "title": "The Seine in Paris",
+              "author": "Mortimer62",
+              "license": "CC BY-SA 2.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/2.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Bercy%2C_Paris_01.jpg"
+            }
+          },
+          {
+            "category": "吃什么",
+            "title": "Bakery breakfast & bistro dinner",
+            "detail": "Order from the menu. No particular price or confirmed booking is assumed.",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "Métro connections & short riverside walks",
+            "detail": "Prioritize your tower and cruise reservation times over the suggested itinerary times.",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "Stay in the city near a Métro station",
+            "detail": "Choose a well-connected area such as the Left Bank or around the Marais to suit your budget. Confirm your own accommodation.",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "A few tips for today",
+            "detail": "Check ticket types separately for the tower and a cruise. Switch to indoor activities if it rains.",
+            "time": ""
+          }
+        ]
+      },
+      {
+        "title": "The Louvre & Gardens",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "The Louvre",
+            "detail": "Set aside half a day starting in the morning. Choose collection themes first rather than rushing through everything.",
+            "time": "09:00",
+            "photo": {
+              "asset": "sight-paris-louvre",
+              "thumbnail": "sight-paris-louvre-thumb",
+              "title": "The Louvre",
+              "author": "Benh LIEU SONG ( Flickr )",
+              "license": "CC BY-SA 3.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/3.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Louvre_Museum_Wikimedia_Commons.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "Tuileries Garden",
+            "detail": "Walk and relax in the afternoon, keeping it shorter in poor weather.",
+            "time": "14:30",
+            "photo": {
+              "asset": "sight-paris-tuileries-garden",
+              "thumbnail": "sight-paris-tuileries-garden-thumb",
+              "title": "Tuileries Garden",
+              "author": "Guilhem Vellut from Tokyo, Japan",
+              "license": "CC BY 2.0",
+              "licenseURL": "https://creativecommons.org/licenses/by/2.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Crowd_in_the_Jardin_des_Tuileries%2C_Paris_July_2014.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "Around the Palais-Royal",
+            "detail": "Find dinner in the nearby streets in the early evening.",
+            "time": "16:30",
+            "photo": {
+              "asset": "sight-paris-palais-royal",
+              "thumbnail": "sight-paris-palais-royal-thumb",
+              "title": "Palais-Royal, Paris",
+              "author": "Marie-Lan Nguyen; Grondin（色阶调整）",
+              "license": "Public domain",
+              "licenseURL": "https://commons.wikimedia.org/wiki/File:Conseil_d%27Etat_Paris_WA.jpg#Licensing",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Conseil_d%27Etat_Paris_WA.jpg"
+            }
+          },
+          {
+            "category": "吃什么",
+            "title": "A simple meal near the museum",
+            "detail": "Avoid crossing the city for a restaurant and leave time to rest.",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "Métro to the Louvre, then explore on foot",
+            "detail": "Follow the entrance and time on your reservation so you do not queue at the wrong entrance.",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "Stay in the city near a Métro station",
+            "detail": "Choose a well-connected area such as the Left Bank or around the Marais to suit your budget. Confirm your own accommodation.",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "A few tips for today",
+            "detail": "Check Louvre opening days and reservation requirements for your chosen date. Plan only one major museum today.",
+            "time": ""
+          }
+        ]
+      },
+      {
+        "title": "Île de la Cité & the Left Bank",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "Around Notre-Dame",
+            "detail": "Explore Île de la Cité in the morning. Follow official reservation and opening rules for entering buildings.",
+            "time": "09:30",
+            "photo": {
+              "asset": "sight-paris-notre-dame-de-paris",
+              "thumbnail": "sight-paris-notre-dame-de-paris-thumb",
+              "title": "Around Notre-Dame",
+              "author": "Ali Sabbagh",
+              "license": "CC0",
+              "licenseURL": "https://creativecommons.org/publicdomain/zero/1.0/deed.en",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Notre-Dame_de_Paris%2C_4_October_2017.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "An optional visit to Sainte-Chapelle",
+            "detail": "Book if it interests you. Queuing need not be a compulsory part of the day.",
+            "time": "11:30",
+            "photo": {
+              "asset": "sight-paris-sainte-chapelle",
+              "thumbnail": "sight-paris-sainte-chapelle-thumb",
+              "title": "Upper chapel, Sainte-Chapelle",
+              "author": "Didier B ( Sam67fr )",
+              "license": "CC BY-SA 2.5",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/2.5",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Sainte_Chapelle_-_Upper_level_1.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "Latin Quarter & Luxembourg Gardens",
+            "detail": "Explore the Left Bank at an easy pace in the afternoon.",
+            "time": "14:00",
+            "photo": {
+              "asset": "sight-paris-jardin-du-luxembourg",
+              "thumbnail": "sight-paris-jardin-du-luxembourg-thumb",
+              "title": "Luxembourg Gardens",
+              "author": "Kirua",
+              "license": "Public domain",
+              "licenseURL": "https://commons.wikimedia.org/wiki/File:LuxembourgMontparnasse.JPG#Licensing",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:LuxembourgMontparnasse.JPG"
+            }
+          },
+          {
+            "category": "吃什么",
+            "title": "Left Bank coffee & French homestyle food",
+            "detail": "Leave time for a leisurely lunch.",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "Métro to Île de la Cité, then walk along the Left Bank",
+            "detail": "Break the walk into sections after crossing the bridge. Finish at a Métro station when you are tired.",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "Stay in the city near a Métro station",
+            "detail": "Choose a well-connected area such as the Left Bank or around the Marais to suit your budget. Confirm your own accommodation.",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "A few tips for today",
+            "detail": "Keep quiet when visiting churches. Adjust indoor visits to fit your reservations.",
+            "time": ""
+          }
+        ]
+      },
+      {
+        "title": "Montmartre & Departure",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "Montmartre streets",
+            "detail": "Start slowly from the bottom of the hill in the morning, choosing slopes and stairs that suit your fitness.",
+            "time": "09:30",
+            "photo": {
+              "asset": "sight-paris-montmartre",
+              "thumbnail": "sight-paris-montmartre-thumb",
+              "title": "Place du Tertre, Montmartre",
+              "author": "David Monniaux",
+              "license": "CC BY-SA 3.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/3.0/",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Paris_Montmartre_Place_du_Tertre_dsc07247.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "Views around Sacré-Cœur",
+            "detail": "Make a short stop before heading down. Do not rush your departure for one last photo.",
+            "time": "11:30",
+            "photo": {
+              "asset": "sight-paris-sacr-c-ur-paris",
+              "thumbnail": "sight-paris-sacr-c-ur-paris-thumb",
+              "title": "Sacré-Cœur",
+              "author": "Tonchino",
+              "license": "CC BY-SA 3.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/3.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Le_sacre_coeur.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "Return to your accommodation for your bags",
+            "detail": "Leave in the afternoon according to your actual flight or train booking.",
+            "time": "14:00"
+          },
+          {
+            "category": "吃什么",
+            "title": "Brunch in the neighborhood",
+            "detail": "Choose a nearby restaurant and leave a buffer for departure.",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "Métro to and from Montmartre; check airport transfers separately",
+            "detail": "Confirm the departure airport and ticket type. Do not assume a city ticket covers the airport journey.",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "Stay in the city near a Métro station",
+            "detail": "Choose a well-connected area such as the Left Bank or around the Marais to suit your budget. Confirm your own accommodation.",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "A few tips for today",
+            "detail": "Skip outlying trips on departure day. Keep an eye on your belongings and avoid tickets offered by unverified intermediaries.",
+            "time": ""
+          }
+        ]
+      }
+    ],
+    "coverCredit": {
+      "title": "Bercy, Paris 01.jpg",
+      "author": "Mortimer62",
+      "license": "CC BY-SA 2.0",
+      "licenseURL": "https://creativecommons.org/licenses/by-sa/2.0",
+      "url": "https://commons.wikimedia.org/wiki/File:Bercy%2C_Paris_01.jpg",
+      "note": "Images are resized and compressed, and may be cropped for display. Their licenses are independent of the app code."
+    }
+  },
+  {
+    "id": "london",
+    "destination": "London",
+    "country": "United Kingdom",
+    "theme": "Riverbanks & Museums",
+    "summary": "Spend 4 days exploring the Thames, royal neighborhoods and museums. Pick highlights in the larger museums rather than measuring the trip by the number of stops.",
+    "cover": "template-london",
+    "reviewedOn": "2026-09-30",
+    "sources": [
+      {
+        "title": "Visit London: A First-Time Itinerary",
+        "url": "https://www.visitlondon.com/things-to-do/visiting-london-for-the-first-time/firsttime-visitors-itinerary"
+      },
+      {
+        "title": "Visit London: Three-Day Inspiration",
+        "url": "https://www.visitlondon.com/things-to-do/sightseeing/london-itinerary/three-days-in-london-itinerary"
+      }
+    ],
+    "days": [
+      {
+        "title": "Westminster & the South Bank",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "Big Ben & Parliament Square",
+            "detail": "See the riverfront and building exteriors in the morning. Check indoor visits separately.",
+            "time": "09:30",
+            "photo": {
+              "asset": "sight-london-big-ben",
+              "thumbnail": "sight-london-big-ben-thumb",
+              "title": "Big Ben & the Palace of Westminster",
+              "author": "Christian David",
+              "license": "CC BY-SA 4.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Elizabeth_Tower_and_the_north_front_of_the_Palace_of_Westminster%2C_London.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "An optional visit to Westminster Abbey",
+            "detail": "Visit according to opening hours and your reservation, or take a break in a park instead.",
+            "time": "11:00",
+            "photo": {
+              "asset": "sight-london-westminster-abbey",
+              "thumbnail": "sight-london-westminster-abbey-thumb",
+              "title": "Westminster Abbey",
+              "author": "Antiquary",
+              "license": "CC BY 4.0",
+              "licenseURL": "https://creativecommons.org/licenses/by/4.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Westminster_Abbey%2C_Westminster.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "South Bank walkway",
+            "detail": "Walk along the Thames in the afternoon, with the London Eye as an optional stop.",
+            "time": "14:00",
+            "photo": {
+              "asset": "sight-london-south-bank",
+              "thumbnail": "sight-london-south-bank-thumb",
+              "title": "South Bank walkway outside the Royal Festival Hall",
+              "author": "Doyle of London",
+              "license": "CC BY-SA 4.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:South_Bank_outside_Royal_Festival_Hall_%2801%29.jpg"
+            }
+          },
+          {
+            "category": "吃什么",
+            "title": "A simple British meal",
+            "detail": "Eat lunch nearby and find a café for shelter from the rain in the afternoon if needed.",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "Tube to Westminster, then walk across the bridge",
+            "detail": "Keep the day focused on the river instead of repeatedly changing areas for views.",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "Stay in a well-connected city neighborhood",
+            "detail": "Choose an area such as Bloomsbury or Waterloo based on your budget and airport connections. Book your own hotel.",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "A few tips for today",
+            "detail": "Services and events may affect visits to the abbey. Check the day's opening arrangements first.",
+            "time": ""
+          }
+        ]
+      },
+      {
+        "title": "Museums & the West End",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "The British Museum",
+            "detail": "Allow half a day starting in the morning. Choose galleries that interest you rather than trying to see the whole museum.",
+            "time": "10:00",
+            "photo": {
+              "asset": "sight-london-british-museum",
+              "thumbnail": "sight-london-british-museum-thumb",
+              "title": "The British Museum",
+              "author": "Ham",
+              "license": "CC BY-SA 3.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/3.0/",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:British_Museum_from_NE_2.JPG"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "Covent Garden",
+            "detail": "Browse the market and public streets in the afternoon, with time to rest.",
+            "time": "14:30",
+            "photo": {
+              "asset": "sight-london-covent-garden",
+              "thumbnail": "sight-london-covent-garden-thumb",
+              "title": "Covent Garden",
+              "author": "Diliff; SilkTork（裁切）",
+              "license": "CC BY 2.5",
+              "licenseURL": "https://creativecommons.org/licenses/by/2.5",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Covent_Garden_Interior_May_2006_crop.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "An optional West End show",
+            "detail": "Plan the evening around a show ticket you have bought, or have a relaxed dinner instead.",
+            "time": "18:00"
+          },
+          {
+            "category": "吃什么",
+            "title": "Dinner in Covent Garden",
+            "detail": "Check whether your chosen restaurant needs a reservation. A table is not assumed to be available.",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "Tube connections & a walk through Bloomsbury",
+            "detail": "Check transport back to your accommodation before the show ends.",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "Stay in a well-connected city neighborhood",
+            "detail": "Choose an area such as Bloomsbury or Waterloo based on your budget and airport connections. Book your own hotel.",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "A few tips for today",
+            "detail": "Booking requirements may differ between permanent collections and special exhibitions. Follow the performance time on your ticket.",
+            "time": ""
+          }
+        ]
+      },
+      {
+        "title": "The Tower of London & Eastern Riverfront",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "Tower of London",
+            "detail": "Visit in the morning, choosing highlights to suit your interests. Confirm your own tickets.",
+            "time": "09:30",
+            "photo": {
+              "asset": "sight-london-tower-of-london",
+              "thumbnail": "sight-london-tower-of-london-thumb",
+              "title": "Tower of London",
+              "author": "[Duncan] from Nottingham, UK",
+              "license": "CC BY 2.0",
+              "licenseURL": "https://creativecommons.org/licenses/by/2.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Tower_of_London_from_the_Shard_%288515883950%29.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "Tower Bridge",
+            "detail": "See the bridge and both riverbanks in the afternoon. An indoor visit is optional.",
+            "time": "13:00",
+            "photo": {
+              "asset": "sight-london-tower-bridge",
+              "thumbnail": "sight-london-tower-bridge-thumb",
+              "title": "Tower Bridge",
+              "author": "© User:Colin / Wikimedia Commons",
+              "license": "CC BY-SA 4.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Tower_Bridge_from_London_City_Hall_2015.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "Around Borough Market",
+            "detail": "Explore the neighborhood and food options later, checking opening arrangements separately.",
+            "time": "15:00",
+            "photo": {
+              "asset": "sight-london-borough-market",
+              "thumbnail": "sight-london-borough-market-thumb",
+              "title": "Borough Market",
+              "author": "Øyvind Holmstad / © PermaLiv AS",
+              "license": "CC BY-SA 4.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:London_2018_March_IMG_0663.jpg"
+            }
+          },
+          {
+            "category": "吃什么",
+            "title": "Market lunch & fish and chips",
+            "detail": "Choose according to opening hours and queues, keeping a nearby alternative in mind.",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "Tube to Tower Hill, then riverside walks",
+            "detail": "The market is across the river. Walk or use public transport according to your energy level.",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "Stay in a well-connected city neighborhood",
+            "detail": "Choose an area such as Bloomsbury or Waterloo based on your budget and airport connections. Book your own hotel.",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "A few tips for today",
+            "detail": "Prioritize indoor activities if it rains. Keep bridge and riverside walkways clear.",
+            "time": ""
+          }
+        ]
+      },
+      {
+        "title": "Royal London & Departure",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "Buckingham Palace exterior & St James's Park",
+            "detail": "Choose a short morning route. Do not assume there will be a Changing of the Guard ceremony.",
+            "time": "09:30",
+            "photo": {
+              "asset": "sight-london-buckingham-palace",
+              "thumbnail": "sight-london-buckingham-palace-thumb",
+              "title": "Buckingham Palace exterior",
+              "author": "Julian Herzog",
+              "license": "CC BY 4.0",
+              "licenseURL": "https://creativecommons.org/licenses/by/4.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Buckingham_Palace_London_Morning_2020_01_%28cropped%29.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "Trafalgar Square",
+            "detail": "Make a brief afternoon stop if your departure time allows, or return directly to your accommodation.",
+            "time": "12:00",
+            "photo": {
+              "asset": "sight-london-trafalgar-square",
+              "thumbnail": "sight-london-trafalgar-square-thumb",
+              "title": "Trafalgar Square",
+              "author": "Diliff",
+              "license": "CC BY-SA 3.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/3.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Trafalgar_Square%2C_London_2_-_Jun_2009.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "Collect your bags & transfer to the airport",
+            "detail": "Plan transport for your actual airport and terminal.",
+            "time": "14:00"
+          },
+          {
+            "category": "吃什么",
+            "title": "Brunch before departure",
+            "detail": "Avoid a lengthy afternoon tea so you are not rushing to catch your transport.",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "Tube & walking, with airport routes checked separately",
+            "detail": "Connections differ between London's airports. Do not assume the Tube is a direct option for all of them.",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "Stay in a well-connected city neighborhood",
+            "detail": "Choose an area such as Bloomsbury or Waterloo based on your budget and airport connections. Book your own hotel.",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "A few tips for today",
+            "detail": "Guard ceremonies, palace openings and performances are not fixed daily activities. Check the official schedule for that day.",
+            "time": ""
+          }
+        ]
+      }
+    ],
+    "coverCredit": {
+      "title": "Tower Bridge from London City Hall 2015.jpg",
+      "author": "Colin",
+      "license": "CC BY-SA 4.0",
+      "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+      "url": "https://commons.wikimedia.org/wiki/File:Tower_Bridge_from_London_City_Hall_2015.jpg",
+      "note": "Images are resized and compressed, and may be cropped for display. Their licenses are independent of the app code."
+    }
+  },
+  {
+    "id": "dalian",
+    "destination": "Dalian",
+    "country": "China",
+    "theme": "Coast & City Walks",
+    "summary": "Spend 3 days around Xinghai Bay, Donggang and Binhai Road, walking just one stretch of coast each day.",
+    "cover": "template-dalian",
+    "reviewedOn": "2026-09-30",
+    "sources": [
+      {
+        "title": "Liaoning Provincial Government: Dalian Coastal Routes",
+        "url": "https://www.ln.gov.cn/web/ywdt/qsgd/ass_2_1/2024060709090185410/index.shtml"
+      },
+      {
+        "title": "Dalian Public Transport Group: Sightseeing Bus Information",
+        "url": "https://www.dltransgrp.com/subway/subwayShow.do?columnId=serviceCenter3link&newsId=e7de5245031e41278fbcad0d3ae9c03f"
+      }
+    ],
+    "days": [
+      {
+        "title": "A Leisurely Day at Xinghai Bay",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "Xinghai Square",
+            "detail": "Walk around the square and waterfront in the morning without planning an overly long route.",
+            "time": "10:00",
+            "photo": {
+              "asset": "sight-dalian-45",
+              "thumbnail": "sight-dalian-45-thumb",
+              "title": "Xinghai Square",
+              "author": "HSJ233",
+              "license": "CC BY-SA 4.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Xinghai_Square_.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "Western Binhai Road",
+            "detail": "Choose an open stretch of walkway in the afternoon and turn back when it suits your energy level.",
+            "time": "14:00",
+            "photo": {
+              "asset": "sight-dalian-46",
+              "thumbnail": "sight-dalian-46-thumb",
+              "title": "Xinghai Bay Bridge & coastline",
+              "author": "Yhz1221",
+              "license": "CC BY-SA 4.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Dalian_Xinghai_Bay_Bridge.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "Evening views of Xinghai Bay",
+            "detail": "Return to the sea for a rest in the early evening. Finish sooner in strong winds.",
+            "time": "17:00",
+            "photo": {
+              "asset": "sight-dalian-46",
+              "thumbnail": "sight-dalian-46-thumb",
+              "title": "Xinghai Bay Bridge & coastline",
+              "author": "Yhz1221",
+              "license": "CC BY-SA 4.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Dalian_Xinghai_Bay_Bridge.jpg"
+            }
+          },
+          {
+            "category": "吃什么",
+            "title": "Seafood & Dalian homestyle dishes",
+            "detail": "Confirm unit prices, measurement units and preparation fees before ordering. No particular restaurant is essential.",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "Public transport to Xinghai Bay & short walks",
+            "detail": "You do not need to walk all of Binhai Road. Use buses or taxis to connect sections.",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "Stay around Zhongshan Square or Xinghai Bay",
+            "detail": "Choose Zhongshan Square for city dining or Xinghai Bay for sea views, balancing transport and budget.",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "A few tips for today",
+            "detail": "Wind and temperature can change noticeably by the sea. Do not climb fences or use closed boardwalks.",
+            "time": ""
+          }
+        ]
+      },
+      {
+        "title": "Donggang & City Neighborhoods",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "Zhongshan Square",
+            "detail": "See the public spaces and surrounding buildings in the morning, leaving time to explore the streets.",
+            "time": "09:30",
+            "photo": {
+              "asset": "sight-dalian-47",
+              "thumbnail": "sight-dalian-47-thumb",
+              "title": "Zhongshan Square",
+              "author": "kanegen",
+              "license": "CC BY 2.0",
+              "licenseURL": "https://creativecommons.org/licenses/by/2.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:%E5%A4%A7%E8%BF%9E%E5%B8%82%E4%B8%AD%E5%B1%B1%E8%B7%AF.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "Donggang waterfront",
+            "detail": "Walk a stretch of the harbor in the afternoon. Take a break indoors nearby if the weather turns.",
+            "time": "14:00",
+            "photo": {
+              "asset": "sight-dalian-48",
+              "thumbnail": "sight-dalian-48-thumb",
+              "title": "Dalian International Conference Center, Donggang",
+              "author": "準建築人手札網站 Forgemind ArchiMedia",
+              "license": "CC BY 2.0",
+              "licenseURL": "https://creativecommons.org/licenses/by/2.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:Dalian_International_Conference_Center.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "Around Gangdong Fifth Street",
+            "detail": "Make a brief early-evening stop if traffic conditions allow. Do not stand in the road to take photos.",
+            "time": "16:30",
+            "photo": {
+              "asset": "sight-dalian-49",
+              "thumbnail": "sight-dalian-49-thumb",
+              "title": "Donggang waterfront (nearby scenery)",
+              "author": "Ffggss",
+              "license": "CC BY-SA 4.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:%E5%A4%A7%E8%BF%9E%E4%B8%9C%E6%B8%AF.jpg",
+              "note": "A reference view of the surrounding area, not a photograph of the attraction itself."
+            }
+          },
+          {
+            "category": "吃什么",
+            "title": "Northeastern Chinese homestyle food",
+            "detail": "Choose a nearby restaurant. If you prefer seafood, swap this meal with yesterday's.",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "Subway & short public transport connections",
+            "detail": "Adjust transport and walking sections to your accommodation rather than relying on fixed sightseeing bus services.",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "Stay around Zhongshan Square or Xinghai Bay",
+            "detail": "Choose Zhongshan Square for city dining or Xinghai Bay for sea views, balancing transport and budget.",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "A few tips for today",
+            "detail": "A musical fountain show is not guaranteed. Check that day's announcements for any performances.",
+            "time": ""
+          }
+        ]
+      },
+      {
+        "title": "Fisherman's Wharf & Departure",
+        "items": [
+          {
+            "category": "逛什么",
+            "title": "Laohutan Fisherman's Wharf",
+            "detail": "Explore the harbor and neighborhood in the morning, with time for a coffee break.",
+            "time": "09:30",
+            "photo": {
+              "asset": "sight-dalian-50",
+              "thumbnail": "sight-dalian-50-thumb",
+              "title": "Laohutan coast (nearby scenery)",
+              "author": "chp13579753",
+              "license": "CC BY-SA 3.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/3.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:%E8%80%81%E8%99%8E%E6%BB%A9%E9%A3%8E%E5%85%89_-_panoramio.jpg",
+              "note": "A reference view of the surrounding area, not a photograph of the attraction itself."
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "A short coastal walk",
+            "detail": "Walk nearby after lunch rather than adding distant islands or suburbs.",
+            "time": "12:30",
+            "photo": {
+              "asset": "sight-dalian-50",
+              "thumbnail": "sight-dalian-50-thumb",
+              "title": "Laohutan coast",
+              "author": "chp13579753",
+              "license": "CC BY-SA 3.0",
+              "licenseURL": "https://creativecommons.org/licenses/by-sa/3.0",
+              "sourceURL": "https://commons.wikimedia.org/wiki/File:%E8%80%81%E8%99%8E%E6%BB%A9%E9%A3%8E%E5%85%89_-_panoramio.jpg"
+            }
+          },
+          {
+            "category": "逛什么",
+            "title": "Collect your bags & depart",
+            "detail": "Leave in the afternoon according to your own flight or train booking.",
+            "time": "14:00"
+          },
+          {
+            "category": "吃什么",
+            "title": "Lunch by the harbor",
+            "detail": "Choose light noodles or homestyle dishes to fit your departure time.",
+            "time": ""
+          },
+          {
+            "category": "怎么去",
+            "title": "Public transport to Fisherman's Wharf; check onward travel separately",
+            "detail": "Allow time for the station or airport based on your actual departure.",
+            "time": ""
+          },
+          {
+            "category": "住哪里",
+            "title": "Stay around Zhongshan Square or Xinghai Bay",
+            "detail": "Choose Zhongshan Square for city dining or Xinghai Bay for sea views, balancing transport and budget.",
+            "time": ""
+          },
+          {
+            "category": "备忘",
+            "title": "A few tips for today",
+            "detail": "Skip seaside stops in bad weather. This route does not assume admission to the marine park is included.",
+            "time": ""
+          }
+        ]
+      }
+    ],
+    "coverCredit": {
+      "title": "Dalian Xinghai Bay Bridge.jpg",
+      "author": "Yhz1221",
+      "license": "CC BY-SA 4.0",
+      "licenseURL": "https://creativecommons.org/licenses/by-sa/4.0",
+      "url": "https://commons.wikimedia.org/wiki/File:Dalian_Xinghai_Bay_Bridge.jpg",
+      "note": "Images are resized and compressed, and may be cropped for display. Their licenses are independent of the app code."
+    }
+  }
+]

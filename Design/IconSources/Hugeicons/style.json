@@ -1,0 +1,47 @@
+{
+  "strokeWidth": 3,
+  "omittedDecorativePaths": {
+    "Camera01Icon": [
+      "2"
+    ],
+    "Luggage02Icon": [
+      "5",
+      "6"
+    ],
+    "Luggage01Icon": [
+      "2",
+      "3"
+    ],
+    "Note01Icon": [
+      "0"
+    ],
+    "UtensilsIcon": [
+      "1"
+    ],
+    "TrainFrontIcon": [
+      "4",
+      "5",
+      "6"
+    ],
+    "Train01Icon": [
+      "4",
+      "5",
+      "6"
+    ],
+    "BedDoubleIcon": [
+      "2",
+      "3"
+    ]
+  },
+  "detailStrokeWidths": {
+    "TrainFrontIcon": {
+      "1": 2.25
+    },
+    "Train01Icon": {
+      "1": 2.25
+    },
+    "BedDoubleIcon": {
+      "0": 2.25
+    }
+  }
+}

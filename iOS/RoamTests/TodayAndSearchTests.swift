@@ -3,6 +3,67 @@ import CoreLocation
 @testable import Roam
 
 final class TodayAndSearchTests: XCTestCase {
+    @MainActor func testCompactNavigationSurvivesSwitchingBetweenHomePages() {
+        let navigation = HomeNavigationState()
+        navigation.isCollapsed = true
+
+        navigation.select(.stickers)
+        XCTAssertEqual(navigation.tab, .stickers)
+        XCTAssertTrue(navigation.isCollapsed, "Switching pages must not jump to the expanded size")
+        XCTAssertTrue(navigation.shouldRestoreStickerBar)
+
+        navigation.select(.trips)
+        XCTAssertEqual(navigation.tab, .trips)
+        XCTAssertTrue(navigation.isCollapsed)
+        XCTAssertFalse(navigation.shouldRestoreStickerBar)
+        XCTAssertEqual(navigation.searchFocusRequest, 0, "Page changes must not request keyboard focus")
+    }
+
+    @MainActor func testSearchExpandsNavigationAndItsFocusRequestIsConsumedOnlyOnce() {
+        let navigation = HomeNavigationState()
+        navigation.select(.stickers)
+        navigation.isCollapsed = true
+
+        navigation.activateSearch()
+        XCTAssertEqual(navigation.tab, .trips)
+        XCTAssertFalse(navigation.isCollapsed)
+        XCTAssertTrue(navigation.isSearchPresented)
+        XCTAssertEqual(navigation.searchFocusRequest, 1)
+        let request = navigation.searchFocusRequest
+        XCTAssertTrue(navigation.consumeSearchFocusRequest(request))
+
+        navigation.isLibraryRootVisible = false
+        navigation.isLibraryRootVisible = true
+        XCTAssertEqual(navigation.searchFocusRequest, request)
+        XCTAssertFalse(navigation.consumeSearchFocusRequest(request), "Returning from detail must not refocus an old search")
+
+        navigation.activateSearch()
+        XCTAssertEqual(navigation.searchFocusRequest, request + 1)
+        XCTAssertTrue(navigation.consumeSearchFocusRequest(navigation.searchFocusRequest))
+        XCTAssertFalse(navigation.consumeSearchFocusRequest(navigation.searchFocusRequest))
+    }
+
+    @MainActor func testBottomNavigationVisibilityFollowsTheActivePageAndCamera() {
+        let navigation = HomeNavigationState()
+        XCTAssertTrue(navigation.isBottomBarVisible)
+        navigation.isLibraryRootVisible = false
+        XCTAssertFalse(navigation.isBottomBarVisible, "Trip details have their own bottom controls")
+
+        navigation.select(.stickers)
+        navigation.isCollapsed = true
+        XCTAssertTrue(navigation.isBottomBarVisible, "The hidden Trips root must not hide the Stickers navigation")
+        navigation.isStickerCapturePresented = true
+        XCTAssertFalse(navigation.isBottomBarVisible)
+        XCTAssertFalse(navigation.shouldRestoreStickerBar, "Capture must suspend idle expansion")
+        navigation.isStickerCapturePresented = false
+        XCTAssertTrue(navigation.isBottomBarVisible)
+        XCTAssertTrue(navigation.shouldRestoreStickerBar)
+
+        navigation.select(.trips)
+        XCTAssertTrue(navigation.isLibraryRootVisible)
+        XCTAssertTrue(navigation.isBottomBarVisible)
+    }
+
     @MainActor func testTodayUsesCalendarBoundariesAndExcludesInactiveTrips() {
         var calendar = Calendar(identifier: .gregorian)
         calendar.timeZone = TimeZone(identifier: "Asia/Tokyo")!

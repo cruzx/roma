@@ -2,14 +2,16 @@ import SwiftUI
 import Combine
 
 enum PlanCategory: String, Codable, CaseIterable, Identifiable {
-    case explore = "逛什么", food = "吃什么", stay = "住哪里", transport = "怎么去", notes = "备忘"
+    case explore = "逛什么", food = "吃什么", stay = "住哪里", transport = "怎么去", expense = "多少钱", notes = "备忘"
     var id: String { rawValue }
+    var localizedTitle: String { AppLocalization.text(rawValue) }
     var symbol: String {
         switch self {
         case .explore: "map"
         case .food: "fork.knife"
         case .stay: "bed.double"
         case .transport: "tram"
+        case .expense: "creditcard"
         case .notes: "note.text"
         }
     }
@@ -19,6 +21,7 @@ enum PlanCategory: String, Codable, CaseIterable, Identifiable {
         case .food: .orange
         case .stay: .purple
         case .transport: .teal
+        case .expense: .green
         case .notes: .secondary
         }
     }
@@ -30,32 +33,33 @@ enum TransportMode: String, Codable, CaseIterable, Identifiable {
     case walk = "步行", bicycle = "骑行", ferry = "轮渡", driving = "自驾"
 
     var id: String { rawValue }
+    var localizedTitle: String { AppLocalization.text(rawValue) }
     var numberLabel: String? {
         switch self {
-        case .flight: "航班号"
-        case .highSpeedRail, .jr, .shinkansen, .train: "车次"
-        case .subway: "线路号"
-        case .bus: "线路 / 班次"
-        case .taxi: "车牌号 / 订单号"
-        case .ferry: "航次"
-        case .driving: "车牌号"
-        case .bicycle: "租车编号"
+        case .flight: AppLocalization.text("航班号")
+        case .highSpeedRail, .jr, .shinkansen, .train: AppLocalization.text("车次")
+        case .subway: AppLocalization.text("线路号")
+        case .bus: AppLocalization.text("线路 / 班次")
+        case .taxi: AppLocalization.text("车牌号 / 订单号")
+        case .ferry: AppLocalization.text("航次")
+        case .driving: AppLocalization.text("车牌号")
+        case .bicycle: AppLocalization.text("租车编号")
         case .walk: nil
         }
     }
     var numberExample: String {
         switch self {
-        case .flight: "如 CA1234"
-        case .highSpeedRail: "如 G123"
-        case .jr: "如 JR 车次"
-        case .shinkansen: "如 のぞみ 123 号"
-        case .train: "如 K123"
-        case .subway: "如 2 号线"
-        case .bus: "如 101 路"
-        case .taxi: "车牌或订单号"
-        case .ferry: "如 123 航次"
-        case .driving: "车牌号"
-        case .bicycle: "租车编号"
+        case .flight: AppLocalization.text("如 CA1234")
+        case .highSpeedRail: AppLocalization.text("如 G123")
+        case .jr: AppLocalization.text("如 JR 车次")
+        case .shinkansen: AppLocalization.text("如 のぞみ 123 号")
+        case .train: AppLocalization.text("如 K123")
+        case .subway: AppLocalization.text("如 2 号线")
+        case .bus: AppLocalization.text("如 101 路")
+        case .taxi: AppLocalization.text("车牌或订单号")
+        case .ferry: AppLocalization.text("如 123 航次")
+        case .driving: AppLocalization.text("车牌号")
+        case .bicycle: AppLocalization.text("租车编号")
         case .walk: ""
         }
     }
@@ -87,15 +91,36 @@ struct PlanWaypoint: Identifiable, Codable, Equatable {
     var place: PlanPlace
 }
 
+/// A bundled destination photo with its original attribution retained when a trip is copied or shared.
+struct PlacePhoto: Codable, Equatable, Identifiable {
+    let asset: String
+    let thumbnail: String
+    let title: String
+    let author: String
+    let license: String
+    let licenseURL: URL
+    let sourceURL: URL
+    var note: String? = nil
+    var id: String { asset }
+}
+
 struct PlanItem: Identifiable, Codable, Equatable {
     var id = UUID()
     var title: String
     var detail = ""
     var time = ""
     var category: PlanCategory
+    var amount: Decimal? = nil
+    var currency: String? = nil
+    var displayTitle: String {
+        guard category == .expense, let amount else { return title }
+        return title + " · " + ExpenseMoney.format(amount, currency: currency ?? "CNY")
+    }
     var transportMode: TransportMode? = nil
     var transportNumber: String? = nil
+    var linkPreview: LinkPreview? = nil
     var photos: [Data]? = nil
+    var photo: PlacePhoto? = nil
     var place: PlanPlace? = nil
     var places: [PlanWaypoint]? = nil
 
@@ -107,10 +132,20 @@ struct PlanItem: Identifiable, Codable, Equatable {
 
 struct TravelDay: Identifiable, Codable, Equatable {
     var id = UUID()
-    var title = "自由安排"
+    var title = AppLocalization.text("自由安排")
     var items: [PlanItem] = []
     var routeOrder: [UUID]? = nil
     var excludedRouteIDs: [UUID]? = nil
+
+    var expenseTotals: [String: Decimal] {
+        items.filter { $0.category == .expense }.reduce(into: [:]) { totals, item in
+            if let amount = item.amount { totals[item.currency ?? "CNY", default: 0] += amount }
+        }
+    }
+    var expenseSummary: String {
+        let totals = expenseTotals
+        return totals.isEmpty ? AppLocalization.text("未记账") : totals.keys.sorted().map { ExpenseMoney.format(totals[$0]!, currency: $0) }.joined(separator: " · ")
+    }
 
     var routeItems: [PlanItem] {
         let located = items.flatMap { item in
@@ -131,6 +166,7 @@ struct TravelDay: Identifiable, Codable, Equatable {
 
 enum TripStatus: String, CaseIterable, Codable {
     case planning = "计划中", wish = "想去", completed = "已结束"
+    var localizedTitle: String { AppLocalization.text(rawValue) }
 }
 
 struct Trip: Identifiable, Codable, Equatable {
@@ -154,7 +190,8 @@ struct Trip: Identifiable, Codable, Equatable {
     }
     var dateRange: String {
         let format = DateFormatter()
-        format.dateFormat = "M.dd"
+        format.locale = AppLocalization.locale
+        format.dateFormat = AppLocalization.isEnglish ? "MMM d" : "M.dd"
         return "\(format.string(from: startDate)) – \(format.string(from: date(for: max(0, days.count - 1))))"
     }
     var itemCount: Int { days.reduce(0) { $0 + $1.items.count } }
@@ -177,36 +214,74 @@ final class TravelStore: ObservableObject {
     @Published var trips: [Trip] { didSet { save(); if !applyingCloud { cloud?.localChanged(trips, trash: deletedTrips) } } }
     @Published private(set) var deletedTrips: [DeletedTrip] = []
     private var trashFile: URL { file.deletingLastPathComponent().appendingPathComponent(file.deletingPathExtension().lastPathComponent + "-trash.json") }
-    @Published var cloudStatus = "仅本机保存"
+    @Published private var cloudStatusKey = "仅本机保存"
+    @Published private var cloudConflictCount = 0
+    var cloudStatus: String {
+        get {
+            cloudConflictCount > 0
+                ? AppLocalization.format("已同步，保留了 %lld 份冲突副本", Int64(cloudConflictCount))
+                : AppLocalization.text(cloudStatusKey)
+        }
+        set { cloudConflictCount = 0; cloudStatusKey = newValue }
+    }
+    func setCloudSyncResult(conflictCount: Int) {
+        cloudStatusKey = "iCloud 已同步"
+        cloudConflictCount = conflictCount
+    }
     @Published var cloudLastSync: Date?
     var cloud: RoamCloudSync?
     private var applyingCloud = false
     @Published var saveError: String?
     private let file: URL
+    var readingLinkIDs = Set<UUID>()
+    var readingSharedLinks = false
+    let shareEnabled: Bool
 
     init(file: URL? = nil, reset: Bool = false) {
         let base = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
+        self.shareEnabled = file == nil && !reset
         self.file = file ?? base.appendingPathComponent("Roam/trips.json")
         if !reset, let data = try? Data(contentsOf: self.file), let loaded = try? JSONDecoder().decode([Trip].self, from: data) {
             trips = loaded
         } else {
-            trips = Self.samples
+            trips = file == nil ? [] : Self.samples
         }
         if !reset, let data = try? Data(contentsOf: trashFile), let saved = try? JSONDecoder().decode([DeletedTrip].self, from: data) {
             deletedTrips = saved.filter { $0.expiresAt > Date() }
         }
         if reset { save(); saveTrash() }
+        collectPendingShares()
         if file == nil && !reset {
             cloud = RoamCloudSync(store: self, file: self.file, hasExistingData: FileManager.default.fileExists(atPath: self.file.path))
             cloud?.start()
         }
     }
 
+    @discardableResult
+    func importCollectedNote(_ note: CollectedNote, tripID: UUID, dayID: UUID) -> Bool {
+        guard let t = trips.firstIndex(where: { $0.id == tripID }),
+              let d = trips[t].days.firstIndex(where: { $0.id == dayID }) else { return false }
+        var updated = trips
+        if !updated.contains(where: { $0.days.contains(where: { $0.items.contains(where: { $0.id == note.id }) }) }) {
+            var item = PlanItem(id: note.id, title: note.preview?.title ?? note.title, detail: note.text, category: .notes)
+            item.linkPreview = note.preview ?? LinkReader.firstURL(in: note.text).map { LinkPreview(originalURL: $0, title: note.title) }
+            updated[t].days[d].items.append(item)
+        }
+        do {
+            try FileManager.default.createDirectory(at: file.deletingLastPathComponent(), withIntermediateDirectories: true)
+            try JSONEncoder().encode(updated).write(to: file, options: .atomic)
+            trips = updated
+            if shareEnabled { try? ShareBridge.remove(note.id) }
+            return true
+        } catch { saveError = AppLocalization.text("分享内容未能保存，仍保留在收集箱，请稍后重试。"); return false }
+    }
+
     func save() {
         do {
             try FileManager.default.createDirectory(at: file.deletingLastPathComponent(), withIntermediateDirectories: true)
             try JSONEncoder().encode(trips).write(to: file, options: .atomic)
-        } catch { saveError = "暂时无法保存，请检查设备剩余空间。" }
+            publishShareDestinations()
+        } catch { saveError = AppLocalization.text("暂时无法保存，请检查设备剩余空间。") }
     }
 
     func applyCloudTrips(_ incoming: [Trip], trash: [DeletedTrip] = []) {
@@ -222,7 +297,7 @@ final class TravelStore: ObservableObject {
             try FileManager.default.createDirectory(at: trashFile.deletingLastPathComponent(), withIntermediateDirectories: true)
             try JSONEncoder().encode(deletedTrips).write(to: trashFile, options: .atomic)
             return true
-        } catch { saveError = "暂时无法保存垃圾桶，请检查设备剩余空间。"; return false }
+        } catch { saveError = AppLocalization.text("暂时无法保存垃圾桶，请检查设备剩余空间。"); return false }
     }
 
     func deleteTrip(_ id: UUID, now: Date = Date()) {

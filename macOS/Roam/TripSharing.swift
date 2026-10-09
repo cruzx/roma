@@ -45,7 +45,12 @@ struct TripPackage: Codable, Transferable {
         copy.id = UUID()
         return copy
     }
-    enum PackageError: Error { case invalid }
+    enum PackageError: LocalizedError {
+        case invalid
+        var errorDescription: String? {
+            AppLocalization.text("文件损坏、过大或来自更新版本。请确认选择的是漫游导出的 .roamtrip 文件。")
+        }
+    }
 }
 
 struct IncomingTrip: Identifiable {
@@ -71,7 +76,7 @@ struct TripImportModifier: ViewModifier {
                         Section("收到的旅行") {
                             Text(value.package.trip.destination).font(.title2.bold())
                             Text(value.package.trip.dateRange)
-                            Text("\(value.package.trip.days.count) 天 · \(value.package.trip.itemCount) 项安排")
+                            Text(AppLocalization.format("%lld 天 · %lld 项安排", Int64(value.package.trip.days.count), Int64(value.package.trip.itemCount)))
                         }
                         Section {
                             Text("包含行程、地点、交通备注、安排图片和自选封面。导入为一份独立旅行，不会覆盖已有行程；保存后同步到你自己的 iCloud。")

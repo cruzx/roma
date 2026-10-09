@@ -4,14 +4,34 @@ import PhotosUI
 import UniformTypeIdentifiers
 import ImageIO
 
+/// Search remains native; this app-owned empty state uses the same icon family as the library.
+struct MacDoodleSearchEmptyState: View {
+    let text: String
+
+    var body: some View {
+        ContentUnavailableView {
+            Label("未找到目的地", doodleSystemImage: "magnifyingglass", size: 52)
+        } description: {
+            VStack(spacing: 4) {
+                Text(verbatim: text)
+                Text("试试搜索其他目的地")
+            }
+        }
+    }
+}
+
 struct RootView: View {
     var body: some View { LibraryView() }
 }
 
 struct LibraryView: View {
+    @EnvironmentObject private var language: AppLanguageStore
     @EnvironmentObject private var store: TravelStore
     @State private var search = ""
+    @FocusState private var searchFocused: Bool
     @State private var showCreate = false
+    @State private var showInbox = false
+    @State private var showTemplates = false
     @State private var showCloud = false
     @State private var showTrash = false
     private var filtered: [Trip] {
@@ -29,7 +49,7 @@ struct LibraryView: View {
                         }
                         Button { showCreate = true } label: {
                             VStack(spacing: 12) {
-                                Image(systemName: "plus").font(.title2.weight(.medium))
+                                DoodleIcon(systemName: "plus", size: 22)
                                     .frame(width: 48, height: 48).background(.blue.opacity(0.08), in: Circle())
                                 Text("新的旅程").font(.headline)
                                 Text("下一站，由你决定").font(.caption).foregroundStyle(.secondary)
@@ -38,11 +58,9 @@ struct LibraryView: View {
                         }.buttonStyle(.plain).foregroundStyle(.blue).accessibilityIdentifier("new-trip-card")
                     }
                     if filtered.isEmpty && !search.isEmpty {
-                        ContentUnavailableView.search(text: search)
+                        MacDoodleSearchEmptyState(text: search)
                     }
-                    Label("长按卡片拖动，调整旅行顺序", systemImage: "hand.draw")
-                        .font(.caption).foregroundStyle(.tertiary)
-                        .frame(maxWidth: .infinity).padding(.top, 10)
+                    TravelTemplateHomeSection(columns: [GridItem(.adaptive(minimum: 240, maximum: 320), spacing: 20, alignment: .top)]).environmentObject(store)
                 }.frame(maxWidth: 1360).padding(.horizontal, 28).padding(.top, 16).padding(.bottom, 28)
                 .frame(maxWidth: .infinity, alignment: .top)
             }
@@ -51,29 +69,84 @@ struct LibraryView: View {
             .navigationBarTitleDisplayMode(.large)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
+                    librarySearchField
+                }
+                .sharedBackgroundVisibility(.hidden)
+                ToolbarItem(placement: .topBarTrailing) {
                     Menu {
-                        Button("iCloud 同步", systemImage: "icloud") { showCloud = true }
-                        Button("垃圾桶", systemImage: "trash") { showTrash = true }
-                        Button("新建旅行", systemImage: "plus") { showCreate = true }
-                        Button("导入旅行文件", systemImage: "square.and.arrow.down") {
+                        Button("语言 / Language", doodleSystemImage: "globe") { language.isSettingsPresented = true }
+                            .accessibilityIdentifier("language-settings")
+                        Button("iCloud 同步", doodleSystemImage: "icloud") { showCloud = true }
+                        Button("垃圾桶", doodleSystemImage: "trash") { showTrash = true }
+                        Button("分享收集箱", doodleSystemImage: "square.and.arrow.down") { showInbox = true }
+                        Button("旅行模板", doodleSystemImage: "suitcase.rolling") { showTemplates = true }
+                        Button("新建旅行", doodleSystemImage: "plus") { showCreate = true }
+                        Button("导入旅行文件", doodleSystemImage: "square.and.arrow.down") {
                             NotificationCenter.default.post(name: .importRoamTrip, object: nil)
                         }
-                    } label: { Image(systemName: "gearshape") }
+                        Divider()
+                        Link(destination: URL(string: "https://roam-privacy-support.cruzxcx.chatgpt.site/")!) {
+                            Label("隐私政策", doodleSystemImage: "note.text")
+                        }.accessibilityIdentifier("privacy-policy-link")
+                        Link(destination: URL(string: "https://roam-privacy-support.cruzxcx.chatgpt.site/#support")!) {
+                            Label("帮助与支持", doodleSystemImage: "questionmark")
+                        }.accessibilityIdentifier("support-link")
+                    } label: { DoodleIcon(systemName: "gearshape", size: 20) }
                         .accessibilityLabel("设置").accessibilityIdentifier("library-settings")
                 }
             }
-            .searchable(text: $search, prompt: "搜索目的地")
             .navigationDestination(for: UUID.self) { TripDetailView(tripID: $0) }
+            .sheet(isPresented: $showInbox) { ShareInboxView().environmentObject(store) }
+            .sheet(isPresented: $showTemplates) { TravelTemplatePicker().environmentObject(store) }
             .sheet(isPresented: $showCreate) { TripEditor().environmentObject(store) }
             .sheet(isPresented: $showCloud) { CloudSyncView().environmentObject(store) }
             .sheet(isPresented: $showTrash) { TrashView().environmentObject(store) }
         }
     }
+    private var librarySearchField: some View {
+        HStack(spacing: 8) {
+            Button { searchFocused = true } label: {
+                DoodleIcon(systemName: "magnifyingglass", size: 18)
+                    .foregroundStyle(.secondary)
+            }
+            .buttonStyle(.plain)
+            .keyboardShortcut("f", modifiers: .command)
+            .accessibilityLabel("搜索目的地")
+            .help("搜索目的地")
+
+            TextField("搜索目的地", text: $search)
+                .textFieldStyle(.plain)
+                .font(.system(size: 13))
+                .textInputAutocapitalization(.never)
+                .autocorrectionDisabled()
+                .focused($searchFocused)
+                .onSubmit { searchFocused = false }
+                .accessibilityLabel("搜索目的地")
+                .accessibilityIdentifier("library-search-input")
+
+            if !search.isEmpty {
+                Button {
+                    search = ""
+                    searchFocused = true
+                } label: {
+                    DoodleIcon(systemName: "xmark.circle.fill", size: 16)
+                        .foregroundStyle(.secondary)
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel("清除搜索内容")
+                .accessibilityIdentifier("library-search-clear")
+            }
+        }
+        .padding(.horizontal, 10)
+        .frame(width: 220, height: 34)
+        .background(Color.primary.opacity(0.06), in: RoundedRectangle(cornerRadius: 11))
+    }
+
     private func sortableTripCard(_ trip: Trip) -> some View {
                             NavigationLink(value: trip.id) { DestinationCard(trip: trip) }
                                 .buttonStyle(.plain)
                                 .accessibilityIdentifier("trip-\(trip.cover.isEmpty ? trip.destination : trip.cover)")
-                                .accessibilityLabel("\(trip.destination)，\(trip.days.count)天，\(trip.status.rawValue)")
+                                .accessibilityLabel("\(trip.destination)，\(trip.days.count)天，\(trip.status.localizedTitle)")
                                 .draggable("roam-trip:" + trip.id.uuidString)
                                 .dropDestination(for: String.self) { values, _ in
                                     guard let value = values.first, value.hasPrefix("roam-trip:"),
@@ -110,7 +183,7 @@ struct DestinationCard: View {
                 } else {
                     ZStack {
                         Color.blue.opacity(0.08)
-                        Image(systemName: "mountain.2").font(.system(size: 52, weight: .ultraLight))
+                        DoodleIcon(systemName: "mountain.2", size: 52)
                             .foregroundStyle(.blue.opacity(0.6))
                     }.frame(height: 142)
                 }
@@ -122,7 +195,7 @@ struct DestinationCard: View {
                 HStack(alignment: .firstTextBaseline) {
                     Text(trip.destination).font(.title3.weight(.bold)).foregroundStyle(.primary).lineLimit(1)
                     Spacer(minLength: 2)
-                    Image(systemName: "arrow.up.right").font(.caption2.weight(.semibold)).foregroundStyle(.tertiary)
+                    DoodleIcon(systemName: "arrow.up.right", size: 11).foregroundStyle(.tertiary)
                 }
                 Text(trip.status == .wish ? "\(trip.country) · 等一个出发的日子" : "\(trip.dateRange) · \(trip.country)")
                     .font(.caption2).foregroundStyle(.secondary).lineLimit(1)
@@ -178,7 +251,9 @@ struct TripDetailView: View {
                 .confirmationDialog("删除“\(trip.destination)”旅行？", isPresented: $showDeleteTrip, titleVisibility: .visible) {
                     Button("删除旅行", role: .destructive) { store.deleteTrip(tripID); dismiss() }
                 } message: { Text("攻略会移入垃圾桶，保留 30 天，期间可以恢复。") }
-            } else { ContentUnavailableView("旅行已删除", systemImage: "suitcase") }
+            } else { ContentUnavailableView {
+                Label("旅行已删除", doodleSystemImage: "suitcase", size: 52)
+            } }
         }
     }
 
@@ -200,7 +275,7 @@ struct TripDetailView: View {
                             .foregroundStyle(.secondary)
                     }
                     ToolbarItem(placement: .topBarLeading) {
-                        Label("\(trip.dateRange) · \(trip.days.count) 天", systemImage: "calendar")
+                        Label("\(trip.dateRange) · \(trip.days.count) 天", doodleSystemImage: "calendar")
                             .labelStyle(.titleAndIcon)
                             .font(.body.weight(.medium))
                             .foregroundStyle(.secondary)
@@ -209,37 +284,37 @@ struct TripDetailView: View {
                     .sharedBackgroundVisibility(.hidden)
                     ToolbarItem(placement: .topBarTrailing) {
                         Button { addDay(trip) } label: {
-                            Label("加一天", systemImage: "plus").labelStyle(.titleAndIcon)
+                            Label("加一天", doodleSystemImage: "plus").labelStyle(.titleAndIcon)
                         }
                         .accessibilityIdentifier("add-day")
                     }
                     ToolbarItem(placement: .topBarTrailing) {
                         Menu {
-                            Button("重新排序", systemImage: "arrow.up.arrow.down") {
+                            Button("重新排序", doodleSystemImage: "arrow.up.arrow.down") {
                                 singleDay = false; draggedDayID = nil; reorderingDays = true
                             }.accessibilityIdentifier("reorder-days")
-                            Button(trip.status == .wish ? "加入行程 / 编辑旅行" : "编辑旅行", systemImage: "pencil") { showTripEditor = true }
+                            Button(trip.status == .wish ? "加入行程 / 编辑旅行" : "编辑旅行", doodleSystemImage: "pencil") { showTripEditor = true }
                             ShareLink(item: TripPackage(trip: trip), preview: SharePreview(trip.destination)) {
-                                Label("分享旅行 / AirDrop", systemImage: "square.and.arrow.up")
+                                Label("分享旅行 / AirDrop", doodleSystemImage: "square.and.arrow.up")
                             }.accessibilityIdentifier("share-trip")
-                            Button("查看地图路线", systemImage: "point.topleft.down.to.point.bottomright.curvepath") { showRoute = true }
-                            Button("新增一天", systemImage: "calendar.badge.plus") { addDay(trip) }
+                            Button("查看地图路线", doodleSystemImage: "point.topleft.down.to.point.bottomright.curvepath") { showRoute = true }
+                            Button("新增一天", doodleSystemImage: "calendar.badge.plus") { addDay(trip) }
                             if trip.days.count > 1 {
-                                Button("删除第 \(selectedDay + 1) 天", systemImage: "calendar.badge.minus", role: .destructive) { showDeleteDay = true }
+                                Button("删除第 \(selectedDay + 1) 天", doodleSystemImage: "calendar.badge.minus", role: .destructive) { showDeleteDay = true }
                             }
                             Divider()
-                            Button(trip.status == .completed ? "移回计划中" : "标记为已结束", systemImage: "checkmark.circle") {
+                            Button(trip.status == .completed ? "移回计划中" : "标记为已结束", doodleSystemImage: "checkmark.circle") {
                                 var changed = trip; changed.status = trip.status == .completed ? .planning : .completed; store.update(changed)
                             }
-                            Button("删除旅行", systemImage: "trash", role: .destructive) { showDeleteTrip = true }
-                        } label: { Image(systemName: "ellipsis") }
+                            Button("删除旅行", doodleSystemImage: "trash", role: .destructive) { showDeleteTrip = true }
+                        } label: { DoodleIcon(systemName: "ellipsis", size: 20) }
                         .accessibilityLabel("旅行选项").accessibilityIdentifier("trip-options")
                     }
                     ToolbarItemGroup(placement: .bottomBar) {
                         Spacer()
-                        Button("地图路线", systemImage: "map") { showRoute = true }
+                        Button("地图路线", doodleSystemImage: "map") { showRoute = true }
                             .keyboardShortcut("m", modifiers: [.command, .shift]).help("当天地图路线 ⇧⌘M").accessibilityIdentifier("show-route")
-                        Button("添加安排", systemImage: "plus") {
+                        Button("添加安排", doodleSystemImage: "plus") {
                             editing = ItemSelection(dayID: trip.days[min(selectedDay, trip.days.count - 1)].id, category: .explore)
                         }.keyboardShortcut("n", modifiers: [.command, .shift]).help("添加安排 ⇧⌘N").accessibilityIdentifier("add-item")
                     }
@@ -268,7 +343,7 @@ struct TripDetailView: View {
                     ForEach(Array(trip.days.enumerated()), id: \.element.id) { index, day in
                         VStack(alignment: .leading, spacing: 10) {
                             Text("第 \(index + 1) 天").font(.caption.weight(.bold)).foregroundStyle(.blue)
-                            Text(day.title.isEmpty ? "自由安排" : day.title)
+                            Text(day.title.isEmpty ? AppLocalization.text("自由安排") : day.title)
                                 .font(.subheadline.weight(.semibold)).lineLimit(3)
                             Spacer(minLength: 4)
                             Text(trip.date(for: index).formatted(.dateTime.locale(Locale(identifier: "zh_CN")).month().day()))
@@ -315,9 +390,9 @@ struct TripDetailView: View {
     private func controls(_ trip: Trip) -> some View {
         HStack {
             if singleDay {
-                Button { closeDay() } label: { Label("所有天数", systemImage: "rectangle.stack") }
+                Button { closeDay() } label: { Label("所有天数", doodleSystemImage: "rectangle.stack") }
                     .accessibilityIdentifier("close-day")
-                Button("前一天", systemImage: "chevron.left") { selectedDay -= 1 }
+                Button("前一天", doodleSystemImage: "chevron.left") { selectedDay -= 1 }
                     .labelStyle(.iconOnly).disabled(selectedDay == 0)
                 Spacer()
                 Picker("选择天数", selection: $selectedDay) {
@@ -325,13 +400,13 @@ struct TripDetailView: View {
                 }.pickerStyle(.menu).labelsHidden().font(.subheadline)
                     .fixedSize(horizontal: true, vertical: false).accessibilityIdentifier("day-picker")
                 Spacer()
-                Button("后一天", systemImage: "chevron.right") { selectedDay += 1 }
+                Button("后一天", doodleSystemImage: "chevron.right") { selectedDay += 1 }
                     .labelStyle(.iconOnly).disabled(selectedDay == trip.days.count - 1)
             } else {
-                Label("\(trip.dateRange) · \(trip.days.count) 天", systemImage: "calendar")
+                Label("\(trip.dateRange) · \(trip.days.count) 天", doodleSystemImage: "calendar", size: 12)
                     .font(.caption).foregroundStyle(.secondary)
                 Spacer()
-                Button { addDay(trip) } label: { Label("加一天", systemImage: "plus") }
+                Button { addDay(trip) } label: { Label("加一天", doodleSystemImage: "plus") }
                     .font(.caption.bold()).accessibilityIdentifier("add-day")
             }
         }
@@ -396,17 +471,18 @@ struct TripDetailView: View {
             ScrollView(.vertical) {
                 VStack(alignment: .leading, spacing: 0) {
                     ForEach(PlanCategory.allCases) { category in
-                        let items = day.items.filter { $0.category == category }
+                        let items = day.items.filter { $0.category == category && (category != .notes || $0.linkPreview == nil) }
                         VStack(alignment: .leading, spacing: 10) {
                             HStack(spacing: 9) {
-                                Image(systemName: category.symbol).frame(width: 20)
-                                Text(category.rawValue)
+                                DoodleIcon(systemName: category.symbol, size: 20).frame(width: 20)
+                                Text(category.localizedTitle)
+                                if category == .expense { Text("合计 \(day.expenseSummary)").font(.caption).monospacedDigit() }
                                 Spacer()
                                 Button { selectedDay = index; editing = ItemSelection(dayID: day.id, category: category) } label: {
-                                    Image(systemName: "plus.circle.fill").font(.body)
+                                    DoodleIcon(systemName: "plus.circle.fill", size: 17)
                                 }
                                 .buttonStyle(.plain)
-                                .accessibilityLabel("添加\(category.rawValue)")
+                                .accessibilityLabel("添加\(category.localizedTitle)")
                             }
                             .font(.subheadline.weight(.semibold)).foregroundStyle(category.color)
                             if items.isEmpty {
@@ -417,9 +493,13 @@ struct TripDetailView: View {
                                 }.buttonStyle(.plain)
                             } else {
                                 ForEach(items) { item in
+                                    if item.linkPreview != nil {
+                                        SavedLinkCard(item: item) { editing = ItemSelection(dayID: day.id, category: category, item: item) }
+                                    } else {
+                                    HStack(alignment: .top, spacing: 12) {
                                     Button { selectedDay = index; editing = ItemSelection(dayID: day.id, category: category, item: item) } label: {
                                         VStack(alignment: .leading, spacing: 4) {
-                                            Text(item.title).font(.subheadline.weight(.medium)).foregroundStyle(.primary)
+                                            Text(item.displayTitle).font(.subheadline.weight(.medium)).foregroundStyle(.primary)
                                             if !item.detail.isEmpty {
                                                 Text(item.detail).font(.caption).foregroundStyle(.secondary).lineLimit(2)
                                             }
@@ -429,16 +509,54 @@ struct TripDetailView: View {
                                     }
                                     .buttonStyle(.plain)
                                     .accessibilityIdentifier("item-\(item.id)")
+                                    if let photo = item.photo {
+                                        VStack(alignment: .trailing, spacing: 5) {
+                                            PlacePhotoThumbnail(photo: photo, size: 68, identifier: "day-photo-\(item.id)")
+                                            if !item.time.isEmpty {
+                                                Text(item.time).font(.caption2).monospacedDigit().foregroundStyle(.secondary)
+                                            }
+                                        }
+                                    }
+                                    }
+                                    }
                                 }
                             }
                         }
                         .padding(.vertical, 17)
                         if category != .notes { Divider() }
                     }
+                    Divider()
+                    cardGuidesSection(day)
                 }
                 .padding(.horizontal, 24)
             }
         }
+    }
+
+    private func cardGuidesSection(_ day: TravelDay) -> some View {
+        let guides = day.items.filter { $0.category == .notes && $0.linkPreview != nil }
+        return VStack(alignment: .leading, spacing: 10) {
+            HStack(spacing: 9) {
+                DoodleIcon(systemName: "link", size: 20).frame(width: 20)
+                Text("攻略")
+                Spacer()
+                if !guides.isEmpty {
+                    Text("\(guides.count)").font(.caption.monospacedDigit()).foregroundStyle(.secondary)
+                }
+            }
+            .font(.subheadline.weight(.semibold)).foregroundStyle(PlanCategory.notes.color)
+            ForEach(guides) { item in
+                SavedLinkCard(item: item) {
+                    editing = ItemSelection(dayID: day.id, category: .notes, item: item)
+                }
+                if item.id != guides.last?.id { Divider().opacity(0.5) }
+            }
+            DayLinkCollector(tripID: tripID, dayID: day.id)
+                .labelStyle(.titleAndIcon).font(.subheadline)
+        }
+        .tint(PlanCategory.notes.color)
+        .padding(.vertical, 17)
+        .accessibilityIdentifier("day-guides-\(day.id)")
     }
 
     private func tableView(_ trip: Trip) -> some View {
@@ -451,8 +569,8 @@ struct TripDetailView: View {
                         VStack(spacing: 0) {
                             ForEach(PlanCategory.allCases) { category in
                                 VStack(spacing: 7) {
-                                    Image(systemName: category.symbol).font(.body)
-                                    Text(category.rawValue).font(.caption2.weight(.medium))
+                                    DoodleIcon(systemName: category.symbol, size: 17)
+                                    Text(category.localizedTitle).font(.caption2.weight(.medium))
                                 }.foregroundStyle(category.color)
                                     .frame(width: 62, height: rowHeight(category))
                                     .overlay(alignment: .top) { Divider() }
@@ -522,12 +640,15 @@ struct TripDetailView: View {
     private func tableCell(trip: Trip, day: TravelDay, index: Int, category: PlanCategory) -> some View {
         let items = day.items.filter { $0.category == category }
         return VStack(alignment: .leading, spacing: 6) {
+            if category == .notes {
+                DayLinkCollector(tripID: tripID, dayID: day.id).font(.caption)
+            }
             if items.isEmpty {
                 Button {
                     selectedDay = index
                     editing = ItemSelection(dayID: day.id, category: category)
                 } label: {
-                    Label("添加", systemImage: "plus").font(.caption).foregroundStyle(.tertiary)
+                    Label("添加", doodleSystemImage: "plus", size: 12).font(.caption).foregroundStyle(.tertiary)
                 }.buttonStyle(.plain)
             } else {
                 ForEach(items) { item in
@@ -537,10 +658,10 @@ struct TripDetailView: View {
                     } label: {
                         VStack(alignment: .leading, spacing: 3) {
                         if category == .transport, let mode = item.transportMode {
-                            Label([mode.rawValue, item.transportNumber].compactMap { $0 }.filter { !$0.isEmpty }.joined(separator: " · "), systemImage: mode.symbol)
+                            Label([mode.localizedTitle, item.transportNumber].compactMap { $0 }.filter { !$0.isEmpty }.joined(separator: " · "), doodleSystemImage: mode.symbol, size: 12)
                                 .font(.caption.weight(.semibold)).foregroundStyle(category.color)
                         }
-                        Text(item.title).font(.subheadline.weight(.medium)).foregroundStyle(.primary).lineLimit(2)
+                        Text(item.displayTitle).font(.subheadline.weight(.medium)).foregroundStyle(.primary).lineLimit(2)
                         if !item.detail.isEmpty {
                             Text(item.detail).font(.caption).foregroundStyle(.secondary).lineLimit(2)
                         }
@@ -557,12 +678,12 @@ struct TripDetailView: View {
                         }.accessibilityLabel("安排照片")
                     }
                     if let place = items.first?.mapPlaces.first?.place {
-                        Label(place.name, systemImage: "mappin").font(.caption2).foregroundStyle(.blue).lineLimit(1)
+                        Label(place.name, doodleSystemImage: "mappin", size: 11).font(.caption2).foregroundStyle(.blue).lineLimit(1)
                     }
                 Button {
                     selectedDay = index
                     editing = ItemSelection(dayID: day.id, category: category)
-                } label: { Label("添加", systemImage: "plus").font(.caption2).foregroundStyle(.blue) }
+                } label: { Label("添加", doodleSystemImage: "plus", size: 11).font(.caption2).foregroundStyle(.blue) }
                     .buttonStyle(.plain)
             }
             Spacer(minLength: 0)
@@ -599,20 +720,13 @@ struct TripDetailView: View {
                                     .font(.caption).foregroundStyle(.secondary)
                             }
                         }.padding(.top, 8)
-                        HStack {
-                            Button { showRoute = true } label: {
-                                Label("查看当天路线", systemImage: "point.topleft.down.to.point.bottomright.curvepath")
-                            }.buttonStyle(.bordered).accessibilityIdentifier("day-route")
-                            Spacer()
-                            Button { organizingDay = true } label: {
-                                Label("整理", systemImage: "slider.horizontal.3")
-                            }.accessibilityLabel("整理安排").accessibilityIdentifier("organize-day")
-                        }.font(.subheadline)
                         dayCategoryCard(day, category: .explore)
                         dayCategoryCard(day, category: .food)
                         dayCategoryCard(day, category: .stay)
                         dayCategoryCard(day, category: .transport)
+                        dayCategoryCard(day, category: .expense)
                         dayCategoryCard(day, category: .notes)
+                        dayGuidesCard(day)
                         Text("点安排即可编辑 · 按自己的节奏出发")
                             .font(.caption).foregroundStyle(.secondary).frame(maxWidth: .infinity).padding(.vertical, 4)
                     }.frame(maxWidth: 800).padding(.horizontal, 24).padding(.bottom, 24)
@@ -623,16 +737,21 @@ struct TripDetailView: View {
     }
 
     private func dayCategoryCard(_ day: TravelDay, category: PlanCategory) -> some View {
-        let items = day.items.filter { $0.category == category }
+        let items = day.items.filter { $0.category == category && (category != .notes || $0.linkPreview == nil) }
         return VStack(alignment: .leading, spacing: 14) {
             HStack(spacing: 8) {
-                Image(systemName: category.symbol).font(.subheadline.weight(.semibold))
+                DoodleIcon(systemName: category.symbol, size: 15)
                     .frame(width: 32, height: 32).background(category.color.opacity(0.12), in: RoundedRectangle(cornerRadius: 10))
-                Text(category.rawValue).font(.headline)
+                Text(category.localizedTitle).font(.headline)
+                if category == .expense { Text("合计 \(day.expenseSummary)").font(.caption).monospacedDigit().accessibilityIdentifier("day-expense-total") }
                 Spacer(minLength: 0)
                 if !items.isEmpty { Text("\(items.count)").font(.caption.monospacedDigit()).foregroundStyle(.secondary) }
             }.foregroundStyle(category.color)
             ForEach(items) { item in
+                if item.linkPreview != nil {
+                    SavedLinkCard(item: item) { editing = ItemSelection(dayID: day.id, category: category, item: item) }
+                } else {
+                HStack(alignment: .top, spacing: 14) {
                 Button { editing = ItemSelection(dayID: day.id, category: category, item: item) } label: {
                     VStack(alignment: .leading, spacing: 8) {
                         if !item.time.isEmpty {
@@ -640,10 +759,10 @@ struct TripDetailView: View {
                                 .padding(.horizontal, 8).padding(.vertical, 4).background(category.color.opacity(0.08), in: Capsule())
                         }
                         if category == .transport, let mode = item.transportMode {
-                            Label([mode.rawValue, item.transportNumber].compactMap { $0 }.filter { !$0.isEmpty }.joined(separator: " · "), systemImage: mode.symbol)
+                            Label([mode.localizedTitle, item.transportNumber].compactMap { $0 }.filter { !$0.isEmpty }.joined(separator: " · "), doodleSystemImage: mode.symbol, size: 15)
                                 .font(.subheadline.weight(.semibold)).foregroundStyle(category.color)
                         }
-                        Text(item.title).font(.title3.weight(.semibold))
+                        Text(item.displayTitle).font(.title3.weight(.semibold))
                             .foregroundStyle(.primary).fixedSize(horizontal: false, vertical: true)
                         if let photos = item.photos, !photos.isEmpty {
                             ScrollView(.horizontal) {
@@ -663,25 +782,59 @@ struct TripDetailView: View {
                             Text(item.detail).font(.subheadline).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
                         }
                         if !item.mapPlaces.isEmpty {
-                            Label(item.mapPlaces.map { $0.place.name }.joined(separator: " → "), systemImage: "mappin")
+                            Label(item.mapPlaces.map { $0.place.name }.joined(separator: " → "), doodleSystemImage: "mappin", size: 12)
                                 .font(.caption).foregroundStyle(category.color).fixedSize(horizontal: false, vertical: true)
                         }
                     }.frame(maxWidth: .infinity, alignment: .leading).contentShape(Rectangle())
                 }.buttonStyle(.plain).accessibilityIdentifier("day-item-\(item.title)").accessibilityHint("编辑这项安排")
+                if let photo = item.photo {
+                    PlacePhotoThumbnail(photo: photo, identifier: "day-photo-\(item.id)")
+                }
+                }
+                }
                 if item.id != items.last?.id { Divider().opacity(0.5) }
             }
             if items.isEmpty {
-                Text(category == .stay ? "今晚住哪里？" : category == .food ? "留一家想吃的店" : category == .explore ? "把想去的地方放进今天" : category == .transport ? "记下车次、航班或出行方式" : "灵感、预约与随手记")
+                Text(category == .expense ? "记下款项和金额，自动合计当天花费" : category == .stay ? "今晚住哪里？" : category == .food ? "留一家想吃的店" : category == .explore ? "把想去的地方放进今天" : category == .transport ? "记下车次、航班或出行方式" : "灵感、预约与随手记")
                     .font(.subheadline).foregroundStyle(.secondary)
             }
             Button { editing = ItemSelection(dayID: day.id, category: category) } label: {
-                Label(category == .stay ? "添加住宿" : category == .food ? "添加美食" : category == .notes ? "写备忘" : "添加安排", systemImage: "plus")
-                    .font(.subheadline.weight(.medium)).frame(minHeight: 32)
-            }.tint(category.color).accessibilityIdentifier("add-\(category.rawValue)")
+                Label(category == .expense ? "添加款项" : category == .stay ? "添加住宿" : category == .food ? "添加美食" : category == .notes ? "写备忘" : "添加安排", doodleSystemImage: "plus", size: 12)
+                    .font(.caption.weight(.semibold))
+            }.buttonStyle(.bordered).buttonBorderShape(.capsule).controlSize(.small)
+                .tint(category.color).accessibilityIdentifier("add-\(category.rawValue)")
         }
         .frame(maxWidth: .infinity, alignment: .topLeading)
         .padding(.bottom, 22)
         .overlay(alignment: .bottom) { Divider() }
+    }
+
+    @ViewBuilder
+    private func dayGuidesCard(_ day: TravelDay) -> some View {
+        let guides = day.items.filter { $0.category == .notes && $0.linkPreview != nil }
+        if !guides.isEmpty {
+            VStack(alignment: .leading, spacing: 14) {
+                HStack(spacing: 8) {
+                    DoodleIcon(systemName: "link", size: 15)
+                        .frame(width: 32, height: 32)
+                        .background(PlanCategory.notes.color.opacity(0.12), in: RoundedRectangle(cornerRadius: 10))
+                    Text("攻略").font(.headline)
+                    Spacer(minLength: 0)
+                    Text("\(guides.count)").font(.caption.monospacedDigit()).foregroundStyle(.secondary)
+                }.foregroundStyle(PlanCategory.notes.color)
+                ForEach(guides) { item in
+                    SavedLinkCard(item: item) {
+                        editing = ItemSelection(dayID: day.id, category: .notes, item: item)
+                    }
+                    if item.id != guides.last?.id { Divider().opacity(0.5) }
+                }
+            }
+            .tint(PlanCategory.notes.color)
+            .frame(maxWidth: .infinity, alignment: .topLeading)
+            .padding(.bottom, 22)
+            .overlay(alignment: .bottom) { Divider() }
+            .accessibilityIdentifier("day-guides")
+        }
     }
 
     private func dailyOrganization(_ trip: Trip) -> some View {
@@ -696,23 +849,27 @@ struct TripDetailView: View {
                 Section {
                     let items = day.items.filter { $0.category == category }
                     ForEach(items) { item in
+                        if item.linkPreview != nil {
+                            SavedLinkCard(item: item) { editing = ItemSelection(dayID: day.id, category: category, item: item) }
+                        } else {
                         Button {
                             editing = ItemSelection(dayID: day.id, category: category, item: item)
                         } label: {
                             VStack(alignment: .leading, spacing: 6) {
                                 HStack {
-                                    Text(item.title).font(.body.weight(.medium)).foregroundStyle(.primary)
+                                    Text(item.displayTitle).font(.body.weight(.medium)).foregroundStyle(.primary)
                                     Spacer()
                                     if !item.time.isEmpty { Text(item.time).font(.caption).foregroundStyle(.secondary) }
-                                    Image(systemName: "chevron.right").font(.caption2.weight(.semibold)).foregroundStyle(.tertiary)
+                                    DoodleIcon(systemName: "chevron.right", size: 11).foregroundStyle(.tertiary)
                                 }
                                 if !item.mapPlaces.isEmpty {
-                                    Label(item.mapPlaces.map { $0.place.name }.joined(separator: " → "), systemImage: "mappin.circle.fill").font(.caption).foregroundStyle(.blue)
+                                    Label(item.mapPlaces.map { $0.place.name }.joined(separator: " → "), doodleSystemImage: "mappin.circle.fill", size: 12).font(.caption).foregroundStyle(.blue)
                                 }
                                 if !item.detail.isEmpty { Text(item.detail).font(.subheadline).foregroundStyle(.secondary).lineLimit(4) }
                             }.padding(.vertical, 3)
                         }.buttonStyle(.plain).swipeActions {
                             Button("删除", role: .destructive) { store.removeItem(item.id, tripID: tripID, dayID: day.id) }
+                        }
                         }
                     }
                     .onMove { source, destination in
@@ -723,11 +880,11 @@ struct TripDetailView: View {
                         store.update(changed)
                     }
                     Button { editing = ItemSelection(dayID: day.id, category: category) } label: {
-                        Label("添加\(category == .notes ? "备忘" : "安排")", systemImage: "plus").font(.subheadline)
+                        Label(category == .notes ? "写备忘" : "添加安排", doodleSystemImage: "plus", size: 15).font(.subheadline)
                     }.accessibilityIdentifier("add-\(category.rawValue)")
                 } header: {
                     HStack {
-                        Label(category.rawValue, systemImage: category.symbol).foregroundStyle(category.color)
+                        Label(category.localizedTitle, doodleSystemImage: category.symbol).foregroundStyle(category.color)
                         Spacer()
                     }
                 }
@@ -770,7 +927,7 @@ struct TripEditor: View {
                     TextField("国家 / 地区（选填）", text: $country)
                 }
                 Section("旅行安排") {
-                    Picker("状态", selection: $status) { ForEach(TripStatus.allCases, id: \.self) { Text($0.rawValue).tag($0) } }
+                    Picker("状态", selection: $status) { ForEach(TripStatus.allCases, id: \.self) { Text($0.localizedTitle).tag($0) } }
                     if status != .wish { DatePicker("出发日期", selection: $date, displayedComponents: .date) }
                     Stepper("\(duration) 天", value: $duration, in: 1...60).accessibilityIdentifier("duration-stepper")
                 }
@@ -783,10 +940,10 @@ struct TripEditor: View {
                         Button("移除自选照片", role: .destructive) { coverPhoto = nil; selectedPhoto = nil }
                     }
                     PhotosPicker(selection: $selectedPhoto, matching: .images) {
-                        Label("从相册选择", systemImage: "photo.on.rectangle")
+                        Label("从相册选择", doodleSystemImage: "photo.on.rectangle")
                     }.accessibilityIdentifier("choose-cover-photo")
                     Button { showPhotoFile = true } label: {
-                        Label("从文件选择", systemImage: "folder")
+                        Label("从文件选择", doodleSystemImage: "folder")
                     }.accessibilityIdentifier("choose-cover-file")
                     if loadingPhoto { ProgressView("正在处理照片…") }
                     Text("照片随行程同步到你自己的 iCloud 私人空间。")
@@ -797,10 +954,15 @@ struct TripEditor: View {
                         Text("东京").tag("tokyo")
                         Text("京都").tag("kyoto")
                         Text("富士山").tag("fuji")
+                        if case .success(let templates) = TravelTemplateCatalog.result {
+                            ForEach(templates) { template in
+                                Text(template.destination + " · 模板封面").tag(template.cover)
+                            }
+                        }
                     }
                 }
                 Section {
-                    Label("吃、逛、住，之后都可以慢慢补充。", systemImage: "square.grid.2x2")
+                    Label("吃、逛、住，之后都可以慢慢补充。", doodleSystemImage: "square.grid.2x2", size: 15)
                         .font(.subheadline).foregroundStyle(.secondary)
                 }
             }
@@ -830,7 +992,7 @@ struct TripEditor: View {
                     let compressed = try await Task.detached { try CoverPhotoCodec.compress(data) }.value
                     guard !Task.isCancelled else { return }
                     coverPhoto = compressed
-                } catch { if !Task.isCancelled { photoError = "无法读取这张照片，请选择其他图片。" } }
+                } catch { if !Task.isCancelled { photoError = AppLocalization.text("无法读取这张照片，请选择其他图片。") } }
             }
             .fileImporter(isPresented: $showPhotoFile, allowedContentTypes: [.image]) { result in
                 switch result {
@@ -845,9 +1007,9 @@ struct TripEditor: View {
                                 return try CoverPhotoCodec.compress(Data(contentsOf: url))
                             }.value
                             coverPhoto = data
-                        } catch { photoError = "无法读取这张照片，请选择其他图片。" }
+                        } catch { photoError = AppLocalization.text("无法读取这张照片，请选择其他图片。") }
                     }
-                case .failure: photoError = "未能打开文件，请重试。"
+                case .failure: photoError = AppLocalization.text("未能打开文件，请重试。")
                 }
             }
             .alert("照片导入失败", isPresented: Binding(get: { photoError != nil }, set: { if !$0 { photoError = nil } })) {
@@ -875,6 +1037,8 @@ struct ItemEditor: View {
     @Environment(\.dismiss) private var dismiss
     let tripID: UUID
     let selection: ItemSelection
+    @State private var amountText: String
+    @State private var currency: String
     @State private var title: String
     @State private var detail: String
     @State private var time: String
@@ -895,6 +1059,8 @@ struct ItemEditor: View {
     init(tripID: UUID, selection: ItemSelection) {
         self.tripID = tripID; self.selection = selection
         _places = State(initialValue: selection.item?.mapPlaces ?? [])
+        _amountText = State(initialValue: selection.item?.amount.map { NSDecimalNumber(decimal: $0).stringValue } ?? "")
+        _currency = State(initialValue: selection.item?.currency ?? "CNY")
         _title = State(initialValue: selection.item?.title ?? "")
         _detail = State(initialValue: selection.item?.detail ?? "")
         _time = State(initialValue: selection.item?.time ?? "")
@@ -906,19 +1072,34 @@ struct ItemEditor: View {
         _endDayID = State(initialValue: selection.dayID)
     }
     private var trip: Trip? { store.trips.first { $0.id == tripID } }
-    private var valid: Bool { !title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || !itemPhotos.isEmpty }
+    private var valid: Bool {
+        if category == .expense { return !title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && ExpenseMoney.parse(amountText) != nil }
+        return !title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || !itemPhotos.isEmpty
+    }
 
     var body: some View {
         NavigationStack {
             Form {
-                Section("安排什么") {
-                    TextField("地点或安排", text: $title, axis: .vertical).accessibilityIdentifier("item-title")
-                    Picker("分类", selection: $category) { ForEach(PlanCategory.allCases) { Text($0.rawValue).tag($0) } }
+                if let preview = trip?.days.flatMap({ $0.items }).first(where: { $0.id == selection.item?.id })?.linkPreview {
+                    Section("收藏的网页") { LinkPreviewCard(preview: preview, expanded: true) }
+                }
+                Section(category == .expense ? "费用款项" : "安排什么") {
+                    TextField(category == .expense ? "款项（例如：午餐、门票）" : "地点或安排", text: $title, axis: .vertical).accessibilityIdentifier("item-title")
+                    Picker("分类", selection: $category) { ForEach(PlanCategory.allCases) { Text($0.localizedTitle).tag($0) } }
+                    if category == .expense {
+                        TextField("数额", text: $amountText).keyboardType(.decimalPad)
+                            .accessibilityIdentifier("expense-amount")
+                        Picker("币种", selection: $currency) {
+                            ForEach(ExpenseMoney.currencies, id: \.self) { Text($0).tag($0) }
+                        }.accessibilityIdentifier("expense-currency")
+                        Text("金额需大于或等于 0，最多两位小数；不同币种分别合计。")
+                            .font(.caption).foregroundStyle(.secondary)
+                    }
                     if category == .transport {
                         Picker("出行方式", selection: $transportMode) {
                             Text("未指定").tag(nil as TransportMode?)
                             ForEach(TransportMode.allCases) { mode in
-                                Label(mode.rawValue, systemImage: mode.symbol).tag(Optional(mode))
+                                Label(mode.localizedTitle, doodleSystemImage: mode.symbol).tag(Optional(mode))
                             }
                         }.accessibilityIdentifier("transport-mode")
                         if let mode = transportMode, let label = mode.numberLabel {
@@ -953,6 +1134,7 @@ struct ItemEditor: View {
                         }
                     }
                 }
+                if category != .expense {
                 Section("照片 · \(itemPhotos.count)/8") {
                     if !itemPhotos.isEmpty {
                         ScrollView(.horizontal) {
@@ -963,7 +1145,7 @@ struct ItemEditor: View {
                                             Image(uiImage: image).resizable().scaledToFill()
                                                 .frame(width: 112, height: 88).clipped()
                                                 .clipShape(RoundedRectangle(cornerRadius: 9))
-                                            Button("移除第 \(index + 1) 张", systemImage: "trash", role: .destructive) {
+                                            Button("移除第 \(index + 1) 张", doodleSystemImage: "trash", role: .destructive) {
                                                 itemPhotos.remove(at: index)
                                             }.font(.caption).accessibilityIdentifier("remove-item-photo-\(index)")
                                         }
@@ -974,10 +1156,10 @@ struct ItemEditor: View {
                     }
                     if itemPhotos.count < 8 && !loadingItemPhotos {
                         PhotosPicker(selection: $selectedItemPhotos, maxSelectionCount: 8 - itemPhotos.count, matching: .images) {
-                            Label("从相册添加图片", systemImage: "photo.on.rectangle")
+                            Label("从相册添加图片", doodleSystemImage: "photo.on.rectangle")
                         }.accessibilityIdentifier("choose-item-photos")
                         Button { showItemPhotoFiles = true } label: {
-                            Label("从文件添加图片", systemImage: "folder")
+                            Label("从文件添加图片", doodleSystemImage: "folder")
                         }.accessibilityIdentifier("choose-item-photo-files")
                     }
                     if loadingItemPhotos { ProgressView("正在处理图片…") }
@@ -988,7 +1170,12 @@ struct ItemEditor: View {
                     if !places.isEmpty {
                         Map {
                             ForEach(Array(places.enumerated()), id: \.element.id) { index, waypoint in
-                                Marker("\(index + 1). \(waypoint.place.name)", coordinate: waypoint.place.coordinate)
+                                Annotation("\(index + 1). \(waypoint.place.name)", coordinate: waypoint.place.coordinate, anchor: .bottom) {
+                                    DoodleIcon(systemName: "mappin", size: 28)
+                                        .foregroundStyle(.red)
+                                        .background(.white, in: Circle())
+                                        .accessibilityLabel(Text("\(index + 1). \(waypoint.place.name)"))
+                                }
                             }
                             if places.count > 1 {
                                 MapPolyline(coordinates: places.map { $0.place.coordinate })
@@ -1007,18 +1194,20 @@ struct ItemEditor: View {
                                 }
                                 Spacer()
                                 Menu {
-                                    Button("上移", systemImage: "arrow.up") { places.swapAt(index, index - 1) }.disabled(index == 0)
-                                    Button("下移", systemImage: "arrow.down") { places.swapAt(index, index + 1) }.disabled(index == places.count - 1)
-                                    Button("在地图中打开", systemImage: "arrow.up.right.square") { waypoint.place.mapItem.openInMaps() }
+                                    Button("上移", doodleSystemImage: "arrow.up") { places.swapAt(index, index - 1) }.disabled(index == 0)
+                                    Button("下移", doodleSystemImage: "arrow.down") { places.swapAt(index, index + 1) }.disabled(index == places.count - 1)
+                                    Button("在地图中打开", doodleSystemImage: "arrow.up.right.square") { waypoint.place.mapItem.openInMaps() }
                                     Button("移除地点", role: .destructive) { places.removeAll { $0.id == waypoint.id } }
-                                } label: { Image(systemName: "ellipsis.circle") }
+                                } label: { DoodleIcon(systemName: "ellipsis.circle", size: 20) }
+                                .accessibilityLabel(Text(waypoint.place.name + " · " + AppLocalization.text("设置")))
                             }
                         }
                     }
-                    Button(places.isEmpty ? "选择多个地点 / 地图选点" : "继续添加地点", systemImage: "plus.circle") { showPlacePicker = true }
+                    Button(places.isEmpty ? "选择多个地点 / 地图选点" : "继续添加地点", doodleSystemImage: "plus.circle") { showPlacePicker = true }
                         .accessibilityIdentifier("choose-place")
                     if places.count > 1 { Text("按上方顺序连线；可在当天地图路线中选择地点、计算道路路线。")
                         .font(.caption).foregroundStyle(.secondary) }
+                }
                 }
                 Section("攻略与备注") {
                     TextEditor(text: $detail).frame(minHeight: 150).accessibilityIdentifier("item-detail")
@@ -1036,11 +1225,18 @@ struct ItemEditor: View {
                 ToolbarItem(placement: .cancellationAction) { Button("取消") { dismiss() } }
                 ToolbarItem(placement: .confirmationAction) {
                     Button("保存") {
-                        var item = PlanItem(id: selection.item?.id ?? UUID(), title: title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? "照片" : title.trimmingCharacters(in: .whitespacesAndNewlines), detail: detail, time: time, category: category, places: places)
+                        var item = PlanItem(id: selection.item?.id ?? UUID(), title: title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? AppLocalization.text("照片") : title.trimmingCharacters(in: .whitespacesAndNewlines), detail: detail, time: time, category: category, places: places)
                         item.transportMode = category == .transport ? transportMode : nil
                         let number = transportNumber.trimmingCharacters(in: .whitespacesAndNewlines)
                         item.transportNumber = category == .transport && transportMode?.numberLabel != nil && !number.isEmpty ? number : nil
+                        item.amount = category == .expense ? ExpenseMoney.parse(amountText) : nil
+                        item.currency = category == .expense ? currency : nil
+                        item.linkPreview = trip?.days.flatMap({ $0.items }).first(where: { $0.id == selection.item?.id })?.linkPreview ?? selection.item?.linkPreview
+                        if category == .notes, item.linkPreview == nil, let url = LinkReader.firstURL(in: detail) {
+                            item.linkPreview = LinkPreview(originalURL: url, title: title)
+                        }
                         item.photos = itemPhotos.isEmpty ? nil : itemPhotos
+                        item.photo = selection.item?.photo
                         store.upsert(item, tripID: tripID, from: selection.item == nil ? nil : selection.dayID, to: dayID, through: multipleNights ? endDayID : nil)
                         dismiss()
                     }.disabled(!valid || loadingItemPhotos).accessibilityIdentifier("save-item")
@@ -1061,7 +1257,7 @@ struct ItemEditor: View {
                     guard !Task.isCancelled else { return }
                     itemPhotos.append(contentsOf: added)
                 } catch {
-                    if !Task.isCancelled { itemPhotoError = "图片无法读取或过大，请选择其他图片。" }
+                    if !Task.isCancelled { itemPhotoError = AppLocalization.text("图片无法读取或过大，请选择其他图片。") }
                 }
             }
             .fileImporter(isPresented: $showItemPhotoFiles, allowedContentTypes: [.image], allowsMultipleSelection: true) { result in
@@ -1083,9 +1279,9 @@ struct ItemEditor: View {
                                 }
                             }.value
                             itemPhotos.append(contentsOf: added)
-                        } catch { itemPhotoError = "图片无法读取或过大，请选择其他图片。" }
+                        } catch { itemPhotoError = AppLocalization.text("图片无法读取或过大，请选择其他图片。") }
                     }
-                case .failure: itemPhotoError = "未能打开文件，请重试。"
+                case .failure: itemPhotoError = AppLocalization.text("未能打开文件，请重试。")
                 }
             }
             .alert("图片导入失败", isPresented: Binding(get: { itemPhotoError != nil }, set: { if !$0 { itemPhotoError = nil } })) {
@@ -1118,7 +1314,7 @@ extension PlanPlace {
         return item
     }
     init(mapItem: MKMapItem) {
-        name = mapItem.name ?? "地图地点"
+        name = mapItem.name ?? AppLocalization.text("地图地点")
         address = mapItem.address?.fullAddress ?? ""
         latitude = mapItem.location.coordinate.latitude
         longitude = mapItem.location.coordinate.longitude
@@ -1147,14 +1343,14 @@ struct PlacePicker: View {
             VStack(spacing: 0) {
                 Button { searchFocused = false; editCity = true } label: {
                     HStack {
-                        Image(systemName: "globe.asia.australia.fill").font(.title2)
+                        DoodleIcon(systemName: "globe.asia.australia.fill", size: 22)
                         VStack(alignment: .leading, spacing: 3) {
                             Text("1 · 国家 / 地区与城市").font(.caption).foregroundStyle(.secondary)
-                            Text(searchCity.isEmpty ? "点这里选择" : searchCity).font(.headline)
+                            Text(searchCity.isEmpty ? AppLocalization.text("点这里选择") : searchCity).font(.headline)
                         }
                         Spacer()
                         Text("更改").font(.subheadline)
-                        Image(systemName: "chevron.right").font(.caption)
+                        DoodleIcon(systemName: "chevron.right", size: 12)
                     }.padding(12).background(.quaternary, in: RoundedRectangle(cornerRadius: 14))
                 }.buttonStyle(.plain).accessibilityIdentifier("search-city").padding(.horizontal).padding(.bottom, 10)
                 if !manual {
@@ -1174,14 +1370,19 @@ struct PlacePicker: View {
                             if !selectedPlaces.contains(place) {
                                 Annotation(place.name, coordinate: place.coordinate) {
                                     Button { selectedPlaces.append(place); searchFocused = false; position = .region(place.region) } label: {
-                                        Image(systemName: "mappin.circle.fill").font(.title).foregroundStyle(.blue).background(.white, in: Circle())
-                                    }.accessibilityLabel("选择" + place.name)
+                                        DoodleIcon(systemName: "mappin.circle.fill", size: 28).foregroundStyle(.blue).background(.white, in: Circle())
+                                    }.accessibilityLabel(AppLocalization.format("选择%@", place.name))
                                 }
                             }
                         }
                     }
                     ForEach(Array(selectedPlaces.enumerated()), id: \.offset) { index, place in
-                        Marker("\(index + 1). \(place.name)", coordinate: place.coordinate)
+                        Annotation("\(index + 1). \(place.name)", coordinate: place.coordinate, anchor: .bottom) {
+                            DoodleIcon(systemName: "mappin", size: 28)
+                                .foregroundStyle(.red)
+                                .background(.white, in: Circle())
+                                .accessibilityLabel(Text("\(index + 1). \(place.name)"))
+                        }
                     }
                     if selectedPlaces.count > 1 {
                         MapPolyline(coordinates: selectedPlaces.map(\.coordinate)).stroke(.blue, style: StrokeStyle(lineWidth: 3, dash: [5, 4]))
@@ -1191,13 +1392,13 @@ struct PlacePicker: View {
                 .onMapCameraChange(frequency: .onEnd) { center = $0.region.center }
                 .overlay {
                     if manual {
-                        Image(systemName: "mappin.circle.fill").font(.largeTitle).foregroundStyle(.red)
+                        DoodleIcon(systemName: "mappin.circle.fill", size: 34).foregroundStyle(.red)
                             .background(.white, in: Circle()).allowsHitTesting(false)
                     }
                 }
                 .overlay(alignment: .bottomTrailing) {
                     Button { if let area = searchModel.area { position = .region(area.region) } } label: {
-                        Image(systemName: "scope").padding(10).background(.regularMaterial, in: Circle())
+                        DoodleIcon(systemName: "scope", size: 20).padding(10).background(.regularMaterial, in: Circle())
                     }.accessibilityLabel("回到搜索城市").padding(10)
                 }
                 .frame(height: manual ? 250 : searchFocused ? 100 : 170)
@@ -1207,7 +1408,7 @@ struct PlacePicker: View {
                         HStack {
                             ForEach(Array(selectedPlaces.enumerated()), id: \.offset) { index, place in
                                 Button { selectedPlaces.remove(at: index) } label: {
-                                    Label("\(index + 1). \(place.name)", systemImage: "xmark.circle.fill")
+                                    Label("\(index + 1). \(place.name)", doodleSystemImage: "xmark.circle.fill")
                                 }.buttonStyle(.bordered).font(.caption)
                             }
                         }.padding(.horizontal)
@@ -1217,7 +1418,7 @@ struct PlacePicker: View {
                     Form {
                         Section {
                             TextField("地点名称", text: $pinName).accessibilityIdentifier("pin-name")
-                            Button("加入已选地点", systemImage: "plus.circle.fill") {
+                            Button("加入已选地点", doodleSystemImage: "plus.circle.fill") {
                                 if let pin = manualPin { selectedPlaces.append(pin); pinName = "" }
                             }.disabled(center == nil).accessibilityIdentifier("add-map-pin")
                             Text("移动地图对准位置，加入已选后可继续选下一站。")
@@ -1240,7 +1441,7 @@ struct PlacePicker: View {
                                 searchTask = Task { await searchModel.search(query, completion: completion) }
                             } label: {
                                 HStack {
-                                    Image(systemName: "magnifyingglass")
+                                    DoodleIcon(systemName: "magnifyingglass", size: 20)
                                     VStack(alignment: .leading, spacing: 4) {
                                         Text(completion.title).foregroundStyle(.primary)
                                         Text(completion.subtitle).font(.caption).foregroundStyle(.secondary)
@@ -1261,7 +1462,7 @@ struct PlacePicker: View {
                                         Text(place.address).font(.caption).foregroundStyle(.secondary)
                                     }
                                     Spacer()
-                                    Label(selectedPlaces.contains(place) ? "已选" : "选择", systemImage: selectedPlaces.contains(place) ? "checkmark.circle.fill" : "plus.circle").font(.subheadline).foregroundStyle(.blue)
+                                    Label(selectedPlaces.contains(place) ? "已选" : "选择", doodleSystemImage: selectedPlaces.contains(place) ? "checkmark.circle.fill" : "plus.circle", size: 15).font(.subheadline).foregroundStyle(.blue)
                                 }
                             }.accessibilityIdentifier("place-result")
                         }
@@ -1318,7 +1519,7 @@ struct PlacePicker: View {
     private var manualPin: PlanPlace? {
         guard let center else { return nil }
         let name = pinName.trimmingCharacters(in: .whitespacesAndNewlines)
-        return PlanPlace(name: name.isEmpty ? "地图选点 \(selectedPlaces.count + 1)" : name, address: "", latitude: center.latitude, longitude: center.longitude)
+        return PlanPlace(name: name.isEmpty ? AppLocalization.format("地图选点 %lld", selectedPlaces.count + 1) : name, address: "", latitude: center.latitude, longitude: center.longitude)
     }
 
     private func scheduleSuggestions() {
@@ -1383,10 +1584,10 @@ struct TripRouteView: View {
                 }
                 HStack {
                     Button { showSelection = true } label: {
-                        Label("选择地点 (\(stops.count))", systemImage: "checklist")
+                        Label("选择地点 (\(stops.count))", doodleSystemImage: "checklist")
                     }.accessibilityIdentifier("select-route-stops")
                     Spacer()
-                    Button("添加地点", systemImage: "plus") { showAddPlace = true }
+                    Button("添加地点", doodleSystemImage: "plus") { showAddPlace = true }
                         .accessibilityIdentifier("add-route-place")
                 }.font(.subheadline).padding(.horizontal).padding(.bottom, 10)
                 if !stops.isEmpty {
@@ -1405,7 +1606,11 @@ struct TripRouteView: View {
                     }.frame(maxWidth: .infinity, alignment: .leading).padding(.horizontal).padding(.bottom, 10)
                 }
                 if stops.isEmpty {
-                    ContentUnavailableView("选择想串起来的地点", systemImage: "map", description: Text("点击上方“选择地点”勾选已有地点，或“添加地点”一次加入多个地点。"))
+                    ContentUnavailableView {
+                        Label("选择想串起来的地点", doodleSystemImage: "map", size: 52)
+                    } description: {
+                        Text("点击上方“选择地点”勾选已有地点，或“添加地点”一次加入多个地点。")
+                    }
                 } else {
                     routeMap.frame(height: 260)
                     List {
@@ -1415,9 +1620,9 @@ struct TripRouteView: View {
                             }.pickerStyle(.segmented)
                             Button { calculateRoutes() } label: {
                                 HStack {
-                                    Text(calculating ? "正在计算路线…" : "计算\(driving ? "驾车" : "步行")路线")
+                                    Text(calculating ? AppLocalization.text("正在计算路线…") : AppLocalization.text(driving ? "计算驾车路线" : "计算步行路线"))
                                     Spacer()
-                                    if calculating { ProgressView() } else { Image(systemName: "arrow.triangle.turn.up.right.diamond") }
+                                    if calculating { ProgressView() } else { DoodleIcon(systemName: "arrow.triangle.turn.up.right.diamond", size: 20) }
                                 }
                             }.disabled(stops.count < 2 || calculating).accessibilityIdentifier("calculate-route")
                             if routes.count == max(0, stops.count - 1), !routes.isEmpty {
@@ -1436,7 +1641,7 @@ struct TripRouteView: View {
                                             .frame(width: 24, height: 24).background(item.category.color, in: Circle())
                                         VStack(alignment: .leading, spacing: 3) {
                                             Text(item.place?.name ?? item.title).font(.body.weight(.medium))
-                                            Text(item.title).font(.caption).foregroundStyle(.secondary).lineLimit(1)
+                                            Text(item.displayTitle).font(.caption).foregroundStyle(.secondary).lineLimit(1)
                                         }
                                     }
                                     if index < stops.count - 1 {
@@ -1444,7 +1649,7 @@ struct TripRouteView: View {
                                             Text("至下一站：\(route.distance / 1000, specifier: "%.1f") 公里 · 约 \(Int(ceil(route.expectedTravelTime / 60))) 分钟")
                                                 .font(.caption).foregroundStyle(.secondary)
                                         }
-                                        Button("在苹果地图查看这一段", systemImage: "arrow.up.right.square") { openLeg(index) }
+                                        Button("在苹果地图查看这一段", doodleSystemImage: "arrow.up.right.square") { openLeg(index) }
                                             .font(.caption)
                                     }
                                 }.padding(.vertical, 3)
@@ -1475,11 +1680,11 @@ struct TripRouteView: View {
                             ForEach(allStops) { item in
                                 Button { setIncluded(item.id, included: !stops.contains { $0.id == item.id }) } label: {
                                     HStack {
-                                        Image(systemName: stops.contains { $0.id == item.id } ? "checkmark.circle.fill" : "circle")
+                                        DoodleIcon(systemName: stops.contains { $0.id == item.id } ? "checkmark.circle.fill" : "circle", size: 20)
                                             .foregroundStyle(.blue)
                                         VStack(alignment: .leading, spacing: 4) {
                                             Text(item.place?.name ?? item.title).foregroundStyle(.primary)
-                                            Text(item.title).font(.caption).foregroundStyle(.secondary).lineLimit(1)
+                                            Text(item.displayTitle).font(.caption).foregroundStyle(.secondary).lineLimit(1)
                                         }
                                         Spacer()
                                     }.frame(maxWidth: .infinity, alignment: .leading).contentShape(Rectangle())
@@ -1511,7 +1716,7 @@ struct TripRouteView: View {
             ForEach(Array(stops.enumerated()), id: \.element.id) { index, item in
                 if let place = item.place {
                     Annotation(place.name, coordinate: place.coordinate) {
-                        Text(index == 0 ? "起" : index == stops.count - 1 ? "终" : "\(index + 1)").font(.subheadline.bold()).foregroundStyle(.white)
+                        Text(index == 0 ? AppLocalization.text("起") : index == stops.count - 1 ? AppLocalization.text("终") : "\(index + 1)").font(.subheadline.bold()).foregroundStyle(.white)
                             .frame(width: 30, height: 30).background(index == 0 ? Color.green : index == stops.count - 1 ? Color.red : Color.blue, in: Circle())
                             .overlay(Circle().stroke(.white, lineWidth: 2))
                     }
@@ -1529,8 +1734,8 @@ struct TripRouteView: View {
     }
 
     private func stopRole(_ index: Int) -> String {
-        if index == 0 { return "起点" }
-        return index == stops.count - 1 ? "终点" : "途经"
+        if index == 0 { return AppLocalization.text("起点") }
+        return AppLocalization.text(index == stops.count - 1 ? "终点" : "途经")
     }
     private func setIncluded(_ id: UUID, included: Bool) {
         guard var trip else { return }
@@ -1576,7 +1781,7 @@ struct TripRouteView: View {
                 }
             }
             calculating = false
-            routeMessage = failed == 0 ? "道路路线已更新，时间为估算。" : "\(failed) 段暂时无法获取道路路线，保留虚线示意；可重试或在苹果地图查看。"
+            routeMessage = failed == 0 ? AppLocalization.text("道路路线已更新，时间为估算。") : AppLocalization.format("%lld 段暂时无法获取道路路线，保留虚线示意；可重试或在苹果地图查看。", failed)
             position = .automatic
         }
     }
@@ -1673,7 +1878,7 @@ actor OverseasPlaceSearch {
             guard c.count >= 2, let name = p.name, !name.isEmpty,
                   country == nil || p.countrycode?.uppercased() == country,
                   !["footway", "steps", "path"].contains(p.osm_value ?? "") else { continue }
-            let countryName = p.countrycode.flatMap { Locale(identifier: "zh_CN").localizedString(forRegionCode: $0) } ?? p.country
+            let countryName = p.countrycode.flatMap { AppLocalization.locale.localizedString(forRegionCode: $0) } ?? p.country
             var parts: [String] = []
             for part in [countryName, p.state, p.city, p.district, p.street, p.housenumber].compactMap({ $0 }) {
                 if !parts.contains(part) { parts.append(part) }
@@ -1737,7 +1942,7 @@ final class PlaceSearchModel: NSObject, ObservableObject, @preconcurrency MKLoca
             area = resolved; Self.areas[destination] = resolved; resolvingArea = false
         } catch {
             guard scopeGeneration == token, !Task.isCancelled else { return }
-            resolvingArea = false; message = "无法定位搜索城市，请点上方城市，输入国家和城市后重试。"
+            resolvingArea = false; message = AppLocalization.text("无法定位搜索城市，请点上方城市，输入国家和城市后重试。")
         }
     }
     func invalidate() {
@@ -1755,17 +1960,17 @@ final class PlaceSearchModel: NSObject, ObservableObject, @preconcurrency MKLoca
     func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
         guard completer === self.completer else { return }
         completions = completer.results; loading = false
-        if completions.isEmpty { message = "没有找到联想地点，可点搜索或修改搜索城市。" }
+        if completions.isEmpty { message = AppLocalization.text("没有找到联想地点，可点搜索或修改搜索城市。") }
     }
     func completer(_ completer: MKLocalSearchCompleter, didFailWithError error: Error) {
         guard completer === self.completer else { return }
-        loading = false; message = "地点联想暂时不可用，可以点搜索重试。"
+        loading = false; message = AppLocalization.text("地点联想暂时不可用，可以点搜索重试。")
     }
     func search(_ text: String, completion: MKLocalSearchCompletion? = nil) async {
         invalidate()
         let query = text.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !query.isEmpty else { return }
-        guard let area else { message = "请先确认搜索城市，再搜索地点。"; return }
+        guard let area else { message = AppLocalization.text("请先确认搜索城市，再搜索地点。"); return }
         loading = true; let token = generation
         let station = PlaceSearchTerms.isStation(query)
         let request = completion.map { MKLocalSearch.Request(completion: $0) } ?? MKLocalSearch.Request()
@@ -1798,7 +2003,7 @@ final class PlaceSearchModel: NSObject, ObservableObject, @preconcurrency MKLoca
         }
         places = Array(unique.prefix(20)); loading = false
         if places.isEmpty {
-            message = appleSucceeded || supplemental != nil ? "没有找到这个地点。可输入更完整的地址，或切换到地图选点。" : "网络暂时不可用，请重试；也可以在地图上手动选点。"
+            message = AppLocalization.text(appleSucceeded || supplemental != nil ? "没有找到这个地点。可输入更完整的地址，或切换到地图选点。" : "网络暂时不可用，请重试；也可以在地图上手动选点。")
         }
     }
 
@@ -1812,7 +2017,7 @@ struct NativePlaceSearchBar: UIViewRepresentable {
     func makeUIView(context: Context) -> UISearchBar {
         let bar = UISearchBar()
         bar.searchBarStyle = .minimal
-        bar.placeholder = "输入景点、餐厅、酒店名称"
+        bar.placeholder = AppLocalization.text("输入景点、餐厅、酒店名称")
         bar.delegate = context.coordinator
         bar.searchTextField.accessibilityIdentifier = "place-query"
         return bar
@@ -1838,7 +2043,7 @@ struct SearchCityEditor: View {
     @State private var country: String
     @State private var selectingCountry = false
     let onSave: (String) -> Void
-    static let locale = Locale(identifier: "zh_CN")
+    static var locale: Locale { AppLocalization.locale }
     static let common = ["CN", "JP", "KR", "TH", "SG", "MY", "US", "GB", "FR", "AU"]
     static let cities = ["CN": ["广州", "上海", "北京", "成都", "大理"], "JP": ["东京", "大阪", "京都", "札幌", "福冈"], "KR": ["首尔", "釜山"], "TH": ["曼谷", "清迈", "普吉岛"], "SG": ["新加坡"], "US": ["纽约", "洛杉矶", "旧金山"], "GB": ["伦敦"], "FR": ["巴黎"], "AU": ["悉尼", "墨尔本"]]
     static func name(_ code: String) -> String { locale.localizedString(forRegionCode: code) ?? code }
@@ -1853,7 +2058,7 @@ struct SearchCityEditor: View {
             Form {
                 Section("1 · 选择国家 / 地区") {
                     Button { selectingCountry = true } label: {
-                        HStack { Text("国家 / 地区"); Spacer(); Text(Self.name(country)).foregroundStyle(.blue); Image(systemName: "chevron.right").font(.caption) }
+                        HStack { Text("国家 / 地区"); Spacer(); Text(Self.name(country)).foregroundStyle(.blue); DoodleIcon(systemName: "chevron.right", size: 12) }
                     }.accessibilityIdentifier("choose-country")
                     .navigationDestination(isPresented: $selectingCountry) {
                         List {
@@ -1869,13 +2074,13 @@ struct SearchCityEditor: View {
                 Section {
                     TextField("输入城市名称，例如东京", text: $city).accessibilityIdentifier("search-city-input")
                     ForEach(Self.cities[country] ?? [], id: \.self) { name in
-                        Button { city = name } label: {
-                            HStack { Text(name); Spacer(); if city == name { Image(systemName: "checkmark") } }
+                        Button { city = AppLocalization.text(name) } label: {
+                            HStack { Text(AppLocalization.text(name)); Spacer(); if city == AppLocalization.text(name) { DoodleIcon(systemName: "checkmark", size: 20) } }
                         }.accessibilityIdentifier("city-" + name)
                     }
                 } header: { Text("2 · 选择或输入城市") } footer: { Text("只填城市，不用再输入国家。下一步再搜索餐厅、景点和酒店。") }
                 Section {
-                    Button("在" + (city.isEmpty ? "所选城市" : city) + "搜索地点") {
+                    Button(AppLocalization.format("在%@搜索地点", city.isEmpty ? AppLocalization.text("所选城市") : city)) {
                         onSave(Self.name(country) + " " + city.trimmingCharacters(in: .whitespacesAndNewlines)); dismiss()
                     }.disabled(city.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
                     .accessibilityIdentifier("confirm-search-city")
@@ -1887,7 +2092,7 @@ struct SearchCityEditor: View {
     }
     private func countryRow(_ code: String) -> some View {
         Button { if country != code { country = code; city = "" }; selectingCountry = false } label: {
-            HStack { Text(Self.name(code)); Spacer(); if country == code { Image(systemName: "checkmark") } }
+            HStack { Text(Self.name(code)); Spacer(); if country == code { DoodleIcon(systemName: "checkmark", size: 20) } }
         }.accessibilityIdentifier("country-" + code)
     }
 }
@@ -1904,7 +2109,11 @@ struct TrashView: View {
                         .font(.subheadline).foregroundStyle(.secondary)
                 }
                 if store.deletedTrips.isEmpty {
-                    ContentUnavailableView("垃圾桶为空", systemImage: "trash", description: Text("删除的攻略会暂存在这里。"))
+                    ContentUnavailableView {
+                        Label("垃圾桶为空", doodleSystemImage: "trash", size: 52)
+                    } description: {
+                        Text("删除的攻略会暂存在这里。")
+                    }
                 } else {
                     ForEach(store.deletedTrips) { entry in
                         VStack(alignment: .leading, spacing: 12) {
@@ -1914,10 +2123,10 @@ struct TrashView: View {
                             Text("剩余 \(entry.remainingDays) 天后彻底删除")
                                 .font(.caption).foregroundStyle(.secondary)
                             HStack {
-                                Button("恢复", systemImage: "arrow.uturn.backward") { store.restoreTrip(entry.id) }
+                                Button("恢复", doodleSystemImage: "arrow.uturn.backward") { store.restoreTrip(entry.id) }
                                     .buttonStyle(.bordered).accessibilityIdentifier("restore-trip-" + entry.id.uuidString)
                                 Spacer()
-                                Button("彻底删除", systemImage: "trash", role: .destructive) { deleting = entry }
+                                Button("彻底删除", doodleSystemImage: "trash", role: .destructive) { deleting = entry }
                                     .buttonStyle(.borderless)
                             }
                         }.padding(.vertical, 6)
