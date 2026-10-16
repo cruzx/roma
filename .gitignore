@@ -16,3 +16,4 @@ trips.json
 icloud-ledger*.json
 ImportBackups/
 SyncBackups/
+node_modules/

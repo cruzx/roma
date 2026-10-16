@@ -55,6 +55,7 @@ struct LinkPreview: Codable, Equatable {
     var summary: String = ""
     var author: String = ""
     var imageData: Data?
+    var imageReference: String? = nil
     var fetchedAt: Date?
     var failure: String?
     var source: String {

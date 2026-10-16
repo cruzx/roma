@@ -1,0 +1,4 @@
+[functions.roam-membership]
+verify_jwt = false # The function validates Bearer JWT using Supabase auth.getUser.
+[functions.apple-notifications]
+verify_jwt = false # Apple JWS signature is verified before any data access.

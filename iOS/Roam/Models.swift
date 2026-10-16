@@ -120,6 +120,7 @@ struct PlanItem: Identifiable, Codable, Equatable {
     var transportNumber: String? = nil
     var linkPreview: LinkPreview? = nil
     var photos: [Data]? = nil
+    var photoReferences: [String]? = nil
     var photo: PlacePhoto? = nil
     var place: PlanPlace? = nil
     var places: [PlanWaypoint]? = nil
@@ -176,6 +177,7 @@ struct Trip: Identifiable, Codable, Equatable {
     var startDate: Date
     var cover: String
     var coverPhoto: Data? = nil
+    var coverPhotoReference: String? = nil
     var status: TripStatus = .planning
     var days: [TravelDay]
 
@@ -232,22 +234,29 @@ final class TravelStore: ObservableObject {
     var cloud: RoamCloudSync?
     private var applyingCloud = false
     @Published var saveError: String?
+    private var accountReadFailed = false
     private let file: URL
     var readingLinkIDs = Set<UUID>()
     var readingSharedLinks = false
     let shareEnabled: Bool
 
     init(file: URL? = nil, reset: Bool = false) {
-        let base = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
         self.shareEnabled = file == nil && !reset
-        self.file = file ?? base.appendingPathComponent("Roam/trips.json")
+        self.file = file ?? AccountWorkspace.root.appendingPathComponent("trips.json")
         if !reset, let data = try? Data(contentsOf: self.file), let loaded = try? JSONDecoder().decode([Trip].self, from: data) {
             trips = loaded
         } else {
             trips = file == nil ? [] : Self.samples
+            if AccountWorkspace.enabled && FileManager.default.fileExists(atPath: self.file.path) {
+                accountReadFailed = true
+                saveError = "本机账号行程读取失败，同步已暂停。请先恢复备份，不要创建或覆盖行程。"
+            }
         }
         if !reset, let data = try? Data(contentsOf: trashFile), let saved = try? JSONDecoder().decode([DeletedTrip].self, from: data) {
             deletedTrips = saved.filter { $0.expiresAt > Date() }
+        } else if AccountWorkspace.enabled && !reset && FileManager.default.fileExists(atPath: trashFile.path) {
+            accountReadFailed = true
+            saveError = "账号垃圾桶资料读取失败，同步已暂停以避免覆盖。"
         }
         if reset { save(); saveTrash() }
         collectPendingShares()
@@ -259,6 +268,7 @@ final class TravelStore: ObservableObject {
 
     @discardableResult
     func importCollectedNote(_ note: CollectedNote, tripID: UUID, dayID: UUID) -> Bool {
+        guard !accountReadFailed else { return false }
         guard let t = trips.firstIndex(where: { $0.id == tripID }),
               let d = trips[t].days.firstIndex(where: { $0.id == dayID }) else { return false }
         var updated = trips
@@ -277,6 +287,7 @@ final class TravelStore: ObservableObject {
     }
 
     func save() {
+        guard !accountReadFailed else { saveError = "本机账号行程读取失败，未覆盖原文件"; return }
         do {
             try FileManager.default.createDirectory(at: file.deletingLastPathComponent(), withIntermediateDirectories: true)
             try JSONEncoder().encode(trips).write(to: file, options: .atomic)
@@ -293,6 +304,7 @@ final class TravelStore: ObservableObject {
     }
 
     @discardableResult private func saveTrash() -> Bool {
+        guard !accountReadFailed else { return false }
         do {
             try FileManager.default.createDirectory(at: trashFile.deletingLastPathComponent(), withIntermediateDirectories: true)
             try JSONEncoder().encode(deletedTrips).write(to: trashFile, options: .atomic)

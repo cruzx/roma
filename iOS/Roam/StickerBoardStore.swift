@@ -124,8 +124,7 @@ final class StickerBoardStore: ObservableObject {
             self.directory = FileManager.default.temporaryDirectory
                 .appendingPathComponent("roam-stickers-ui-tests", isDirectory: true)
         } else {
-            self.directory = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
-                .appendingPathComponent("Roam", isDirectory: true)
+            self.directory = AccountWorkspace.root
                 .appendingPathComponent("Stickers", isDirectory: true)
         }
 
@@ -213,6 +212,17 @@ final class StickerBoardStore: ObservableObject {
             return nil
         }
         return item.id
+    }
+
+    @discardableResult
+    func addStickerAutomatically(_ cutout: StickerCutout, canvasSize: CGSize) -> UUID? {
+        guard let placement = StickerAutoLayout.placement(aspectRatio: cutout.aspectRatio, items: items, canvasSize: canvasSize, viewport: viewport) else {
+            error = "暂时无法安排图片位置，请稍后重试。"
+            return nil
+        }
+        guard let id = addSticker(cutout, at: placement.point) else { return nil }
+        moveViewport(to: placement.viewport)
+        return id
     }
 
     @discardableResult
@@ -310,7 +320,7 @@ final class StickerBoardStore: ObservableObject {
         }
     }
 
-    private static func isSafeImageName(_ name: String) -> Bool {
+    static func isSafeImageName(_ name: String) -> Bool {
         guard name.hasSuffix(".png") else { return false }
         return UUID(uuidString: String(name.dropLast(4))) != nil
     }

@@ -15,6 +15,20 @@ struct CloudLibrary: Codable {
     var order: [String] = []
     var orderRevision = UUID().uuidString
 
+    func validateAccountPayload() throws {
+        guard schema == 1, Set(order).count == order.count else { throw AccountError.invalidResponse }
+        for (key, value) in trips {
+            if let trip = value.trip ?? value.archived?.trip {
+                guard trip.coverPhoto == nil, AccountPhotoCodec.references(trip).allSatisfy(AccountPhotoCodec.valid),
+                      trip.days.flatMap({ $0.items }).allSatisfy({ $0.photos == nil && $0.linkPreview?.imageData == nil }) else { throw AccountError.invalidResponse }
+            }
+            guard UUID(uuidString: key) != nil, !value.revision.isEmpty,
+                  value.trip == nil || value.archived == nil,
+                  value.trip.map({ $0.id.uuidString == key }) ?? true,
+                  value.archived.map({ $0.id.uuidString == key }) ?? true else { throw AccountError.invalidResponse }
+        }
+    }
+
     var visible: [Trip] {
         let keys = order + trips.keys.filter { !order.contains($0) }.sorted()
         var seen = Set<String>()
@@ -36,6 +50,11 @@ struct CloudLedger: Codable {
     var pending = Set<String>()
     var orderPending = false
     var owner: String?
+
+    mutating func acknowledge(_ outgoing: CloudLibrary) {
+        for (key, version) in outgoing.trips where library.trips[key]?.revision == version.revision { pending.remove(key) }
+        if library.orderRevision == outgoing.orderRevision { orderPending = false }
+    }
 
     mutating func capture(_ trips: [Trip], trash: [DeletedTrip] = []) {
         let validTrash = trash.filter { $0.expiresAt > Date() }
@@ -114,35 +133,73 @@ final class RoamCloudSync {
     private let ledgerFile: URL
     private var ledger: CloudLedger
     private var task: Task<Void, Never>?
+    private var stopped = false
     private var syncing = false
     private var conflictCount = 0
+    private var accountStorageOK = true
+    private let accountPhotos = AccountPhotoStore()
     private var container: CKContainer?
     private let recordID = CKRecord.ID(recordName: "travel-library-v1")
 
     init(store: TravelStore, file: URL, hasExistingData: Bool) {
         self.store = store
-        ledgerFile = file.deletingLastPathComponent().appendingPathComponent("icloud-ledger-v1.json")
+        accountStorageOK = store.saveError == nil
+        ledgerFile = file.deletingLastPathComponent().appendingPathComponent(AccountWorkspace.enabled ? "account-ledger-v1.json" : "icloud-ledger-v1.json")
         if let data = try? Data(contentsOf: ledgerFile), let saved = try? JSONDecoder().decode(CloudLedger.self, from: data) {
             ledger = saved
-            if hasExistingData { ledger.capture(store.trips, trash: store.deletedTrips) }
+            if hasExistingData && (!AccountWorkspace.enabled || accountStorageOK) { captureAccountAware(store.trips, trash: store.deletedTrips) }
         } else {
             ledger = CloudLedger()
-            if hasExistingData { ledger.capture(store.trips, trash: store.deletedTrips) }
+            if AccountWorkspace.enabled && FileManager.default.fileExists(atPath: ledgerFile.path) { accountStorageOK = false }
+            if hasExistingData && (!AccountWorkspace.enabled || accountStorageOK) { captureAccountAware(store.trips, trash: store.deletedTrips) }
         }
-        if Self.isConfigured {
+        if AccountWorkspace.enabled {
+            store.cloudStatus = "等待邮箱账号同步"
+        } else if Self.isConfigured {
             container = CKContainer(identifier: Self.containerID)
             store.cloudStatus = "等待连接 iCloud"
         } else { store.cloudStatus = "iCloud 待配置开发者权限" }
     }
 
+    private func captureAccountAware(_ trips: [Trip], trash: [DeletedTrip]) {
+        guard AccountWorkspace.enabled else { ledger.capture(trips, trash: trash); return }
+        do {
+            let metadata = try trips.map { try accountPhotos.codec.metadata($0) }
+            let archived = try trash.map { entry in
+                var copy = entry; copy.trip = try accountPhotos.codec.metadata(entry.trip); return copy
+            }
+            ledger.capture(metadata, trash: archived)
+        } catch { accountStorageOK = false; store?.cloudStatus = "照片本机缓存保存失败，账号同步已暂停" }
+    }
+    private func applyAccountLibrary() {
+        let trips = ledger.library.visible.map { accountPhotos.codec.hydrated($0) }
+        let trash = ledger.library.trash.map { entry in
+            var copy = entry; copy.trip = accountPhotos.codec.hydrated(entry.trip); return copy
+        }
+        store?.applyCloudTrips(trips, trash: trash)
+    }
+    private func synchronizeAccountPhotos(user: String) async {
+        let trips = ledger.library.trips.values.compactMap { $0.trip ?? $0.archived?.trip }
+        let keys = trips.reduce(into: Set<String>()) { $0.formUnion(AccountPhotoCodec.references($1)) }
+        do {
+            try await accountPhotos.synchronize(keys, user: user)
+            try AccountService.shared.checkOwner(user)
+            applyAccountLibrary()
+            if !keys.isEmpty { store?.cloudStatus += "；iCloud 照片已同步" }
+        } catch {
+            store?.cloudStatus += "；照片等待 iCloud（需相同 Apple ID，稍后自动重试）"
+        }
+    }
+
     func localChanged(_ trips: [Trip], trash: [DeletedTrip] = []) {
-        ledger.capture(trips, trash: trash)
+        captureAccountAware(trips, trash: trash)
         persist()
-        if container != nil { store?.cloudStatus = "更改已保存在本机，等待同步" }
+        if container != nil || AccountWorkspace.enabled { store?.cloudStatus = "更改已保存在本机，等待同步" }
     }
 
     func start() {
-        guard container != nil, task == nil else { return }
+        stopped = false
+        guard (container != nil || AccountWorkspace.enabled), task == nil else { return }
         task = Task { [weak self] in
             while !Task.isCancelled {
                 await self?.synchronize()
@@ -155,10 +212,18 @@ final class RoamCloudSync {
         do {
             try FileManager.default.createDirectory(at: ledgerFile.deletingLastPathComponent(), withIntermediateDirectories: true)
             try JSONEncoder().encode(ledger).write(to: ledgerFile, options: .atomic)
-        } catch { store?.cloudStatus = "同步记录保存失败，本机行程仍保留" }
+        } catch { if AccountWorkspace.enabled { accountStorageOK = false }; store?.cloudStatus = "同步记录保存失败，本机行程仍保留" }
+    }
+
+    func stopAndDrain() async {
+        stopped = true
+        task?.cancel(); task = nil
+        while syncing { await Task.detached { try? await Task.sleep(for: .milliseconds(50)) }.value }
     }
 
     func synchronize() async {
+        guard !stopped else { return }
+        if AccountWorkspace.enabled { await synchronizeAccount(); return }
         guard let container, !syncing, let store else { return }
         store.purgeExpiredTrash()
         syncing = true
@@ -227,6 +292,55 @@ final class RoamCloudSync {
         }
     }
 
+    private func synchronizeAccount() async {
+        guard !syncing, let store else { return }
+        guard accountStorageOK, store.saveError == nil else {
+            store.cloudStatus = "本机同步资料读取或保存失败，账号同步已暂停"; return
+        }
+        syncing = true
+        defer { syncing = false }
+        do {
+            let service = AccountService.shared
+            let user = try await service.credential().user.id
+            try service.checkOwner(user)
+            store.cloudStatus = "正在同步邮箱账号…"
+            for attempt in 0..<3 {
+                try FileManager.default.createDirectory(at: ledgerFile.deletingLastPathComponent(), withIntermediateDirectories: true)
+                try JSONEncoder().encode(ledger).write(to: ledgerFile, options: .atomic)
+                let snapshot = try await service.fetch("trips")
+                try service.checkOwner(user)
+                if let snapshot {
+                    let remote = try snapshot.decode(CloudLibrary.self)
+                    try remote.validateAccountPayload()
+                    // Preserve a durable pre-merge snapshot including the trash.
+                    let recovery = ledgerFile.deletingLastPathComponent().appendingPathComponent("account-before-merge.json")
+                    try JSONEncoder().encode(ledger).write(to: recovery, options: .atomic)
+                    conflictCount += ledger.merge(remote)
+                    try JSONEncoder().encode(ledger).write(to: ledgerFile, options: .atomic)
+                    applyAccountLibrary()
+                    guard store.saveError == nil else { throw AccountError.invalidResponse }
+                }
+                if ledger.pending.isEmpty && !ledger.orderPending {
+                    store.cloudStatus = "行程文字已同步"; store.cloudLastSync = Date()
+                    await synchronizeAccountPhotos(user: user); return
+                }
+                let outgoing = ledger.library
+                try outgoing.validateAccountPayload()
+                do {
+                    try await service.put("trips", data: JSONEncoder().encode(outgoing), replacing: snapshot?.revision ?? 0)
+                    try service.checkOwner(user)
+                    ledger.acknowledge(outgoing)
+                    try JSONEncoder().encode(ledger).write(to: ledgerFile, options: .atomic)
+                    store.cloudLastSync = Date()
+                    store.cloudStatus = !ledger.pending.isEmpty || ledger.orderPending ? "更改已保存在本机，等待同步" :
+                        (conflictCount == 0 ? "账号已同步" : "账号已同步，保留了 \(conflictCount) 份冲突副本")
+                    await synchronizeAccountPhotos(user: user)
+                    return
+                } catch AccountError.conflict where attempt < 2 { continue }
+            }
+        } catch { store.cloudStatus = error.localizedDescription }
+    }
+
     private func backup(_ trips: [Trip]) {
         let folder = ledgerFile.deletingLastPathComponent().appendingPathComponent("SyncBackups")
         do {
@@ -240,36 +354,13 @@ final class RoamCloudSync {
 }
 
 struct CloudSyncView: View {
-    @EnvironmentObject private var store: TravelStore
-    @EnvironmentObject private var stickers: StickerBoardStore
     @Environment(\.dismiss) private var dismiss
     var body: some View {
         NavigationStack {
             Form {
-                Section {
-                    Label(store.cloudStatus, doodleSystemImage: "icloud")
-                    if let date = store.cloudLastSync { Text(AppLocalization.format("最近同步：%@", date.formatted(Date.FormatStyle(date: .abbreviated, time: .shortened).locale(AppLocalization.locale)))).font(.caption).foregroundStyle(.secondary) }
-                    Button("立即同步") { Task { await store.cloud?.synchronize() } }
-                        .disabled(!RoamCloudSync.isConfigured)
-                }
-                Section("两台设备互通") {
-                    Text("iPhone 和 Mac 登录同一个 iCloud 账户，即可同步旅行、每日安排、地点、路线顺序和首页排序。")
-                    Text("离线时仍会保存到本机；打开 App 后会自动重试。同一旅行发生同时编辑冲突时，会保留冲突副本供你整理。")
-                    Text("云端数据保存在你的私人 iCloud 空间，不会公开给其他用户。")
-                }
-                Section("Travel Journal") {
-                    Label(AppLocalization.text(stickers.cloudStatus), doodleSystemImage: "icloud")
-                    if let date = stickers.cloudLastSync {
-                        Text(AppLocalization.format("最近同步：%@", date.formatted(Date.FormatStyle(date: .abbreviated, time: .shortened).locale(AppLocalization.locale))))
-                            .font(.caption).foregroundStyle(.secondary)
-                    }
-                    Text("贴纸、文字、描边和位置会自动同步到你的私人 iCloud。离线时先保存在本机，联网后自动重试。")
-                    Text("在支持旅游手账的设备上登录同一个 iCloud 账户，即可继续编辑；同时编辑的不同内容会保留为副本。")
-                    Button("立即同步") { Task { await stickers.cloud?.synchronize() } }
-                        .disabled(!RoamCloudSync.isConfigured)
-                }
+                AccountSyncSettings()
             }
-            .navigationTitle("iCloud 同步").navigationBarTitleDisplayMode(.inline)
+            .navigationTitle("账号与同步").navigationBarTitleDisplayMode(.inline)
             .toolbar { ToolbarItem(placement: .confirmationAction) { Button("完成") { dismiss() } } }
         }
     }

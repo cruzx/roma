@@ -174,7 +174,7 @@ final class CloudKitJournalTransport: JournalCloudTransport {
         return file
     }
 
-    nonisolated private static func validatePNG(_ data: Data) throws {
+    nonisolated static func validatePNG(_ data: Data) throws {
         guard !data.isEmpty,
               let source = CGImageSourceCreateWithData(data as CFData, nil),
               CGImageSourceGetType(source) as String? == UTType.png.identifier,
@@ -191,6 +191,7 @@ final class JournalCloudSync {
     private let transport: (any JournalCloudTransport)?
     private var timer: Task<Void, Never>?
     private var debounce: Task<Void, Never>?
+    private var stopped = false
     private var syncing = false
     private var accountGeneration = 0
     private var accountObserver: NSObjectProtocol?
@@ -200,7 +201,7 @@ final class JournalCloudSync {
 
     init(store: StickerBoardStore, transport: (any JournalCloudTransport)? = nil) {
         self.store = store
-        self.transport = transport ?? (RoamCloudSync.isConfigured ? CloudKitJournalTransport() : nil)
+        self.transport = transport ?? (AccountWorkspace.enabled ? AccountJournalTransport() : (RoamCloudSync.isConfigured ? CloudKitJournalTransport() : nil))
         store.cloudStatus = self.transport == nil ? "iCloud 待配置开发者权限" : "等待连接 iCloud"
         accountObserver = NotificationCenter.default.addObserver(
             forName: .CKAccountChanged, object: nil, queue: .main
@@ -222,6 +223,7 @@ final class JournalCloudSync {
     }
 
     func start() {
+        stopped = false
         guard transport != nil, timer == nil else { return }
         timer = Task { [weak self] in
             while !Task.isCancelled {
@@ -248,7 +250,16 @@ final class JournalCloudSync {
         }
     }
 
+    func stopAndDrain() async {
+        stopped = true
+        timer?.cancel(); timer = nil
+        debounce?.cancel(); debounce = nil
+        accountGeneration += 1
+        while syncing { await Task.detached { try? await Task.sleep(for: .milliseconds(50)) }.value }
+    }
+
     func synchronize() async {
+        guard !stopped else { return }
         guard let store, let transport, !syncing else { return }
         guard store.syncStorageAvailable else {
             store.cloudStatus = "同步数据读取失败，本机数据已保留"
@@ -268,7 +279,7 @@ final class JournalCloudSync {
                 confirmedImageNames.removeAll()
                 confirmedImageAccount = owner
             }
-            store.cloudStatus = "正在同步 iCloud…"
+            store.cloudStatus = AccountWorkspace.enabled ? "正在同步账号手账…" : "正在同步 iCloud…"
 
             for attempt in 0..<3 {
                 let snapshot = try await transport.fetchManifest()
@@ -360,11 +371,12 @@ final class JournalCloudSync {
     }
 
     private var completedStatus: String {
-        conflictCount == 0 ? "iCloud 已同步" :
+        conflictCount == 0 ? (AccountWorkspace.enabled ? "账号手账已同步" : "iCloud 已同步") :
             AppLocalization.format("已同步，保留了 %lld 份冲突副本", Int64(conflictCount))
     }
 
     private func status(for error: Error) -> String {
+        if let error = error as? AccountError { return error.localizedDescription }
         if let error = error as? JournalStorageError, case .accountChanged = error {
             return "iCloud 账户已更换，同步已暂停以保护原账户数据"
         }

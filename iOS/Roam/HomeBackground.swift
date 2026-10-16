@@ -43,16 +43,21 @@ final class HomeBackgroundStore: ObservableObject {
     private let enabled: Bool
     private var pending = false
     private var owner: String?
+    private var stopped = false
     private var syncing = false
     private var task: Task<Void, Never>?
     init(testing: Bool = false, reset: Bool = false) {
         let base = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
         file = testing ? FileManager.default.temporaryDirectory.appendingPathComponent("roam-test-background.json") : base.appendingPathComponent("Roam/home-background.json")
-        enabled = !testing && RoamCloudSync.isConfigured
+        enabled = !testing && !AccountWorkspace.enabled && RoamCloudSync.isConfigured
         if !reset, let data = try? Data(contentsOf: file), let saved = try? JSONDecoder().decode(Saved.self, from: data) {
             selection = saved.selection; pending = saved.pending; owner = saved.owner
         }
-        if enabled {
+        start()
+    }
+    func start() {
+        stopped = false
+        if enabled && task == nil {
             task = Task { [weak self] in
                 while !Task.isCancelled {
                     await self?.synchronize()
@@ -75,8 +80,13 @@ final class HomeBackgroundStore: ObservableObject {
             return true
         } catch { self.error = AppLocalization.text("背景保存失败，请重试。"); return false }
     }
+    func stopAndDrain() async {
+        stopped = true
+        task?.cancel(); task = nil
+        while syncing { await Task.detached { try? await Task.sleep(for: .milliseconds(50)) }.value }
+    }
     func synchronize() async {
-        guard enabled, !syncing else { return }
+        guard !stopped, enabled, !syncing else { return }
         syncing = true
         defer { syncing = false }
         do {
@@ -187,8 +197,6 @@ struct HomeBackgroundPicker: View {
                             }
                         }
                     }
-                    Text(backgrounds.status).font(.caption).foregroundStyle(.secondary)
-                    Text("自选照片会同步到你的私人 iCloud；离线时先保存在本机，联网后自动重试。").font(.caption).foregroundStyle(.secondary)
                 }.padding(20)
             }.navigationTitle("首页背景").navigationBarTitleDisplayMode(.inline)
             .toolbar { ToolbarItem(placement: .confirmationAction) { Button("完成") { dismiss() } } }

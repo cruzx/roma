@@ -1,0 +1,35 @@
+import { PGlite } from '@electric-sql/pglite';
+import fs from 'node:fs/promises';
+import assert from 'node:assert/strict';
+const db=new PGlite();
+await db.exec(`create role anon; create role authenticated; create schema auth;
+create table auth.users(id uuid primary key);
+create function auth.uid() returns uuid language sql stable as $$ select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid $$;
+grant usage on schema auth, public to anon, authenticated;
+grant execute on function auth.uid() to anon, authenticated;
+insert into auth.users values ('11111111-1111-1111-1111-111111111111'),('22222222-2222-2222-2222-222222222222');`);
+await db.exec(await fs.readFile(new URL('../account-sync.sql', import.meta.url),'utf8'));
+let checks=0;
+async function login(id){await db.exec('reset role; set role authenticated');await db.query("select set_config('request.jwt.claim.sub',$1,false)",[id]);}
+async function denied(q,code){try{await db.query(q);assert.fail('Unexpected authorization');}catch(e){assert.equal(e.code,code);}checks++;}
+await db.exec('set role anon');await denied("select public.roam_read('trips')",'42501');
+await login('11111111-1111-1111-1111-111111111111');
+assert.equal((await db.query("select public.roam_read('trips') as v")).rows[0].v,null);checks++;
+assert.equal((await db.query("select public.roam_write('trips',0,'e30=') as v")).rows[0].v,1);checks++;
+await denied("select public.roam_write('trips',0,'e30=')",'PT409');
+await denied("update public.roam_documents set payload='bad'",'42501');
+await denied("select public.roam_write('../invalid',0,'e30=')",'PT400');
+await denied("select public.roam_write('image/test.png',0,'YWJj')",'PT400');
+await denied("select public.roam_write('trips',1,'eyJjb3ZlclBob3RvIjoiWVdKaiJ9')",'PT400');
+await denied("select public.roam_write('trips',1,'dHdv')",'PT400');
+await login('22222222-2222-2222-2222-222222222222');
+assert.equal((await db.query("select public.roam_read('trips') as v")).rows[0].v,null);checks++;
+assert.equal((await db.query('select * from public.roam_documents')).rows.length,0);checks++;
+await db.query("select public.roam_write('trips',0,'e30=')");
+await db.query('select public.roam_delete_account()');
+await login('11111111-1111-1111-1111-111111111111');
+assert.equal((await db.query("select public.roam_read('trips') as v")).rows[0].v.payload,'e30=');checks++;
+await db.exec('reset role');
+assert.equal((await db.query("select count(*)::int as n from auth.users where id='22222222-2222-2222-2222-222222222222'")).rows[0].n,0);checks++;
+assert.equal((await db.query("select count(*)::int as n from public.roam_documents where user_id='22222222-2222-2222-2222-222222222222'")).rows[0].n,0);checks++;
+await db.close(); console.log(`${checks} PostgreSQL checks passed`);

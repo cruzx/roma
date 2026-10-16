@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>EmailLoginReady</key>
+	<string>true</string>
+	<key>PublishableKey</key>
+	<string>sb_publishable_bJXlXG7j73Q3rXCdplSSnQ_ChieyaL_</string>
+	<key>URL</key>
+	<string>https://cafgiqhczacecusugxaj.supabase.co</string>
+</dict>
+</plist>

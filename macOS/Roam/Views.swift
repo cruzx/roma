@@ -76,7 +76,7 @@ struct LibraryView: View {
                     Menu {
                         Button("语言 / Language", doodleSystemImage: "globe") { language.isSettingsPresented = true }
                             .accessibilityIdentifier("language-settings")
-                        Button("iCloud 同步", doodleSystemImage: "icloud") { showCloud = true }
+                        Button("账号与同步", doodleSystemImage: "person.crop.circle") { showCloud = true }
                         Button("垃圾桶", doodleSystemImage: "trash") { showTrash = true }
                         Button("分享收集箱", doodleSystemImage: "square.and.arrow.down") { showInbox = true }
                         Button("旅行模板", doodleSystemImage: "suitcase.rolling") { showTemplates = true }
@@ -946,7 +946,7 @@ struct TripEditor: View {
                         Label("从文件选择", doodleSystemImage: "folder")
                     }.accessibilityIdentifier("choose-cover-file")
                     if loadingPhoto { ProgressView("正在处理照片…") }
-                    Text("照片随行程同步到你自己的 iCloud 私人空间。")
+                    Text(AccountWorkspace.enabled ? "行程文字同步到邮箱账号；照片保存在 iCloud，需要相同 Apple ID。" : "照片随行程同步到你自己的 iCloud 私人空间。")
                         .font(.caption).foregroundStyle(.secondary)
 
                     Picker("内置封面", selection: $cover) {
@@ -1026,7 +1026,7 @@ struct TripEditor: View {
         var days = existing?.days ?? []
         if days.count < duration { days.append(contentsOf: (days.count..<duration).map { _ in TravelDay() }) }
         else { days = Array(days.prefix(duration)) }
-        let trip = Trip(id: existing?.id ?? UUID(), destination: destination.trimmingCharacters(in: .whitespacesAndNewlines), country: country, startDate: date, cover: cover, coverPhoto: coverPhoto, status: status, days: days)
+        let trip = Trip(id: existing?.id ?? UUID(), destination: destination.trimmingCharacters(in: .whitespacesAndNewlines), country: country, startDate: date, cover: cover, coverPhoto: coverPhoto, coverPhotoReference: existing?.coverPhoto == nil ? existing?.coverPhotoReference : nil, status: status, days: days)
         if existing != nil { store.update(trip) } else { store.trips.insert(trip, at: 0) }
         dismiss()
     }
@@ -1163,7 +1163,7 @@ struct ItemEditor: View {
                         }.accessibilityIdentifier("choose-item-photo-files")
                     }
                     if loadingItemPhotos { ProgressView("正在处理图片…") }
-                    Text("每条安排最多 8 张。图片随行程保存在你的 iCloud 私人空间，分享旅行时也会一同发送。")
+                    Text(AccountWorkspace.enabled ? "每条安排最多 8 张。图片随行程同步到你的邮箱账号，分享旅行时也会一同发送。" : "每条安排最多 8 张。图片随行程保存在你的 iCloud 私人空间，分享旅行时也会一同发送。")
                         .font(.caption).foregroundStyle(.secondary)
                 }
                 Section("地图地点 · \(places.count) 个") {
@@ -1236,6 +1236,7 @@ struct ItemEditor: View {
                             item.linkPreview = LinkPreview(originalURL: url, title: title)
                         }
                         item.photos = itemPhotos.isEmpty ? nil : itemPhotos
+                        item.photoReferences = selection.item?.photos == nil ? selection.item?.photoReferences : nil
                         item.photo = selection.item?.photo
                         store.upsert(item, tripID: tripID, from: selection.item == nil ? nil : selection.dayID, to: dayID, through: multipleNights ? endDayID : nil)
                         dismiss()

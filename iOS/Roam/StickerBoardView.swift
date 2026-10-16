@@ -169,7 +169,8 @@ struct StickerBoardView: View {
                     try Task.checkCancellation()
                     let cutout = try await StickerSubjectProcessor.cutout(from: data)
                     try Task.checkCancellation()
-                    selectedID = board.addSticker(cutout, at: nextPosition)
+                    finishCanvasPan()
+                    selectedID = board.addStickerAutomatically(cutout, canvasSize: canvasSize)
                     if selectedID != nil { AppHaptics.success() }
                     else { AppHaptics.error() }
                 } catch is CancellationError { return }
@@ -619,7 +620,8 @@ struct StickerBoardView: View {
             do {
                 let cutout = try await StickerSubjectProcessor.cutout(from: data)
                 try Task.checkCancellation()
-                selectedID = board.addSticker(cutout, at: nextPosition)
+                finishCanvasPan()
+                    selectedID = board.addStickerAutomatically(cutout, canvasSize: canvasSize)
                 if selectedID != nil { AppHaptics.success() }
                 else { AppHaptics.error() }
             } catch is CancellationError { return }
@@ -912,9 +914,7 @@ private struct StickerCanvasArtwork: View, Equatable {
     }
 
     private var imageSize: CGSize {
-        let longest = min(200, canvasSize.width * 0.48) * scale
-        let aspect = max(0.1, item.aspectRatio)
-        return aspect >= 1 ? CGSize(width: longest, height: longest / aspect) : CGSize(width: longest * aspect, height: longest)
+        StickerAutoLayout.imageSize(aspectRatio: item.aspectRatio, scale: scale, canvasSize: canvasSize)
     }
 
     var body: some View {
