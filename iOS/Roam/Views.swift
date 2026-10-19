@@ -53,18 +53,11 @@ struct LibraryView: View {
     @State private var showInbox = false
     @State private var showTemplates = false
     @EnvironmentObject private var store: TravelStore
-    private var search: String { navigation.search }
-    @State private var searchScrollPhase: ScrollPhase = .idle
-    @State private var searchIdleGeneration = 0
-    @State private var libraryPosition = ScrollPosition(edge: .top)
+    @State private var libraryScrollPhase: ScrollPhase = .idle
+    @State private var libraryIdleGeneration = 0
     @State private var showCreate = false
     @State private var showCloud = false
     @State private var showTrash = false
-    private var filtered: [Trip] {
-        store.trips.filter {
-            (search.isEmpty || ($0.destination + $0.country).localizedStandardContains(search))
-        }
-    }
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -79,7 +72,7 @@ struct LibraryView: View {
                         }
                     }
                     LazyVGrid(columns: [GridItem(.flexible(), spacing: 14), GridItem(.flexible(), spacing: 14)], spacing: 18) {
-                        ForEach(filtered) { trip in
+                        ForEach(store.trips) { trip in
                             sortableTripCard(trip)
                         }
                         Button { AppHaptics.tap(); showCreate = true } label: {
@@ -92,43 +85,34 @@ struct LibraryView: View {
                                 .background(Color(.secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 24))
                         }.buttonStyle(.plain).foregroundStyle(.blue).accessibilityIdentifier("new-trip-card")
                     }
-                    if filtered.isEmpty && !search.isEmpty {
-                        ContentUnavailableView {
-                            Label { Text("未找到目的地") } icon: {
-                                DoodleIcon(systemName: "magnifyingglass", size: 48).foregroundStyle(.black)
-                            }
-                        } description: { Text("试试搜索其他目的地") }
-                    }
                     TravelTemplateHomeSection(columns: [GridItem(.flexible(), spacing: 14), GridItem(.flexible(), spacing: 14)]).environmentObject(store)
                 }.padding(.horizontal, 20).padding(.top, 8).padding(.bottom, 28)
             }
             .onScrollPhaseChange { _, phase in
-                searchScrollPhase = phase
+                libraryScrollPhase = phase
                 if phase == .idle {
-                    searchIdleGeneration += 1
-                } else if phase != .tracking, !navigation.isSearchPresented {
+                    libraryIdleGeneration += 1
+                } else if phase != .tracking {
                     navigation.isCollapsed = true
                 }
             }
             .onAppear {
                 navigation.isLibraryRootVisible = true
-                searchScrollPhase = .idle
-                searchIdleGeneration += 1
+                libraryScrollPhase = .idle
+                libraryIdleGeneration += 1
             }
             .onDisappear {
                 if navigation.tab == .trips { navigation.isLibraryRootVisible = false }
             }
-            .task(id: canExpandSearchAfterRest ? searchIdleGeneration : nil) {
-                guard canExpandSearchAfterRest else { return }
-                // Count from the end of deceleration. Touching, scrolling or searching
+            .task(id: canExpandNavigationAfterRest ? libraryIdleGeneration : nil) {
+                guard canExpandNavigationAfterRest else { return }
+                // Count from the end of deceleration. Touching or scrolling
                 // cancels this task; another idle transition starts a full new second.
                 do { try await Task.sleep(for: .seconds(1)) }
                 catch { return }
-                guard !Task.isCancelled, canExpandSearchAfterRest else { return }
+                guard !Task.isCancelled, canExpandNavigationAfterRest else { return }
                 navigation.isCollapsed = false
             }
-            .scrollPosition($libraryPosition)
-            .onChange(of: search) { _, _ in libraryPosition.scrollTo(edge: .top) }
             .scrollEdgeEffectStyle(.soft, for: .top)
             .safeAreaInset(edge: .bottom, spacing: 0) {
                 Color.clear.frame(height: 68).allowsHitTesting(false)
@@ -189,9 +173,9 @@ struct LibraryView: View {
             .sheet(isPresented: $showTrash) { TrashView().environmentObject(store).tint(.blue) }
         }
     }
-    private var canExpandSearchAfterRest: Bool {
-        scenePhase == .active && navigation.tab == .trips && navigation.isLibraryRootVisible && searchScrollPhase == .idle &&
-            navigation.isCollapsed && !navigation.isSearchPresented
+    private var canExpandNavigationAfterRest: Bool {
+        scenePhase == .active && navigation.tab == .trips && navigation.isLibraryRootVisible && libraryScrollPhase == .idle &&
+            navigation.isCollapsed
     }
 
     private func sortableTripCard(_ trip: Trip) -> some View {
@@ -214,8 +198,8 @@ struct LibraryView: View {
     }
 
     private func moveTrip(_ id: UUID, offset: Int) {
-        guard let index = filtered.firstIndex(where: { $0.id == id }), filtered.indices.contains(index + offset) else { return }
-        if store.reorderTrip(id, onto: filtered[index + offset].id) { AppHaptics.impact() }
+        guard let index = store.trips.firstIndex(where: { $0.id == id }), store.trips.indices.contains(index + offset) else { return }
+        if store.reorderTrip(id, onto: store.trips[index + offset].id) { AppHaptics.impact() }
     }
 
 }

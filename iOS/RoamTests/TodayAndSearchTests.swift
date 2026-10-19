@@ -16,31 +16,6 @@ final class TodayAndSearchTests: XCTestCase {
         XCTAssertEqual(navigation.tab, .trips)
         XCTAssertTrue(navigation.isCollapsed)
         XCTAssertFalse(navigation.shouldRestoreStickerBar)
-        XCTAssertEqual(navigation.searchFocusRequest, 0, "Page changes must not request keyboard focus")
-    }
-
-    @MainActor func testSearchExpandsNavigationAndItsFocusRequestIsConsumedOnlyOnce() {
-        let navigation = HomeNavigationState()
-        navigation.select(.stickers)
-        navigation.isCollapsed = true
-
-        navigation.activateSearch()
-        XCTAssertEqual(navigation.tab, .trips)
-        XCTAssertFalse(navigation.isCollapsed)
-        XCTAssertTrue(navigation.isSearchPresented)
-        XCTAssertEqual(navigation.searchFocusRequest, 1)
-        let request = navigation.searchFocusRequest
-        XCTAssertTrue(navigation.consumeSearchFocusRequest(request))
-
-        navigation.isLibraryRootVisible = false
-        navigation.isLibraryRootVisible = true
-        XCTAssertEqual(navigation.searchFocusRequest, request)
-        XCTAssertFalse(navigation.consumeSearchFocusRequest(request), "Returning from detail must not refocus an old search")
-
-        navigation.activateSearch()
-        XCTAssertEqual(navigation.searchFocusRequest, request + 1)
-        XCTAssertTrue(navigation.consumeSearchFocusRequest(navigation.searchFocusRequest))
-        XCTAssertFalse(navigation.consumeSearchFocusRequest(navigation.searchFocusRequest))
     }
 
     @MainActor func testBottomNavigationVisibilityFollowsTheActivePageAndCamera() {

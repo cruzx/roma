@@ -1,64 +1,20 @@
 import XCTest
 
 final class HomeSearchUITests: XCTestCase {
-    @MainActor func testSearchLivesInsideIconNavigationAndStillFiltersTrips() {
+    @MainActor func testHomeHasTwoTabsWithoutSearch() {
         let app = launchHome()
         let bar = navigation(in: app)
         XCTAssertTrue(bar.waitForExistence(timeout: 10))
         XCTAssertTrue(bar.buttons["home-tab-trips"].exists)
         XCTAssertTrue(bar.buttons["home-tab-stickers"].exists)
-        XCTAssertTrue(bar.buttons["home-search-toggle"].exists)
-        XCTAssertFalse(bar.staticTexts["Trips"].exists)
-        XCTAssertFalse(bar.staticTexts["Stickers"].exists)
-        XCTAssertFalse(app.textFields["home-search-input"].isHittable)
-        XCTAssertFalse(app.tabBars.firstMatch.exists)
-        XCTAssertLessThan(bar.frame.width, 220)
-        screenshot(app, "Icon-only bottom navigation")
-
-        let content = app.scrollViews.firstMatch
-        content.swipeUp()
-        waitUntil { (bar.value as? String) == "已展开" && bar.frame.width > 180 }
-        content.swipeDown()
-        waitUntil { (bar.value as? String) == "已展开" && bar.frame.width > 180 }
-
-        bar.buttons["home-search-toggle"].tap()
-        let input = app.textFields["home-search-input"]
-        XCTAssertTrue(input.waitForExistence(timeout: 5))
-        waitUntil { bar.frame.width > 250 }
-        input.typeText("东京")
-        waitUntil { app.buttons["trip-tokyo"].exists && !app.buttons["trip-kyoto"].exists }
-        screenshot(app, "Search expanded inside bottom navigation")
-        input.typeText("\n")
-        waitUntil { app.keyboards.count == 0 }
-        app.buttons["trip-tokyo"].tap()
-        waitUntil { !bar.isHittable }
-        app.buttons["back-trip"].tap()
-        waitUntil { bar.isHittable }
-        XCTAssertEqual(app.keyboards.count, 0, "Returning from detail must not replay an old focus request")
-
-        let clear = app.buttons["home-search-clear"]
-        clear.tap()
-        XCTAssertTrue(app.buttons["trip-kyoto"].waitForExistence(timeout: 5))
-        clear.tap()
-        waitUntil { !input.isHittable && app.keyboards.count == 0 && bar.frame.width < 220 }
-        app.buttons["trip-tokyo"].tap()
-        waitUntil { !bar.isHittable }
-    }
-
-    @MainActor func testSearchFromStickersReturnsToTripsAndFocusesInput() {
-        let app = launchHome()
+        XCTAssertFalse(app.buttons["home-search-toggle"].exists)
+        XCTAssertFalse(app.textFields["home-search-input"].exists)
+        XCTAssertLessThan(bar.frame.width, 150)
         app.buttons["home-tab-stickers"].tap()
         XCTAssertTrue(app.buttons["sticker-add-text"].waitForExistence(timeout: 5))
-        app.buttons["home-search-toggle"].tap()
-        let input = app.textFields["home-search-input"]
-        XCTAssertTrue(input.waitForExistence(timeout: 5))
-        input.typeText("京都")
-        waitUntil { app.buttons["trip-kyoto"].exists && !app.buttons["trip-tokyo"].exists }
-        app.buttons["home-tab-stickers"].tap()
-        waitUntil { app.buttons["sticker-add-text"].exists && app.keyboards.count == 0 }
         app.buttons["home-tab-trips"].tap()
         XCTAssertTrue(app.buttons["trip-tokyo"].waitForExistence(timeout: 5))
-        XCTAssertFalse(input.isHittable)
+        screenshot(app, "Two-tab navigation without search")
     }
 
     @MainActor func testRecommendedTemplateHidesBottomNavigationAndRestoresItOnReturn() {

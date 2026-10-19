@@ -27,24 +27,17 @@ struct RootView: View {
 struct LibraryView: View {
     @EnvironmentObject private var language: AppLanguageStore
     @EnvironmentObject private var store: TravelStore
-    @State private var search = ""
-    @FocusState private var searchFocused: Bool
     @State private var showCreate = false
     @State private var showInbox = false
     @State private var showTemplates = false
     @State private var showCloud = false
     @State private var showTrash = false
-    private var filtered: [Trip] {
-        store.trips.filter {
-            (search.isEmpty || ($0.destination + $0.country).localizedStandardContains(search))
-        }
-    }
     var body: some View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 24) {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 240, maximum: 320), spacing: 20, alignment: .top)], alignment: .leading, spacing: 20) {
-                        ForEach(filtered) { trip in
+                        ForEach(store.trips) { trip in
                             sortableTripCard(trip)
                         }
                         Button { showCreate = true } label: {
@@ -57,9 +50,6 @@ struct LibraryView: View {
                                 .background(Color(.secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 24))
                         }.buttonStyle(.plain).foregroundStyle(.blue).accessibilityIdentifier("new-trip-card")
                     }
-                    if filtered.isEmpty && !search.isEmpty {
-                        MacDoodleSearchEmptyState(text: search)
-                    }
                     TravelTemplateHomeSection(columns: [GridItem(.adaptive(minimum: 240, maximum: 320), spacing: 20, alignment: .top)]).environmentObject(store)
                 }.frame(maxWidth: 1360).padding(.horizontal, 28).padding(.top, 16).padding(.bottom, 28)
                 .frame(maxWidth: .infinity, alignment: .top)
@@ -68,10 +58,6 @@ struct LibraryView: View {
             .navigationTitle("我的旅行")
             .navigationBarTitleDisplayMode(.large)
             .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    librarySearchField
-                }
-                .sharedBackgroundVisibility(.hidden)
                 ToolbarItem(placement: .topBarTrailing) {
                     Menu {
                         Button("语言 / Language", doodleSystemImage: "globe") { language.isSettingsPresented = true }
@@ -103,45 +89,6 @@ struct LibraryView: View {
             .sheet(isPresented: $showTrash) { TrashView().environmentObject(store) }
         }
     }
-    private var librarySearchField: some View {
-        HStack(spacing: 8) {
-            Button { searchFocused = true } label: {
-                DoodleIcon(systemName: "magnifyingglass", size: 18)
-                    .foregroundStyle(.secondary)
-            }
-            .buttonStyle(.plain)
-            .keyboardShortcut("f", modifiers: .command)
-            .accessibilityLabel("搜索目的地")
-            .help("搜索目的地")
-
-            TextField("搜索目的地", text: $search)
-                .textFieldStyle(.plain)
-                .font(.system(size: 13))
-                .textInputAutocapitalization(.never)
-                .autocorrectionDisabled()
-                .focused($searchFocused)
-                .onSubmit { searchFocused = false }
-                .accessibilityLabel("搜索目的地")
-                .accessibilityIdentifier("library-search-input")
-
-            if !search.isEmpty {
-                Button {
-                    search = ""
-                    searchFocused = true
-                } label: {
-                    DoodleIcon(systemName: "xmark.circle.fill", size: 16)
-                        .foregroundStyle(.secondary)
-                }
-                .buttonStyle(.plain)
-                .accessibilityLabel("清除搜索内容")
-                .accessibilityIdentifier("library-search-clear")
-            }
-        }
-        .padding(.horizontal, 10)
-        .frame(width: 220, height: 34)
-        .background(Color.primary.opacity(0.06), in: RoundedRectangle(cornerRadius: 11))
-    }
-
     private func sortableTripCard(_ trip: Trip) -> some View {
                             NavigationLink(value: trip.id) { DestinationCard(trip: trip) }
                                 .buttonStyle(.plain)
@@ -159,8 +106,8 @@ struct LibraryView: View {
     }
 
     private func moveTrip(_ id: UUID, offset: Int) {
-        guard let index = filtered.firstIndex(where: { $0.id == id }), filtered.indices.contains(index + offset) else { return }
-        _ = store.reorderTrip(id, onto: filtered[index + offset].id)
+        guard let index = store.trips.firstIndex(where: { $0.id == id }), store.trips.indices.contains(index + offset) else { return }
+        _ = store.reorderTrip(id, onto: store.trips[index + offset].id)
     }
 
 }
