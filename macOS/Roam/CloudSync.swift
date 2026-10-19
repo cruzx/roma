@@ -360,7 +360,7 @@ struct CloudSyncView: View {
             Form {
                 AccountSyncSettings()
             }
-            .navigationTitle("账号与同步").navigationBarTitleDisplayMode(.inline)
+            .navigationTitle("账号").navigationBarTitleDisplayMode(.inline)
             .toolbar { ToolbarItem(placement: .confirmationAction) { Button("完成") { dismiss() } } }
         }
     }

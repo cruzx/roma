@@ -61,7 +61,7 @@ struct LibraryView: View {
                     Menu {
                         Button("语言 / Language", doodleSystemImage: "globe") { language.isSettingsPresented = true }
                             .accessibilityIdentifier("language-settings")
-                        Button("账号与同步", doodleSystemImage: "person.crop.circle") { showCloud = true }
+                        Button("账号", doodleSystemImage: "person.crop.circle") { showCloud = true }
                         Button("垃圾桶", doodleSystemImage: "trash") { showTrash = true }
                         Button("分享收集箱", doodleSystemImage: "square.and.arrow.down") { showInbox = true }
                         Button("新建旅行", doodleSystemImage: "plus") { showCreate = true }

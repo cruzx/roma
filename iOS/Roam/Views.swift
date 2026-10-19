@@ -134,7 +134,7 @@ struct LibraryView: View {
                         Button("语言 / Language", doodleSystemImage: "globe") { language.isSettingsPresented = true }
                             .accessibilityIdentifier("language-settings")
                         Button("首页背景", doodleSystemImage: "photo") { AppHaptics.tap(); showBackground = true }
-                        Button("账号与同步", doodleSystemImage: "person.crop.circle") { AppHaptics.tap(); showCloud = true }
+                        Button("账号", doodleSystemImage: "person.crop.circle") { AppHaptics.tap(); showCloud = true }
                         Button("垃圾桶", doodleSystemImage: "trash") { AppHaptics.tap(); showTrash = true }
                         Button("分享收集箱", doodleSystemImage: "square.and.arrow.down") { AppHaptics.tap(); showInbox = true }
                         Button("新建旅行", doodleSystemImage: "plus") { AppHaptics.tap(); showCreate = true }

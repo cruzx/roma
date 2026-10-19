@@ -6,7 +6,7 @@ final class AccountSettingsUITests: XCTestCase {
         app.launch()
         XCTAssertTrue(app.buttons["library-settings"].waitForExistence(timeout: 15))
         app.buttons["library-settings"].tap()
-        app.buttons["账号与同步"].tap()
+        app.buttons["账号"].tap()
         XCTAssertTrue(app.staticTexts["账号云服务尚未配置。部署后即可使用邮箱验证码登录；当前保存方式不变。"].waitForExistence(timeout: 5))
         XCTAssertFalse(app.buttons["发送验证码"].exists)
         XCTAssertFalse(app.buttons["立即同步"].exists)
