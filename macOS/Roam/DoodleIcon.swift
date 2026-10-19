@@ -138,6 +138,7 @@ struct DoodleIcon: View {
         "note.text": "Doodle_Note01Icon",
         "paintpalette": "Doodle_PaintBoardIcon",
         "pencil": "Doodle_PencilEdit01Icon",
+        "person.crop.circle": "Doodle_AccountIcon",
         "photo": "Doodle_Image01Icon",
         "photo.badge.exclamationmark": "Doodle_ImageNotFound01Icon",
         "photo.badge.plus": "Doodle_ImageAdd01Icon",

@@ -86,5 +86,6 @@
   "home.trips.fill": "MingCute/luggage.svg",
   "home.journal.fill": "MingCute/notebook-2.svg",
   "home.settings.fill": "MingCute/settings-3.svg",
-  "home.search.fill": "MingCute/search-3.svg"
+  "home.search.fill": "MingCute/search-3.svg",
+  "person.crop.circle": "Custom/AccountIcon.svg"
 }
