@@ -51,7 +51,6 @@ struct LibraryView: View {
     @Environment(\.scenePhase) private var scenePhase
     @State private var showBackground = false
     @State private var showInbox = false
-    @State private var showTemplates = false
     @EnvironmentObject private var store: TravelStore
     @State private var libraryScrollPhase: ScrollPhase = .idle
     @State private var libraryIdleGeneration = 0
@@ -138,7 +137,6 @@ struct LibraryView: View {
                         Button("账号与同步", doodleSystemImage: "person.crop.circle") { AppHaptics.tap(); showCloud = true }
                         Button("垃圾桶", doodleSystemImage: "trash") { AppHaptics.tap(); showTrash = true }
                         Button("分享收集箱", doodleSystemImage: "square.and.arrow.down") { AppHaptics.tap(); showInbox = true }
-                        Button("旅行模板", doodleSystemImage: "suitcase.rolling") { AppHaptics.tap(); showTemplates = true }
                         Button("新建旅行", doodleSystemImage: "plus") { AppHaptics.tap(); showCreate = true }
                         Button("导入旅行文件", doodleSystemImage: "square.and.arrow.down") {
                             AppHaptics.tap()
@@ -166,7 +164,6 @@ struct LibraryView: View {
                 }
             }
             .sheet(isPresented: $showInbox) { ShareInboxView().environmentObject(store).tint(.blue) }
-            .sheet(isPresented: $showTemplates) { TravelTemplatePicker().environmentObject(store).tint(.blue) }
             .sheet(isPresented: $showCreate) { TripEditor().environmentObject(store).tint(.blue) }
             .sheet(isPresented: $showBackground) { HomeBackgroundPicker().environmentObject(backgrounds).tint(.blue) }
             .sheet(isPresented: $showCloud) { CloudSyncView().environmentObject(store).tint(.blue) }

@@ -29,7 +29,6 @@ struct LibraryView: View {
     @EnvironmentObject private var store: TravelStore
     @State private var showCreate = false
     @State private var showInbox = false
-    @State private var showTemplates = false
     @State private var showCloud = false
     @State private var showTrash = false
     var body: some View {
@@ -65,7 +64,6 @@ struct LibraryView: View {
                         Button("账号与同步", doodleSystemImage: "person.crop.circle") { showCloud = true }
                         Button("垃圾桶", doodleSystemImage: "trash") { showTrash = true }
                         Button("分享收集箱", doodleSystemImage: "square.and.arrow.down") { showInbox = true }
-                        Button("旅行模板", doodleSystemImage: "suitcase.rolling") { showTemplates = true }
                         Button("新建旅行", doodleSystemImage: "plus") { showCreate = true }
                         Button("导入旅行文件", doodleSystemImage: "square.and.arrow.down") {
                             NotificationCenter.default.post(name: .importRoamTrip, object: nil)
@@ -83,7 +81,6 @@ struct LibraryView: View {
             }
             .navigationDestination(for: UUID.self) { TripDetailView(tripID: $0) }
             .sheet(isPresented: $showInbox) { ShareInboxView().environmentObject(store) }
-            .sheet(isPresented: $showTemplates) { TravelTemplatePicker().environmentObject(store) }
             .sheet(isPresented: $showCreate) { TripEditor().environmentObject(store) }
             .sheet(isPresented: $showCloud) { CloudSyncView().environmentObject(store) }
             .sheet(isPresented: $showTrash) { TrashView().environmentObject(store) }
