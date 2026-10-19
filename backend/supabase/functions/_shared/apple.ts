@@ -1,6 +1,8 @@
-import { AppStoreServerAPIClient, Environment, SignedDataVerifier } from 'npm:@apple/app-store-server-library@3.1.0';
+import { Environment } from 'npm:@apple/app-store-server-library@3.1.0';
 import { createClient } from 'npm:@supabase/supabase-js@2';
 import { Buffer } from 'node:buffer';
+import { EdgeAppleAPI } from './apple-api.ts';
+import { SignedDataVerifier } from './apple-verifier.js';
 import { bundleID, productID, entitlement } from './policy.ts';
 const required = (key: string) => { const value = Deno.env.get(key); if (!value) throw new Error(`Missing configuration: ${key}`); return value; };
 export const admin = () => createClient(required('SUPABASE_URL'), required('SUPABASE_SERVICE_ROLE_KEY'), { auth: { persistSession: false } });
@@ -9,7 +11,7 @@ export function apple(environment: string) {
   const env = environment === 'Production' ? Environment.PRODUCTION : Environment.SANDBOX;
   const roots = JSON.parse(required('APPLE_ROOT_CA_BASE64_JSON')).map((v: string) => Buffer.from(v, 'base64'));
   const verifier = new SignedDataVerifier(roots, true, env, bundleID, Number(required('APPLE_APP_ID')));
-  const api = new AppStoreServerAPIClient(required('APPLE_PRIVATE_KEY').replace(/\\n/g, '\n'), required('APPLE_KEY_ID'), required('APPLE_ISSUER_ID'), bundleID, env);
+  const api = new EdgeAppleAPI(required('APPLE_PRIVATE_KEY').replace(/\\n/g, '\n'), required('APPLE_KEY_ID'), required('APPLE_ISSUER_ID'), bundleID, env);
   return { api, verifier };
 }
 export async function locate(id: string) {

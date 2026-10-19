@@ -8,7 +8,8 @@ Deno.serve(async request => {
     if (typeof signedPayload !== 'string') return json({ error:'Invalid notification' },400);
     let verified; let source = apple('Production');
     try { verified = await source.verifier.verifyAndDecodeNotification(signedPayload); }
-    catch {
+    catch (error) {
+      console.error('Production notification verification failed', { name: error?.constructor?.name, status: (error as any)?.status, cause: String((error as any)?.cause?.message ?? '').slice(0,200) });
       source = apple('Sandbox'); // Throws unless sandbox explicitly enabled.
       verified = await source.verifier.verifyAndDecodeNotification(signedPayload);
     }
@@ -24,5 +25,5 @@ Deno.serve(async request => {
       await refresh(row.user_id, tx.originalTransactionId!, row.environment);
     }
     return json({ ok:true });
-  } catch { return json({ error:'Verification failed; retry notification' },503); }
+  } catch (error) { console.error('Notification verification failed', { name: error?.constructor?.name, status: (error as any)?.status, cause: String((error as any)?.cause?.message ?? '').slice(0,200), message: error instanceof Error ? error.message.replace(/[A-Za-z0-9_-]{60,}/g, '[redacted]') : 'unknown' }); return json({ error:'Verification failed; retry notification' },503); }
 });

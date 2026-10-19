@@ -43,6 +43,10 @@ struct RoamWorkspaceView: View {
                 do { try await Task.sleep(for: .seconds(30)) } catch { return }
             }
         }
+        .sheet(isPresented: $membership.showPurchaseIntentAccount) {
+            CloudSyncView().environmentObject(store).environmentObject(language)
+                .environment(\.locale, language.locale)
+        }
         .onChange(of: account.session?.user.id) { _, _ in Task { await reconcileWorkspace() } }
         .onChange(of: membership.active) { _, active in if active { Task { await reconcileWorkspace() } } }
     }

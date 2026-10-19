@@ -18,8 +18,18 @@ struct SyncMembership: Decodable {
     @Published var message = ""
     @Published private(set) var busy = false
     private var owner: String?
+    @Published var showPurchaseIntentAccount = false
+    private var intentListener: Task<Void, Never>?
     private var listener: Task<Void, Never>?
     init() {
+        intentListener = Task { [weak self] in
+            for await intent in PurchaseIntent.intents {
+                guard let self, intent.product.id == Self.productID else { continue }
+                self.product = intent.product
+                self.showPurchaseIntentAccount = true
+            }
+        }
+
         listener = Task { [weak self] in
             for await result in StoreKit.Transaction.updates {
                 guard let self else { return }
