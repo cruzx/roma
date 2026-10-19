@@ -68,6 +68,13 @@ struct LibraryView: View {
                             }.buttonStyle(.plain).accessibilityIdentifier("today-itinerary-card")
                                 .simultaneousGesture(TapGesture().onEnded { AppHaptics.tap() })
                         }
+                        if let trip = Trip.nextUpcoming(in: store.trips, on: context.date),
+                           let countdown = trip.daysUntilDeparture(on: context.date) {
+                            NavigationLink(value: TodayDayRoute(tripID: trip.id, dayID: trip.days[0].id)) {
+                                TodayItineraryCard(trip: trip, index: 0, daysUntilDeparture: countdown)
+                            }.buttonStyle(.plain).accessibilityIdentifier("upcoming-itinerary-card")
+                                .simultaneousGesture(TapGesture().onEnded { AppHaptics.tap() })
+                        }
                     }
                     LazyVGrid(columns: [GridItem(.flexible(), spacing: 14), GridItem(.flexible(), spacing: 14)], spacing: 18) {
                         ForEach(store.trips) { trip in
@@ -195,6 +202,12 @@ struct TodayDayRoute: Hashable {
 struct TodayItineraryCard: View {
     let trip: Trip
     let index: Int
+    var daysUntilDeparture: Int? = nil
+    private var heading: String { AppLocalization.text(daysUntilDeparture == nil ? "今日行程" : "即将出发") }
+    private var badge: String {
+        if let daysUntilDeparture { return AppLocalization.format("还有 %lld 天出发", Int64(daysUntilDeparture)) }
+        return AppLocalization.format("第 %lld 天", Int64(index + 1))
+    }
     var body: some View {
         GeometryReader { geometry in
             ZStack(alignment: .bottomLeading) {
@@ -208,10 +221,10 @@ struct TodayItineraryCard: View {
                 LinearGradient(colors: [.black.opacity(0.12), .black.opacity(0.82)], startPoint: .top, endPoint: .bottom)
                 VStack(alignment: .leading, spacing: 7) {
                     HStack {
-                        Label { Text("今日行程") } icon: { DoodleIcon(systemName: "sun.max.fill", size: 15).foregroundStyle(.black) }
+                        Label { Text(heading) } icon: { DoodleIcon(systemName: daysUntilDeparture == nil ? "sun.max.fill" : "calendar", size: 15).foregroundStyle(.black) }
                             .font(.subheadline.weight(.semibold))
                         Spacer()
-                        Text("第 \(index + 1) 天").font(.subheadline)
+                        Text(badge).font(.subheadline)
                     }
                     Spacer(minLength: 8)
                     Text(trip.destination).font(.subheadline).opacity(0.85)
@@ -219,7 +232,7 @@ struct TodayItineraryCard: View {
                     Text(trip.date(for: index), format: .dateTime.month().day().weekday())
                         .font(.caption).opacity(0.85)
                     HStack {
-                        Text(trip.days[index].items.isEmpty ? AppLocalization.text("今天自由安排") : trip.days[index].items.prefix(2).map(\.title).joined(separator: " · "))
+                        Text(trip.days[index].items.isEmpty ? AppLocalization.text(daysUntilDeparture == nil ? "今天自由安排" : "自由安排") : trip.days[index].items.prefix(2).map(\.title).joined(separator: " · "))
                             .font(.subheadline).lineLimit(1)
                         Spacer(minLength: 4)
                     }
@@ -228,7 +241,7 @@ struct TodayItineraryCard: View {
         }.aspectRatio(16.0 / 9.0, contentMode: .fit)
         .contentShape(RoundedRectangle(cornerRadius: 26))
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel("今日行程，\(trip.destination)，第 \(index + 1) 天，\(trip.days[index].title)")
+        .accessibilityLabel("\(heading)，\(trip.destination)，\(badge)，\(trip.days[index].title)")
         .accessibilityHint("打开当天行程详情")
     }
 }

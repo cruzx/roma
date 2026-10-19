@@ -190,6 +190,18 @@ struct Trip: Identifiable, Codable, Equatable {
               days.indices.contains(index) else { return nil }
         return index
     }
+    func daysUntilDeparture(on date: Date, calendar: Calendar = .current) -> Int? {
+        guard status == .planning, !days.isEmpty,
+              let days = calendar.dateComponents([.day], from: calendar.startOfDay(for: date), to: calendar.startOfDay(for: startDate)).day,
+              days > 0 else { return nil }
+        return days
+    }
+
+    static func nextUpcoming(in trips: [Trip], on date: Date, calendar: Calendar = .current) -> Trip? {
+        trips.filter { $0.daysUntilDeparture(on: date, calendar: calendar) != nil }
+            .min { $0.startDate < $1.startDate }
+    }
+
     var dateRange: String {
         let format = DateFormatter()
         format.locale = AppLocalization.locale

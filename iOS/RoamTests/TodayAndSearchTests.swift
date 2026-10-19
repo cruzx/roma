@@ -54,6 +54,27 @@ final class TodayAndSearchTests: XCTestCase {
         trip.status = .wish
         XCTAssertNil(trip.dayIndex(on: trip.startDate, calendar: calendar))
     }
+    @MainActor func testUpcomingSelectsNearestEligibleTripAcrossCalendarBoundary() {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(identifier: "Asia/Tokyo")!
+        let now = calendar.date(from: DateComponents(year: 2026, month: 10, day: 23, hour: 23, minute: 59))!
+        var nearest = TravelStore.samples[0]
+        nearest.startDate = calendar.date(from: DateComponents(year: 2026, month: 10, day: 24, hour: 0))!
+        nearest.status = .planning
+        var later = nearest
+        later.id = UUID()
+        later.startDate = calendar.date(byAdding: .day, value: 3, to: nearest.startDate)!
+        var wish = nearest; wish.status = .wish
+        var completed = nearest; completed.status = .completed
+        var empty = nearest; empty.days = []
+        var today = nearest; today.startDate = now
+        XCTAssertEqual(nearest.daysUntilDeparture(on: now, calendar: calendar), 1)
+        XCTAssertEqual(Trip.nextUpcoming(in: [later, wish, completed, empty, today, nearest], on: now, calendar: calendar)?.id, nearest.id)
+        XCTAssertNil(Trip.nextUpcoming(in: [wish, completed, empty, today], on: now, calendar: calendar))
+        XCTAssertNil(nearest.daysUntilDeparture(on: nearest.startDate, calendar: calendar))
+        XCTAssertEqual(nearest.dayIndex(on: nearest.startDate, calendar: calendar), 0)
+    }
+
     @MainActor func testCustomBackgroundAndResetPersistWithoutChangingTrips() {
         let store = HomeBackgroundStore(testing: true, reset: true)
         let photo = Data([1, 2, 3, 4])

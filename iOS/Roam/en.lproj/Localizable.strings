@@ -624,3 +624,6 @@
 "图片经缩放、压缩，显示时可能裁切；其许可独立于应用代码。" = "Images are resized and compressed, and may be cropped for display. Their licenses are independent of the app code.";
 
 "账号" = "Account";
+
+"即将出发" = "Upcoming Trip";
+"还有 %lld 天出发" = "Departs in %lld days";
