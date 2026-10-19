@@ -50,7 +50,6 @@ struct LibraryView: View {
     @EnvironmentObject private var backgrounds: HomeBackgroundStore
     @Environment(\.scenePhase) private var scenePhase
     @State private var showBackground = false
-    @State private var showInbox = false
     @EnvironmentObject private var store: TravelStore
     @State private var libraryScrollPhase: ScrollPhase = .idle
     @State private var libraryIdleGeneration = 0
@@ -136,19 +135,7 @@ struct LibraryView: View {
                         Button("首页背景", doodleSystemImage: "photo") { AppHaptics.tap(); showBackground = true }
                         Button("账号", doodleSystemImage: "person.crop.circle") { AppHaptics.tap(); showCloud = true }
                         Button("垃圾桶", doodleSystemImage: "trash") { AppHaptics.tap(); showTrash = true }
-                        Button("分享收集箱", doodleSystemImage: "square.and.arrow.down") { AppHaptics.tap(); showInbox = true }
                         Button("新建旅行", doodleSystemImage: "plus") { AppHaptics.tap(); showCreate = true }
-                        Button("导入旅行文件", doodleSystemImage: "square.and.arrow.down") {
-                            AppHaptics.tap()
-                            NotificationCenter.default.post(name: .importRoamTrip, object: nil)
-                        }
-                        Divider()
-                        Link(destination: URL(string: "https://roam-privacy-support.cruzxcx.chatgpt.site/")!) {
-                            Label("隐私政策", doodleSystemImage: "note.text")
-                        }.accessibilityIdentifier("privacy-policy-link")
-                        Link(destination: URL(string: "https://roam-privacy-support.cruzxcx.chatgpt.site/#support")!) {
-                            Label("帮助与支持", doodleSystemImage: "questionmark")
-                        }.accessibilityIdentifier("support-link")
                     } label: { DoodleIcon(systemName: "home.settings.fill").foregroundStyle(.black) }
                         .tint(.black)
                         .accessibilityLabel("设置").accessibilityIdentifier("library-settings")
@@ -163,7 +150,6 @@ struct LibraryView: View {
                     TripDetailView(tripID: route.tripID, initialDay: index).tint(.blue).toolbar(.hidden, for: .tabBar)
                 }
             }
-            .sheet(isPresented: $showInbox) { ShareInboxView().environmentObject(store).tint(.blue) }
             .sheet(isPresented: $showCreate) { TripEditor().environmentObject(store).tint(.blue) }
             .sheet(isPresented: $showBackground) { HomeBackgroundPicker().environmentObject(backgrounds).tint(.blue) }
             .sheet(isPresented: $showCloud) { CloudSyncView().environmentObject(store).tint(.blue) }
