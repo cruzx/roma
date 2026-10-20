@@ -31,3 +31,10 @@ Earlier deployment/installation status documents are historical snapshots; this 
 - App version, annual subscription and subscription group submitted together. All three are Waiting for Review. Submission ID: 8038bbc6-47f5-4792-851a-cb6d30ea0bde, 2026-10-20 10:03 Asia/Shanghai.
 - New Paid Applications Schedule acceptance was requested and user answered agree; final acceptance triggered SMS two-factor authentication, which remains user-dependent. Do not claim agreement accepted. It did not prevent this review submission.
 - Export warns missing dSYM for app and share extension; upload and review submission succeeded. No installation on devices was performed this turn.
+
+## Rejection remediation — 2026-10-20
+- Build 2026102001 rejected under Guideline 5.0 at 10:58. Reviewer cited ChatGPT/GPT references in metadata. The old static privacy site's hostname contained that brand; app Swift sources have no corresponding service integration.
+- Bilingual policy moved to https://roam.iiife.com/ on Cloudflare Pages (`roam-privacy-support`); custom-domain SSL active, HTTP 200 and page rendered verified. Support uses user-provided https://www.instagram.com/cruzxcx/.
+- Both iOS and Mac in-app policy URLs updated. iOS 1.1 build 2026102002 archived and uploaded with official Xcode 27A9275. Missing dSYM warnings remain non-blocking.
+- Chinese/English iOS descriptions, support URLs, App Privacy policy URLs and review notes updated. Awaiting new-build processing and resubmission at this checkpoint.
+- Resubmitted successfully at 2026-10-20 11:34 Asia/Shanghai: iOS 1.1 (2026102002), annual subscription and subscription group all show Waiting for Review. Same submission ID 8038bbc6-47f5-4792-851a-cb6d30ea0bde. Reply explaining the static-hosting domain was sent at 11:28. China availability retained.
