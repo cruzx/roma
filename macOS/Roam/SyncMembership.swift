@@ -137,7 +137,7 @@ struct SyncMembershipView: View {
                 .font(.caption).foregroundStyle(.secondary)
             HStack {
                 Link("使用条款", destination: URL(string: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/")!)
-                Link("隐私政策", destination: URL(string: "https://roam-privacy-support.cruzxcx.chatgpt.site/")!)
+                Link("隐私政策", destination: URL(string: "https://roam.iiife.com/")!)
             }.font(.caption)
             }
             if membership.busy { ProgressView() }
