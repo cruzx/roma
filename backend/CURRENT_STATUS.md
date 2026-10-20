@@ -25,3 +25,9 @@ Earlier deployment/installation status documents are historical snapshots; this 
 - iOS and Mac compile with PurchaseIntent handling. Current Xcode 27.1 build 27A9269 is identified by App Store Connect as Beta. Apple blocks adding this binary to review. A formal Xcode download/rebuild with a new build number is required; no review submission has occurred.
 - Full sandbox purchase/renewal/refund flow remains unverified. TEST delivery is not a purchase test.
 - Mac settings are aligned with iOS (Language, Account, Trash, New Trip); previous installed Mac build contains that simplification. The newest PurchaseIntent changes are compiled but not installed on the user's devices.
+
+## Submission completed — 2026-10-20
+- Xcode updated by user to 27.1 (27A9275). iOS 1.1 build 2026102001 archived and uploaded successfully; App Store beta-build restriction cleared.
+- App version, annual subscription and subscription group submitted together. All three are Waiting for Review. Submission ID: 8038bbc6-47f5-4792-851a-cb6d30ea0bde, 2026-10-20 10:03 Asia/Shanghai.
+- New Paid Applications Schedule acceptance was requested and user answered agree; final acceptance triggered SMS two-factor authentication, which remains user-dependent. Do not claim agreement accepted. It did not prevent this review submission.
+- Export warns missing dSYM for app and share extension; upload and review submission succeeded. No installation on devices was performed this turn.
