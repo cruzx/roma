@@ -242,7 +242,7 @@ struct AccountDocument: Codable {
         guard session?.user.id == user else { throw AccountError.signedOut }
         guard AccountWorkspace.owner == user else { throw AccountError.wrongAccount }
     }
-    func membership(transactionID: String? = nil) async throws -> SyncMembership {
+    func membership(transactionID: String? = nil, signedTransaction: String? = nil) async throws -> SyncMembership {
         let current = try await credential()
         if transactionID == nil {
             let grantData = try await request("rest/v1/rpc/roam_complimentary_status", body: [:], token: current.access_token)
@@ -250,7 +250,8 @@ struct AccountDocument: Codable {
             let grant = try JSONDecoder().decode(SyncMembership.self, from: grantData)
             if grant.active && grant.complimentary == true { return grant }
         }
-        let body: [String: Any] = transactionID.map { ["transactionId": $0] } ?? [:]
+        var body: [String: Any] = transactionID.map { ["transactionId": $0] } ?? [:]
+        if let signedTransaction { body["signedTransaction"] = signedTransaction }
         let data: Data
         do { data = try await request("functions/v1/roam-membership", body: body, token: current.access_token) }
         catch AccountError.server(404) { throw AccountError.membershipUnavailable }
@@ -299,7 +300,7 @@ struct AccountSyncSettings: View {
                     Button("删除云端账号", role: .destructive) { confirmDeletion = true }
                 }
             } else {
-                Text("会员登录后自动同步。首次启用会保留原资料，并将其复制到账号中；照片需要相同 Apple ID。").font(.footnote)
+                Text("邮箱登录为可选项，用于启用账号云同步。购买或恢复会员无需登录。首次启用会保留原资料；照片需要相同 Apple ID。").font(.footnote)
                 TextField("邮箱", text: $email).textContentType(.emailAddress).textInputAutocapitalization(.never).autocorrectionDisabled()
                 TextField("邮件验证码", text: $code).textContentType(.oneTimeCode)
                 Button("发送验证码") { run { try await account.sendCode(email: email); sentAt = Date(); account.message = "验证码已发送，请查看邮箱。" } }
@@ -316,7 +317,7 @@ struct AccountSyncSettings: View {
             Button("删除账号及云端资料", role: .destructive) {
                 run { try await account.deleteAccount(); account.message = "云端账号已删除。本机副本仍保留，账号同步已停止。" }
             }
-        } message: { Text("此操作无法撤销。不会删除本机副本或 iCloud 照片。删除账号不会取消 Apple 订阅，请先在订阅管理中取消续订；重新注册后无法自动恢复原账号的会员。") }
+        } message: { Text("此操作无法撤销。不会删除本机副本或 iCloud 照片。删除账号不会取消 Apple 订阅，请在 Apple 订阅管理中另行管理续订。云端资料删除后无法恢复。") }
     }
     private func run(_ action: @escaping @MainActor () async throws -> Void) {
         account.busy = true

@@ -609,3 +609,29 @@
 "图片经缩放、压缩，显示时可能裁切；其许可独立于应用代码。" = "Images are resized and compressed, and may be cropped for display. Their licenses are independent of the app code.";
 
 "账号" = "Account";
+
+"账号同步会员" = "Account Sync Membership";
+"会员已开通" = "Membership Active";
+"此账号免费使用同步" = "Complimentary Account Sync";
+"恢复购买" = "Restore Purchases";
+"管理或取消订阅" = "Manage or Cancel Subscription";
+"订阅管理与说明" = "Subscription Details";
+"使用条款" = "Terms of Use";
+"按年订阅 · %@/年" = "Subscribe · %@/year";
+"当前权益有效至 %@" = "Valid until %@";
+"行程文字与图片引用通过漫游账号同步，照片继续保存在 iCloud，需要相同 Apple ID。本地使用和原有 iCloud 同步免费。" = "Sync itinerary text and photo references with a Roam account. Photos stay in private iCloud and require the same Apple ID. Local use and existing iCloud sync are free.";
+"购买和恢复购买无需邮箱注册。可稍后选择邮箱登录，启用账号云同步。" = "No email registration is required to purchase or restore. You can choose to sign in later to enable account cloud sync.";
+"Apple 订阅可在同一 Apple 账号的设备上恢复。选择启用邮箱云同步后，请使用同一漫游账号访问其资料。" = "Restore your Apple subscription on devices using the same Apple account. If you choose email cloud sync, use the same Roam account to access its data.";
+"按年自动续订，费用由 Apple 账号收取。可在 Apple 订阅设置中取消，取消后可用至当前付费周期结束。到期后停止账号同步，已有本机资料保留。" = "Renews annually and is charged to your Apple account. Cancel in Apple subscription settings; access continues until the paid period ends. Account sync stops on expiry and local data is retained.";
+"年费会员正在准备上架，暂时无法购买。实际价格以 App Store 显示为准。" = "Membership is temporarily unavailable. The App Store purchase sheet shows the final price.";
+"会员已开通，无需重复购买。" = "Membership is active; no additional purchase is needed.";
+"购买成功。可稍后选择邮箱登录，启用账号云同步。" = "Purchase successful. You can choose email sign-in later to enable account cloud sync.";
+"购买成功。" = "Purchase successful.";
+"付款待确认，完成后会自动更新会员状态。" = "Payment is pending. Membership updates automatically after approval.";
+"Apple 订阅已恢复。" = "Apple subscription restored.";
+"未找到当前 Apple 账号的有效订阅。" = "No active subscription was found for the current Apple account.";
+"这笔购买属于另一个漫游账号，请登录购买时使用的邮箱。" = "This subscription is linked to another Roam account. Sign in with that account.";
+"无法验证 Apple 交易，请重试恢复购买。" = "Unable to verify the Apple transaction. Try restoring purchases.";
+"会员商品暂不可用，请稍后重试。" = "Membership is temporarily unavailable. Please try again later.";
+"邮箱账号同步" = "Email Account Sync";
+"邮箱登录为可选项，用于启用账号云同步。购买或恢复会员无需登录。首次启用会保留原资料；照片需要相同 Apple ID。" = "Email sign-in is optional and enables account cloud sync. Purchasing or restoring does not require sign-in. Initial setup preserves your local data; photos require the same Apple ID.";

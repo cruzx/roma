@@ -1,0 +1,45 @@
+{
+  "identifier": "4A3309E2-3443-498F-9A27-6145D595258A",
+  "nonRenewingSubscriptions": [],
+  "products": [],
+  "settings": {
+    "_failTransactionsEnabled": false,
+    "_locale": "en_US",
+    "_storefront": "USA",
+    "_storeKitErrors": []
+  },
+  "subscriptionGroups": [
+    {
+      "id": "22484169",
+      "localizations": [],
+      "name": "Account Sync",
+      "subscriptions": [
+        {
+          "adHocOffers": [],
+          "codeOffers": [],
+          "displayPrice": "18",
+          "familyShareable": false,
+          "groupNumber": 1,
+          "internalID": "6823544188",
+          "introductoryOffer": null,
+          "localizations": [
+            {
+              "description": "Optional account sync",
+              "displayName": "Account Sync Annual",
+              "locale": "en_US"
+            }
+          ],
+          "productID": "com.xiangchengjin.roam.sync.annual",
+          "recurringSubscriptionPeriod": "P1Y",
+          "referenceName": "Account Sync Annual",
+          "subscriptionGroupID": "22484169",
+          "type": "RecurringSubscription"
+        }
+      ]
+    }
+  ],
+  "version": {
+    "major": 3,
+    "minor": 0
+  }
+}

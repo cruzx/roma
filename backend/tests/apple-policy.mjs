@@ -12,3 +12,13 @@ assert.equal(run(t,{gracePeriodExpiresDate:now+2000},4).validUntil,now+2000);n++
 assert.equal(run(t,null,4).active,false);n++;
 for(const change of [{appAccountToken:'other'},{productId:'fake'},{bundleId:'other'},{environment:'Sandbox'},{inAppOwnershipType:'FAMILY_SHARED'},{type:'Non-Consumable'},{originalTransactionId:undefined}]){assert.throws(()=>run({...t,...change}));n++;}
 console.log(`${n} Apple entitlement policy checks passed`);
+// Signed-out purchases have no appAccountToken. Only a verified original-ID proof
+// or a server-owned binding may authorize them; IDs and unrelated tokens cannot.
+const guest={...t,appAccountToken:undefined};
+assert.throws(()=>run(guest));
+assert.equal(entitlement(guest,null,1,user,'Production',now,'123').active,true);
+assert.throws(()=>entitlement(guest,null,1,user,'Production',now,'456'));
+assert.throws(()=>entitlement({...t,appAccountToken:'other'},null,1,user,'Production',now,'123'));
+assert.equal(entitlement({...guest,revocationDate:now-1},null,1,user,'Production',now,'123').active,false);
+assert.equal(entitlement({...guest,expiresDate:now-1},null,1,user,'Production',now,'123').active,false);
+console.log('6 tokenless purchase ownership and expiry checks passed');
