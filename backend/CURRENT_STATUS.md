@@ -47,4 +47,6 @@ Earlier deployment/installation status documents are historical snapshots; this 
 - Final iOS and Mac 1.1 build 2026102202 archived and uploaded successfully with official Xcode. Privacy site updated on roam.iiife.com with optional-email purchase/restore disclosure. Both localizations and review notes updated in App Store Connect.
 - Previous Mac submission was withdrawn to replace its affected purchase flow. Awaiting Apple build processing before selecting the new binaries and resubmitting at this checkpoint.
 
-- Both Apple Production and Sandbox TEST notification requests were accepted after deployment; delivery status is being verified.
+- Apple Production and Sandbox synthetic TEST notifications both returned sendAttemptResult SUCCESS after deployment. This verifies notification delivery/signature handling, not a real purchase or refund.
+- Resubmission completed 2026-10-22 10:20 Asia/Shanghai: iOS 1.1 (2026102202), annual subscription and group all Waiting for Review in submission 8038bbc6-47f5-4792-851a-cb6d30ea0bde. A reply describing the implemented 5.1.1(v) fix was sent before resubmission.
+- Mac 1.1 (2026102202) also Waiting for Review; new submission d5c3cdf7-f9d8-45fb-9b67-670403c5b231. Old affected Mac submission was canceled for replacement. Release preferences retained: iOS automatic after approval, Mac manual after approval. No App Store approval has occurred yet.
