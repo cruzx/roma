@@ -66,6 +66,9 @@ struct SyncMembership: Decodable {
     }
     func requireAccess() async throws {
         try await refresh()
+        // Workspace reconciliation retries every 30 seconds. If payment succeeded
+        // while offline, link its verified Apple entitlement when the server returns.
+        if !active, account.session != nil { try await updateAppleEntitlements() }
         guard active else { throw AccountError.membershipRequired }
     }
     private func updateAppleEntitlements() async throws {
